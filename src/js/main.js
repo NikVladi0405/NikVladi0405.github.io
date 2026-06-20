@@ -2,7 +2,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     // Таймер обратного отсчёта
-    const weddingDate = new Date('2026-06-20T16:00:00+03:00').getTime();
+    const weddingDate = new Date('2027-07-27T16:15:00+03:00').getTime();
 
     function updateTimer() {
         const now = Date.now();
