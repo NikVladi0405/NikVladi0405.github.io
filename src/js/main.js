@@ -1,7 +1,7 @@
 /* ===== main.js ===== */
 document.addEventListener('DOMContentLoaded', () => {
 
-    // ===== ТАЙМЕР ОБРАТНОГО ОТСЧЁТА =====
+    // ===== ТАЙМЕР =====
     const weddingDate = new Date('2027-07-27T15:00:00+03:00').getTime();
 
     function updateTimer() {
@@ -37,12 +37,10 @@ document.addEventListener('DOMContentLoaded', () => {
             navOverlay.classList.add('nav-overlay--active');
             burger.classList.add('burger-menu--hidden');
         });
-
         navClose.addEventListener('click', () => {
             navOverlay.classList.remove('nav-overlay--active');
             burger.classList.remove('burger-menu--hidden');
         });
-
         document.querySelectorAll('.nav-link').forEach(link => {
             link.addEventListener('click', () => {
                 navOverlay.classList.remove('nav-overlay--active');
@@ -51,15 +49,13 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // ===== ПЛАВНЫЙ СКРОЛЛ ДЛЯ CTA-КНОПКИ =====
+    // ===== ПЛАВНЫЙ СКРОЛЛ ДЛЯ CTA =====
     const heroCta = document.getElementById('heroCta');
     if (heroCta) {
         heroCta.addEventListener('click', (e) => {
             e.preventDefault();
             const target = document.querySelector('#rsvp');
-            if (target) {
-                target.scrollIntoView({ behavior: 'smooth' });
-            }
+            if (target) target.scrollIntoView({ behavior: 'smooth' });
         });
     }
 
@@ -78,7 +74,6 @@ document.addEventListener('DOMContentLoaded', () => {
         observer.observe(section);
     });
 
-    // Hero сразу делаем видимым
     const heroSection = document.getElementById('hero');
     if (heroSection) {
         heroSection.classList.add('section--visible');
@@ -87,64 +82,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ===== ГЕНЕРАТОР ЗОЛОТЫХ ЧАСТИЦ =====
     const particlesContainer = document.getElementById('heroParticles');
-    
     if (particlesContainer) {
         function createParticle() {
             const particle = document.createElement('span');
             particle.classList.add('particle');
-            
-            // Случайная позиция по горизонтали
             particle.style.left = Math.random() * 100 + '%';
-            
-            // Случайная длительность анимации (4-8 секунд)
             particle.style.animationDuration = (Math.random() * 4 + 4) + 's';
-            
-            // Случайная задержка перед стартом
             particle.style.animationDelay = Math.random() * 3 + 's';
-            
-            // Случайный символ: звёздочки разных видов
             const symbols = ['✦', '✧', '•', '·', '✶', '✷'];
             particle.textContent = symbols[Math.floor(Math.random() * symbols.length)];
-            
-            // Случайный размер
             particle.style.fontSize = (Math.random() * 1 + 0.8) + 'rem';
-            
             particlesContainer.appendChild(particle);
-            
-            // Удаляем частицу после завершения анимации
             setTimeout(() => {
-                if (particle.parentNode) {
-                    particle.remove();
-                }
+                if (particle.parentNode) particle.remove();
             }, 8000);
         }
-        
-        // Запускаем создание частиц каждые 300 мс
         setInterval(createParticle, 300);
-        
-        // Создаём первые 20 частиц сразу
         for (let i = 0; i < 20; i++) {
             setTimeout(createParticle, i * 150);
         }
     }
-
-    // ===== ПАРАЛЛАКС ДЛЯ ИМЁН (ОПЦИОНАЛЬНО) =====
-    const hero = document.querySelector('.hero');
-    const namesWrapper = document.querySelector('.hero__names-wrapper');
-    const overlay = document.querySelector('.hero__overlay');
-    
-    if (hero && namesWrapper && overlay) {
-        hero.addEventListener('mousemove', (e) => {
-            const xAxis = (window.innerWidth / 2 - e.clientX) / 50;
-            const yAxis = (window.innerHeight / 2 - e.clientY) / 50;
-            namesWrapper.style.transform = `translate(${xAxis}px, ${yAxis}px)`;
-            overlay.style.transform = `translate(${xAxis * 0.5}px, ${yAxis * 0.5}px)`;
-        });
-        
-        hero.addEventListener('mouseleave', () => {
-            namesWrapper.style.transform = 'translate(0, 0)';
-            overlay.style.transform = 'translate(0, 0)';
-        });
-    }
-
 });

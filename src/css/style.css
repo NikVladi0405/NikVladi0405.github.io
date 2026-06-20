@@ -95,8 +95,8 @@ body {
     justify-content: center;
     text-align: center;
     color: #fff;
-    overflow: hidden;
 }
+
 .hero__overlay {
     position: absolute;
     inset: 0;
@@ -140,9 +140,9 @@ body {
 .hero__names {
     font-family: 'Great Vibes', cursive;
     font-size: clamp(3.5rem, 10vw, 7rem);
-    line-height: 1.2;
+    line-height: 1.3;
+    padding: 0.3em 0;
     
-    /* Градиент для анимации */
     background: linear-gradient(
         135deg,
         #c49a2c 0%,
@@ -152,17 +152,11 @@ body {
         #c49a2c 100%
     );
     background-size: 400% 400%;
-    
-    /* Правильная обрезка фона по тексту */
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    
-    /* Анимация движения градиента */
     animation: goldShine 8s ease infinite;
-    
-    /* Тень через фильтр */
-    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.5));
+    filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.6));
 }
 
 @keyframes goldShine {
@@ -204,6 +198,7 @@ body {
 }
 
 /* Кнопка "Подтвердить присутствие" */
+/* ---------- КНОПКА HERO ---------- */
 .hero__cta {
     display: inline-flex;
     align-items: center;
@@ -211,50 +206,87 @@ body {
     gap: 0.8rem;
     margin-top: 3.5rem;
     padding: 1.4rem 3.8rem;
-    background: linear-gradient(135deg, #f5e6d3 0%, #d4af37 40%, #b8962e 100%);
-    color: #2e1a20;
+    
+    /* Более насыщенный градиент */
+    background: linear-gradient(180deg, #fdf0d5 0%, #d4af37 30%, #b8962e 60%, #8b6914 100%);
+    
+    color: #1a0d10;
     border: none;
     border-radius: 60px;
     font-family: 'Playfair Display', serif;
-    font-weight: 600;
+    font-weight: 700;
     font-size: 1.3rem;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
     text-decoration: none;
     position: relative;
-    box-shadow: 0 8px 30px rgba(180, 130, 50, 0.5);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    overflow: hidden;
+    
+    /* Объёмная тень */
+    box-shadow: 
+        0 8px 32px rgba(180, 130, 50, 0.6),
+        0 2px 8px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     z-index: 2;
 }
+
 .hero__cta:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 14px 40px rgba(200, 150, 60, 0.7);
+    transform: translateY(-4px) scale(1.03);
+    box-shadow: 
+        0 16px 48px rgba(200, 150, 60, 0.8),
+        0 4px 12px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.5);
 }
+
 .hero__cta:active {
-    transform: translateY(0);
+    transform: translateY(-1px) scale(0.98);
+    transition: all 0.1s ease;
 }
+
 .hero__cta-icon {
     display: flex;
     align-items: center;
-    color: #2e1a20;
+    color: #1a0d10;
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.3));
 }
+
 .hero__cta-icon svg {
-    width: 24px;
-    height: 24px;
+    width: 26px;
+    height: 26px;
 }
+
 .hero__cta-text {
     position: relative;
     z-index: 1;
+    text-shadow: 0 1px 0 rgba(255,255,255,0.3);
 }
+
+/* Пульсирующее кольцо */
 .hero__cta-pulse {
     position: absolute;
-    inset: -8px;
+    inset: -10px;
     border-radius: 70px;
-    border: 2px solid rgba(212, 175, 55, 0.8);
-    animation: pulseRing 2.4s infinite;
+    border: 2px solid rgba(212, 175, 55, 0.7);
+    animation: pulseRing 2.2s infinite;
     pointer-events: none;
 }
+
+@keyframes pulseRing {
+    0% { 
+        transform: scale(1); 
+        opacity: 0.9; 
+    }
+    50% {
+        transform: scale(1.08);
+        opacity: 0.3;
+    }
+    100% { 
+        transform: scale(1.14); 
+        opacity: 0; 
+    }
+}
+
 @keyframes pulseRing {
     0% { transform: scale(1); opacity: 0.8; }
     70% { transform: scale(1.12); opacity: 0; }
@@ -320,6 +352,7 @@ body {
     background: #fff;
     padding: 6rem 2rem;
     text-align: center;
+    position: relative;
 }
 .timer__container {
     max-width: 900px;
@@ -329,16 +362,16 @@ body {
     font-family: 'Cormorant Garamond', serif;
     font-size: 2.5rem;
     color: #8b3a50;
-    margin-bottom: 2rem;
     letter-spacing: 0.2em;
     writing-mode: vertical-lr;
     text-orientation: mixed;
-    display: inline-block;
     position: absolute;
-    left: 10%;
+    left: 8%;
     top: 50%;
     transform: translateY(-50%);
+    margin: 0;
 }
+
 @media (max-width: 900px) {
     .timer__label {
         position: static;
@@ -960,5 +993,17 @@ body {
     }
     .gallery__item--wide {
         grid-column: span 1;
+    }
+    
+    /* Фикс для имён на мобильных */
+    .hero__names {
+        font-size: clamp(2.8rem, 12vw, 5rem);
+        line-height: 1.2;
+        padding: 0.2em 0;
+    }
+    
+    /* Частицы меньше на мобильных */
+    .particle {
+        font-size: 0.9rem;
     }
 }
