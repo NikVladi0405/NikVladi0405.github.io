@@ -102,4 +102,30 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(createParticle, i * 150);
         }
     }
+
+    // ===== ЭФФЕКТ ПИШУЩЕЙ МАШИНКИ ДЛЯ ЭПИГРАФА =====
+    const epigraphEl = document.getElementById('timerEpigraph');
+    if (epigraphEl) {
+        const fullText = 'Самое долгое ожидание — это путь друг к другу';
+        let charIndex = 0;
+        
+        function typeWriter() {
+            if (charIndex < fullText.length) {
+                epigraphEl.textContent += fullText.charAt(charIndex);
+                charIndex++;
+                setTimeout(typeWriter, 60 + Math.random() * 40);
+            }
+        }
+        
+        const timerObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    setTimeout(typeWriter, 500);
+                    timerObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.3 });
+        
+        timerObserver.observe(document.getElementById('timer'));
+    }
 });
