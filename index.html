@@ -34,6 +34,10 @@
     <!-- ===== 1. HERO ===== -->
     <section class="hero" id="hero">
         <div class="hero__overlay"></div>
+
+        <!-- КОНТЕЙНЕР ДЛЯ ЗОЛОТЫХ ЧАСТИЦ (будет заполняться из JS) -->
+        <div class="hero-particles" id="heroParticles"></div>
+
         <div class="hero__content">
             <div class="hero__names-wrapper">
                 <h1 class="hero__names">
@@ -41,12 +45,25 @@
                     <span class="hero__ampersand">&</span>
                     <span class="hero__name hero__name--nikita">Nikita</span>
                 </h1>
-                <div class="hero__names-shadow">Vlada & Nikita</div>
+                <!-- Тень убрана, так как она мешает градиенту "живого золота" -->
             </div>
+
             <div class="hero__date">
-                <img src="src/img/icons/icon_rings.svg" alt="" class="hero__date-icon">
+                <!-- Встроенная SVG-иконка колец (слева) -->
+                <svg class="hero__date-icon" width="28" height="28" viewBox="0 0 30 30" fill="none">
+                    <circle cx="11" cy="14" r="6" stroke="currentColor" stroke-width="2"/>
+                    <circle cx="19" cy="14" r="6" stroke="currentColor" stroke-width="2"/>
+                    <line x1="16" y1="14" x2="17" y2="14" stroke="currentColor" stroke-width="2"/>
+                </svg>
+
                 <span class="hero__date-text">27 июля 2027</span>
-                <img src="src/img/icons/icon_rings.svg" alt="" class="hero__date-icon hero__date-icon--right">
+
+                <!-- Встроенная SVG-иконка колец (справа) -->
+                <svg class="hero__date-icon hero__date-icon--right" width="28" height="28" viewBox="0 0 30 30" fill="none">
+                    <circle cx="11" cy="14" r="6" stroke="currentColor" stroke-width="2"/>
+                    <circle cx="19" cy="14" r="6" stroke="currentColor" stroke-width="2"/>
+                    <line x1="16" y1="14" x2="17" y2="14" stroke="currentColor" stroke-width="2"/>
+                </svg>
             </div>
 
             <!-- Парящие звёздочки вынесены ПЕРЕД кнопкой -->
@@ -71,6 +88,7 @@
                 <span class="hero__cta-pulse"></span>
             </a>
         </div>
+
         <div class="hero__scroll-indicator">
             <span></span>
             <span></span>
@@ -205,7 +223,6 @@
                 </div>
                 <div class="location__address-card">
                     <div class="location__address-icon">
-                        <img src="src/img/icons/icon_location.svg" alt="" width="28" height="28" style="display:none;">
                         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#8b3a50" stroke-width="2">
                             <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
                             <circle cx="12" cy="9" r="2.5"/>
@@ -251,7 +268,11 @@
             </div>
         </div>
         <div class="location__dresscode">
-            <img src="src/img/icons/icon_shoe.svg" alt="" class="location__dresscode-icon">
+            <svg class="location__dresscode-icon" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#8b3a50" stroke-width="1.5">
+                <path d="M4 16c1 1 3 3 4 3s3-2 4-3 3-3 4-3 3 2 4 3"/>
+                <path d="M3 20h18"/>
+                <circle cx="12" cy="8" r="4"/>
+            </svg>
             <span class="location__dresscode-text">Dress code: <strong>«Закатный сафари»</strong> — тёплые тона</span>
         </div>
     </section>
