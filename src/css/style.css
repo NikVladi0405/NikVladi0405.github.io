@@ -359,6 +359,7 @@ body {
     position: relative;
     z-index: 2;
 }
+
 .timer__label {
     font-family: 'Cormorant Garamond', serif;
     font-size: 2.5rem;
@@ -367,20 +368,38 @@ body {
     writing-mode: vertical-lr;
     text-orientation: mixed;
     position: absolute;
-    left: 5%;
+    left: -80px;
     top: 50%;
-    transform: translateY(-50%);
+    transform: translateY(-50%) translateX(-20px);  /* начальный сдвиг влево */
     margin: 0;
-    opacity: 0.8;
+    opacity: 0;                 /* изначально невидима */
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    z-index: 2;
 }
+
+/* Когда секция таймера становится видимой, надпись плавно появляется */
+#timer.section--visible .timer__label {
+    opacity: 0.8;
+    transform: translateY(-50%) translateX(0);
+}
+
 @media (max-width: 900px) {
     .timer__label {
         position: static;
         writing-mode: horizontal-tb;
         display: block;
         margin-bottom: 2.5rem;
+        left: auto;
+        top: auto;
+        transform: none;          /* сбрасываем трансформацию */
+        opacity: 0;               /* для анимации появления */
+        transition: opacity 0.8s ease;
+    }
+    #timer.section--visible .timer__label {
+        opacity: 0.8;
     }
 }
+
 .timer__grid {
     display: flex;
     justify-content: center;
@@ -482,6 +501,73 @@ body {
 @keyframes cursorBlink {
     0%, 100% { opacity: 1; }
     50% { opacity: 0; }
+}
+
+/* ---------- ФЕЙЕРВЕРК В ТАЙМЕРЕ ---------- */
+.timer__fireworks {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+}
+.firework {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+}
+.firework--1 { top: 20%; left: 15%; }
+.firework--2 { top: 30%; right: 10%; }
+.firework--3 { top: 60%; left: 80%; }
+
+.firework span {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: #d4af37;
+    opacity: 0;
+    animation: fireworkBurst 3s ease-out infinite;
+}
+.firework--1 span { animation-delay: 0s; }
+.firework--2 span { animation-delay: 1s; }
+.firework--3 span { animation-delay: 2s; }
+
+.firework span:nth-child(1) { transform: rotate(0deg) translateY(-30px); }
+.firework span:nth-child(2) { transform: rotate(60deg) translateY(-30px); }
+.firework span:nth-child(3) { transform: rotate(120deg) translateY(-30px); }
+.firework span:nth-child(4) { transform: rotate(180deg) translateY(-30px); }
+.firework span:nth-child(5) { transform: rotate(240deg) translateY(-30px); }
+.firework span:nth-child(6) { transform: rotate(300deg) translateY(-30px); }
+
+@keyframes fireworkBurst {
+    0% { opacity: 1; transform: scale(0) rotate(0deg); }
+    50% { opacity: 1; transform: scale(1.5) rotate(180deg); }
+    100% { opacity: 0; transform: scale(2) rotate(360deg) translateY(-50px); }
+}
+
+/* Парящие огоньки */
+.timer__sparkles {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+}
+.sparkle-t {
+    position: absolute;
+    left: var(--x);
+    bottom: 10%;
+    width: 6px;
+    height: 6px;
+    background: #d4af37;
+    border-radius: 50%;
+    opacity: 0;
+    animation: sparkleFloat 4s ease-in-out infinite;
+    animation-delay: var(--delay);
+}
+@keyframes sparkleFloat {
+    0% { opacity: 0; transform: translateY(0) scale(0.5); }
+    30% { opacity: 1; }
+    100% { opacity: 0; transform: translateY(-120px) scale(1.2); }
 }
 
 /* ---------- ИСТОРИЯ ---------- */
