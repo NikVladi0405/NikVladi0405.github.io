@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vlada & Nikita — 20 июня 2026</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="src/css/reset.css">
+    <link rel="stylesheet" href="src/css/animation.css">
+    <link rel="stylesheet" href="src/css/style.css">
+</head>
+<body>
+
+    <!-- ===== БУРГЕР-МЕНЮ ===== -->
+    <div class="burger-menu" id="burgerMenu" aria-label="Меню" role="button" tabindex="0">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    <nav class="nav-overlay" id="navOverlay">
+        <div class="nav-overlay__close" id="navClose" aria-label="Закрыть меню" role="button" tabindex="0">&times;</div>
+        <ul class="nav-overlay__list">
+            <li><a href="#hero" class="nav-link">Главная</a></li>
+            <li><a href="#timer" class="nav-link">Обратный отсчёт</a></li>
+            <li><a href="#story" class="nav-link">Наша история</a></li>
+            <li><a href="#location" class="nav-link">Локация & Программа</a></li>
+            <li><a href="#rsvp" class="nav-link">Подтверждение</a></li>
+            <li><a href="#gallery" class="nav-link">Галерея</a></li>
+        </ul>
+    </nav>
+
+    <!-- ===== 1. HERO ===== -->
+    <section class="hero" id="hero">
+        <div class="hero__overlay"></div>
+        <div class="hero__content">
+            <div class="hero__names-wrapper">
+                <h1 class="hero__names">
+                    <span class="hero__name hero__name--vlada">Vlada</span>
+                    <span class="hero__ampersand">&</span>
+                    <span class="hero__name hero__name--nikita">Nikita</span>
+                </h1>
+                <div class="hero__names-shadow">Vlada & Nikita</div>
+            </div>
+            <div class="hero__date">
+                <img src="src/img/icons/icon_rings.svg" alt="" class="hero__date-icon">
+                <span class="hero__date-text">20 июня 2026</span>
+                <img src="src/img/icons/icon_rings.svg" alt="" class="hero__date-icon hero__date-icon--right">
+            </div>
+            <a href="#rsvp" class="hero__cta" id="heroCta">
+                <span class="hero__cta-text">Подтвердить присутствие</span>
+                <span class="hero__cta-pulse"></span>
+            </a>
+        </div>
+        <div class="hero__scroll-indicator">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </section>
+
+    <!-- ===== 2. ТАЙМЕР ===== -->
+    <section class="timer" id="timer">
+        <div class="timer__container">
+            <div class="timer__label">Осталось</div>
+            <div class="timer__grid">
+                <div class="timer__block" data-unit="days">
+                    <div class="timer__square">
+                        <span class="timer__number" id="days">000</span>
+                        <span class="timer__unit">Дни</span>
+                    </div>
+                </div>
+                <div class="timer__separator">
+                    <svg class="timer__star" width="16" height="16" viewBox="0 0 16 16">
+                        <defs>
+                            <radialGradient id="starGlow" cx="50%" cy="50%" r="50%">
+                                <stop offset="0%" stop-color="#d4af37" stop-opacity="1" />
+                                <stop offset="100%" stop-color="#d4af37" stop-opacity="0" />
+                            </radialGradient>
+                        </defs>
+                        <circle cx="8" cy="8" r="3" fill="url(#starGlow)" />
+                        <polygon points="8,1 9.5,6 14,6 10.5,9 11.5,14 8,11 4.5,14 5.5,9 2,6 6.5,6" fill="#d4af37" opacity="0.8" />
+                    </svg>
+                </div>
+                <div class="timer__block" data-unit="hours">
+                    <div class="timer__square">
+                        <span class="timer__number" id="hours">00</span>
+                        <span class="timer__unit">Часы</span>
+                    </div>
+                </div>
+                <div class="timer__separator">
+                    <svg class="timer__star" width="16" height="16" viewBox="0 0 16 16">
+                        <polygon points="8,1 9.5,6 14,6 10.5,9 11.5,14 8,11 4.5,14 5.5,9 2,6 6.5,6" fill="#d4af37" opacity="0.6" />
+                    </svg>
+                </div>
+                <div class="timer__block" data-unit="minutes">
+                    <div class="timer__square">
+                        <span class="timer__number" id="minutes">00</span>
+                        <span class="timer__unit">Минуты</span>
+                    </div>
+                </div>
+                <div class="timer__separator">
+                    <svg class="timer__star" width="16" height="16" viewBox="0 0 16 16">
+                        <polygon points="8,1 9.5,6 14,6 10.5,9 11.5,14 8,11 4.5,14 5.5,9 2,6 6.5,6" fill="#d4af37" opacity="0.4" />
+                    </svg>
+                </div>
+                <div class="timer__block" data-unit="seconds">
+                    <div class="timer__square">
+                        <span class="timer__number" id="seconds">00</span>
+                        <span class="timer__unit">Секунды</span>
+                    </div>
+                </div>
+            </div>
+            <p class="timer__epigraph">Самое долгое ожидание — это путь друг к другу</p>
+        </div>
+    </section>
+
+    <!-- ===== 3. ЛЮБОВНАЯ ИСТОРИЯ ===== -->
+    <section class="story" id="story">
+        <div class="story__container">
+            <h2 class="story__heading">Наша история</h2>
+            <div class="story__album">
+                <div class="story__photo-wrapper story__photo-wrapper--left" id="photoVlada">
+                    <div class="story__photo story__photo--vlada">
+                        <img src="src/img/portraits/vlada_1.webp" alt="Влада" loading="lazy" />
+                        <div class="story__photo-frame"></div>
+                    </div>
+                    <span class="story__photo-label">Влада</span>
+                </div>
+                <div class="story__heart" id="storyHeart">
+                    <svg viewBox="0 0 100 100" width="80" height="80">
+                        <defs>
+                            <radialGradient id="heartGradient" cx="30%" cy="30%">
+                                <stop offset="0%" stop-color="#e8a0b4" />
+                                <stop offset="50%" stop-color="#c9708a" />
+                                <stop offset="100%" stop-color="#8b3a50" />
+                            </radialGradient>
+                            <filter id="heartGlow">
+                                <feGaussianBlur stdDeviation="4" result="blur" />
+                                <feMerge>
+                                    <feMergeNode in="blur" />
+                                    <feMergeNode in="SourceGraphic" />
+                                </feMerge>
+                            </filter>
+                        </defs>
+                        <path d="M50,85 C20,60 5,45 5,28 C5,14 16,5 28,5 C36,5 43,10 50,20 C57,10 64,5 72,5 C84,5 95,14 95,28 C95,45 80,60 50,85Z"
+                        fill="url(#heartGradient)" filter="url(#heartGlow)" />
+                    </svg>
+                </div>
+                <div class="story__photo-wrapper story__photo-wrapper--right" id="photoNikita">
+                    <div class="story__photo story__photo--nikita">
+                        <img src="src/img/portraits/nikita_1.webp" alt="Никита" loading="lazy" />
+                        <div class="story__photo-frame"></div>
+                    </div>
+                    <span class="story__photo-label">Никита</span>
+                </div>
+            </div>
+            <div class="story__texts">
+                <div class="story__text story__text--left">
+                    <p>Мы встретились совершенно случайно — в тёплый летний вечер, когда закат красил небо в розовые тона. Одно короткое «привет» перевернуло всё.</p>
+                </div>
+                <div class="story__text story__text--right">
+                    <p>Спустя годы мы поняли: расстояние измеряется не километрами, а моментами, когда сердце скучает. И мы решили больше не считать дни порознь.</p>
+                </div>
+            </div>
+            <p class="story__first-date"><span>Первая встреча:</span> 14 июля 2021</p>
+        </div>
+    </section>
+
+    <!-- ===== 4. ЛОКАЦИЯ И ПРОГРАММА ===== -->
+    <section class="location" id="location">
+        <div class="location__container">
+            <div class="location__half location__half--place">
+                <h2 class="location__heading">Место</h2>
+                <div class="location__map-wrapper">
+                    <iframe
+                        src="https://www.openstreetmap.org/export/embed.html?bbox=37.5,55.6,37.8,55.8&layer=mapnik&marker=55.7,37.65"
+                        width="100%"
+                        height="320"
+                        style="border:0; border-radius: 16px;"
+                        allowfullscreen=""
+                        loading="lazy"
+                        title="Карта локации">
+                    </iframe>
+                    <div class="location__map-overlay"></div>
+                </div>
+                <div class="location__address-card">
+                    <div class="location__address-icon">
+                        <img src="src/img/icons/icon_location.svg" alt="" width="28" height="28" style="display:none;">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#8b3a50" stroke-width="2">
+                            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+                            <circle cx="12" cy="9" r="2.5"/>
+                        </svg>
+                    </div>
+                    <p class="location__address-name">Ресторан «Загородный Клуб»</p>
+                    <p class="location__address-detail">Московская область, Истринский район</p>
+                    <p class="location__address-parking">🚗 Парковка охраняемая, 100 мест</p>
+                </div>
+            </div>
+            <div class="location__half location__half--program">
+                <h2 class="location__heading">Программа</h2>
+                <div class="location__timeline">
+                    <div class="timeline__item">
+                        <div class="timeline__dot"></div>
+                        <div class="timeline__content">
+                            <span class="timeline__time">16:00</span>
+                            <span class="timeline__desc">Встреча гостей — фуршет</span>
+                        </div>
+                    </div>
+                    <div class="timeline__item timeline__item--ceremony">
+                        <div class="timeline__dot timeline__dot--rings">💍</div>
+                        <div class="timeline__content">
+                            <span class="timeline__time">17:00</span>
+                            <span class="timeline__desc">Церемония «На возвышенности»</span>
+                        </div>
+                    </div>
+                    <div class="timeline__item">
+                        <div class="timeline__dot"></div>
+                        <div class="timeline__content">
+                            <span class="timeline__time">18:30</span>
+                            <span class="timeline__desc">Ужин и тосты</span>
+                        </div>
+                    </div>
+                    <div class="timeline__item timeline__item--fireworks">
+                        <div class="timeline__dot timeline__dot--firework">🎆</div>
+                        <div class="timeline__content">
+                            <span class="timeline__time">22:00</span>
+                            <span class="timeline__desc">Салют в честь первой ночи</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="location__dresscode">
+            <img src="src/img/icons/icon_shoe.svg" alt="" class="location__dresscode-icon">
+            <span class="location__dresscode-text">Dress code: <strong>«Закатный сафари»</strong> — тёплые тона</span>
+        </div>
+    </section>
+
+    <!-- ===== 5. ФОРМА ===== -->
+    <section class="rsvp" id="rsvp">
+        <div class="rsvp__container">
+            <h2 class="rsvp__heading">Ждём только вас <span>(и ваше настроение)</span></h2>
+            <form class="rsvp__form" id="rsvpForm">
+                <div class="rsvp__field">
+                    <label for="guestName" class="rsvp__label">Ваше имя</label>
+                    <input type="text" id="guestName" name="guestName" class="rsvp__input" placeholder="Введите ваше имя" required />
+                </div>
+                <div class="rsvp__field rsvp__field--checkbox">
+                    <label class="rsvp__checkbox-label">
+                        <input type="checkbox" id="comingAlone" name="comingAlone" class="rsvp__checkbox-hidden" />
+                        <span class="rsvp__checkbox-custom"></span>
+                        <span class="rsvp__checkbox-text">Я приду один / Я приду с парой</span>
+                    </label>
+                </div>
+                <div class="rsvp__field rsvp__field--guest" id="partnerField" style="display:none;">
+                    <label for="partnerName" class="rsvp__label">Имя гостя</label>
+                    <input type="text" id="partnerName" name="partnerName" class="rsvp__input" placeholder="Имя вашего спутника" />
+                </div>
+                <fieldset class="rsvp__food">
+                    <legend class="rsvp__label">Выбор блюда</legend>
+                    <div class="rsvp__food-options">
+                        <label class="rsvp__food-card">
+                            <input type="radio" name="foodChoice" value="chicken" required />
+                            <span class="rsvp__food-circle">
+                                <span class="rsvp__food-emoji">🍗</span>
+                                <span class="rsvp__food-name">Курица</span>
+                            </span>
+                        </label>
+                        <label class="rsvp__food-card">
+                            <input type="radio" name="foodChoice" value="fish" required />
+                            <span class="rsvp__food-circle">
+                                <span class="rsvp__food-emoji">🐟</span>
+                                <span class="rsvp__food-name">Рыба</span>
+                            </span>
+                        </label>
+                    </div>
+                </fieldset>
+                <div class="rsvp__field">
+                    <label for="message" class="rsvp__label">Оставьте нам пару слов или музыкальный плейлист</label>
+                    <textarea id="message" name="message" class="rsvp__textarea" placeholder="Ваши пожелания, любимые треки..." rows="4"></textarea>
+                </div>
+                <button type="submit" class="rsvp__submit" id="rsvpSubmit">
+                    <span class="rsvp__envelope">
+                        <span class="rsvp__envelope-flap"></span>
+                        <span class="rsvp__envelope-body">
+                            <span class="rsvp__envelope-heart">♥</span>
+                        </span>
+                    </span>
+                    <span class="rsvp__submit-text">Отправить</span>
+                </button>
+            </form>
+            <div class="rsvp__notification" id="rsvpNotification">
+                <span class="rsvp__notification-icon">💌</span>
+                <span class="rsvp__notification-text">Мы будем вас ждать!</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== 6. ГАЛЕРЕЯ ===== -->
+    <section class="gallery" id="gallery">
+        <div class="gallery__container">
+            <h2 class="gallery__heading">Наши мгновения</h2>
+            <div class="gallery__grid">
+                <div class="gallery__item gallery__item--tall">
+                    <img src="src/img/gallery/story_01.webp" alt="Момент 1" loading="lazy" />
+                </div>
+                <div class="gallery__item gallery__item--wide">
+                    <img src="src/img/gallery/story_02.webp" alt="Момент 2" loading="lazy" />
+                </div>
+                <div class="gallery__item">
+                    <img src="src/img/gallery/story_03.webp" alt="Момент 3" loading="lazy" />
+                </div>
+                <div class="gallery__item gallery__item--tall">
+                    <img src="src/img/gallery/story_04.webp" alt="Момент 4" loading="lazy" />
+                </div>
+                <div class="gallery__item">
+                    <img src="src/img/gallery/story_05.webp" alt="Момент 5" loading="lazy" />
+                </div>
+                <div class="gallery__item gallery__item--wide">
+                    <img src="src/img/gallery/story_06.webp" alt="Момент 6" loading="lazy" />
+                </div>
+                <div class="gallery__item">
+                    <img src="src/img/gallery/story_07.webp" alt="Момент 7" loading="lazy" />
+                </div>
+            </div>
+            <a href="#" class="gallery__download" download>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="7 10 12 15 17 10"/>
+                    <line x1="12" y1="15" x2="12" y2="3"/>
+                </svg>
+                Скачать все наши фото
+            </a>
+        </div>
+    </section>
+
+    <!-- ===== 7. ФУТЕР ===== -->
+    <footer class="footer">
+        <div class="footer__container">
+            <p class="footer__thanks">Спасибо, что будете с нами</p>
+            <div class="footer__socials">
+                <a href="#" class="footer__social-link" aria-label="Instagram Влады">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/>
+                        <circle cx="17.5" cy="6.5" r="1.2"/>
+                    </svg>
+                </a>
+                <a href="#" class="footer__social-link" aria-label="Instagram Никиты">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/>
+                        <circle cx="17.5" cy="6.5" r="1.2"/>
+                    </svg>
+                </a>
+                <a href="#" class="footer__social-link" aria-label="Telegram">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 3L2 10l7 3m12-10l-5 15-4-5m4-10l-9 7-3 7"/>
+                    </svg>
+                </a>
+            </div>
+            <p class="footer__contacts">
+                Если заблудитесь, звоните Саше:
+                <a href="tel:+79000000000" class="footer__phone">+7 900 000-00-00</a>
+            </p>
+            <p class="footer__credits">Сайт сделан с любовью Владой и Никитой в 2026</p>
+        </div>
+    </footer>
+
+    <script src="src/js/main.js"></script>
+    <script src="src/js/form.js"></script>
+    <script src="src/js/gallery.js"></script>
+</body>
+</html>

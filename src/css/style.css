@@ -1,0 +1,175 @@
+/* ===== style.css ===== */
+body {
+    font-family: 'Inter', 'Playfair Display', serif;
+    background-color: #fff;
+    color: #2e2e2e;
+}
+
+/* ---------- БУРГЕР-МЕНЮ ---------- */
+.burger-menu {
+    position: fixed;
+    top: 24px;
+    right: 24px;
+    width: 40px;
+    height: 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+    z-index: 1000;
+    opacity: 0.6;
+    transition: opacity 0.3s;
+}
+.burger-menu:hover {
+    opacity: 1;
+}
+.burger-menu span {
+    display: block;
+    height: 3px;
+    background: #fff;
+    border-radius: 2px;
+    transition: transform 0.3s, opacity 0.3s;
+}
+.burger-menu--hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Оверлей навигации */
+.nav-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(20, 10, 14, 0.96);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s, visibility 0.4s;
+    z-index: 999;
+}
+.nav-overlay--active {
+    opacity: 1;
+    visibility: visible;
+}
+.nav-overlay__close {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    font-size: 2.5rem;
+    color: #fff;
+    cursor: pointer;
+}
+.nav-overlay__list {
+    text-align: center;
+}
+.nav-overlay__list li {
+    margin: 2rem 0;
+}
+.nav-link {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    color: #d4af37;
+    letter-spacing: 0.1em;
+    transition: color 0.3s;
+}
+.nav-link:hover {
+    color: #fff;
+}
+
+/* ---------- HERO ---------- */
+.hero {
+    height: 100vh;
+    background: url('../img/hero/background.webp') center/cover no-repeat;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #fff;
+}
+.hero__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(140, 40, 65, 0.55);
+}
+.hero__content {
+    position: relative;
+    z-index: 2;
+}
+.hero__names {
+    font-family: 'Great Vibes', cursive;
+    font-size: clamp(3.5rem, 10vw, 7rem);
+    color: #d4af37;
+    text-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+.hero__names-shadow {
+    font-family: 'Great Vibes', cursive;
+    font-size: inherit;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(212,175,55,0.3);
+    position: absolute;
+    top: 8px;
+    left: 0;
+    right: 0;
+}
+.hero__cta {
+    display: inline-block;
+    margin-top: 3rem;
+    padding: 1.2rem 3.5rem;
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(10px);
+    border: 1px solid #fff;
+    border-radius: 50px;
+    font-size: 1.2rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #fff;
+    position: relative;
+    transition: background 0.3s;
+}
+.hero__cta:hover {
+    background: rgba(255,255,255,0.3);
+}
+.hero__cta-pulse {
+    position: absolute;
+    inset: -6px;
+    border-radius: 50px;
+    border: 2px solid rgba(255,255,255,0.5);
+}
+
+/* ---------- ТАЙМЕР ---------- */
+.timer {
+    background: #fff;
+    padding: 6rem 2rem;
+    text-align: center;
+}
+.timer__grid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+.timer__square {
+    background: #fdf6f9;
+    border: 2px solid #d4af37;
+    border-radius: 20px;
+    padding: 1.5rem 1rem;
+    min-width: 100px;
+}
+.timer__number {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.8rem;
+    color: #8b3a50;
+}
+/* ... остальные секции (story, location, rsvp, gallery, footer) сохранены аналогично */
+
+/* Адаптив */
+@media (max-width: 768px) {
+    .story__album { flex-direction: column; }
+    .location__container { flex-direction: column; }
+}
