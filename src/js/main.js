@@ -110,26 +110,48 @@ document.addEventListener('DOMContentLoaded', () => {
         const container = document.getElementById('mediaParticles');
         if (!container) return;
 
-        // Фейерверки
+        // Множественные фейерверки
         setInterval(() => {
-            const firework = document.createElement('span');
-            firework.className = 'media-firework';
-            firework.style.left = Math.random() * 100 + '%';
-            firework.style.top = Math.random() * 100 + '%';
-            container.appendChild(firework);
-            setTimeout(() => firework.remove(), 2000);
-        }, 700);
+            for (let i = 0; i < 3; i++) {
+                const firework = document.createElement('span');
+                firework.className = 'media-firework';
+                firework.style.left = Math.random() * 100 + '%';
+                firework.style.top = Math.random() * 100 + '%';
+                firework.style.animationDelay = Math.random() * 0.5 + 's';
+                container.appendChild(firework);
+                setTimeout(() => firework.remove(), 2000);
+            }
+        }, 600);
 
         // Расширяющиеся круги
         setInterval(() => {
-            const circle = document.createElement('div');
-            circle.className = 'media-circle';
-            circle.style.left = Math.random() * 100 + '%';
-            circle.style.top = Math.random() * 100 + '%';
-            circle.style.width = '20px';
-            circle.style.height = '20px';
-            container.appendChild(circle);
-            setTimeout(() => circle.remove(), 3000);
-        }, 1500);
+            for (let i = 0; i < 2; i++) {
+                const circle = document.createElement('div');
+                circle.className = 'media-circle';
+                circle.style.left = Math.random() * 100 + '%';
+                circle.style.top = Math.random() * 100 + '%';
+                circle.style.width = '30px';
+                circle.style.height = '30px';
+                circle.style.animationDelay = Math.random() * 0.5 + 's';
+                container.appendChild(circle);
+                setTimeout(() => circle.remove(), 3000);
+            }
+        }, 1200);
+
+        // Мини-салюты (группа частиц в случайных точках)
+        setInterval(() => {
+            const x = Math.random() * 100;
+            const y = Math.random() * 100;
+            for (let i = 0; i < 8; i++) {
+                const particle = document.createElement('span');
+                particle.className = 'media-firework';
+                particle.style.left = x + '%';
+                particle.style.top = y + '%';
+                particle.style.animationDuration = '1.5s';
+                particle.style.transform = `rotate(${i * 45}deg) translateY(-15px)`;
+                container.appendChild(particle);
+                setTimeout(() => particle.remove(), 1500);
+            }
+        }, 2500);
     }
 });
