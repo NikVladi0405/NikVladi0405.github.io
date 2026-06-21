@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentSlide = 0;
     let sliderActive = false;
     let transitionInProgress = false;
+    let regularVisible = false;
 
     // Цвета фона для каждого слайда (нежные тона)
     const slideBackgrounds = [
@@ -21,6 +22,30 @@ document.addEventListener('DOMContentLoaded', () => {
         '#fdf7f2'  // always-together
     ];
 
+    function activateSlider() {
+        sliderActive = true;
+        regularVisible = false;
+        document.body.style.overflow = 'hidden';
+        storySlidesContainer.style.display = 'block';
+        regularContent.classList.remove('visible');
+        // Показываем текущий слайд
+        slides.forEach((slide, index) => {
+            slide.classList.remove('active', 'prev');
+            if (index === currentSlide) slide.classList.add('active');
+            else if (index < currentSlide) slide.classList.add('prev');
+        });
+        document.body.style.backgroundColor = slideBackgrounds[currentSlide];
+    }
+
+    function showRegularContent() {
+        sliderActive = false;
+        regularVisible = true;
+        document.body.style.overflow = '';
+        storySlidesContainer.style.display = 'none';
+        regularContent.classList.add('visible');
+        document.body.style.backgroundColor = '#fefafc';
+    }
+
     if (openBtn) {
         openBtn.addEventListener('click', () => {
             const music = document.getElementById('bgMusic');
@@ -31,23 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             intro.style.display = 'none';
             mainContent.style.display = 'block';
-
-            // Инициализируем слайды
-            sliderActive = true;
-            document.body.style.overflow = 'hidden';
-            storySlidesContainer.style.display = 'block';
-            regularContent.classList.remove('visible');
-
-            // Устанавливаем первый слайд
-            slides.forEach((slide, index) => {
-                slide.classList.remove('active', 'prev');
-                if (index === 0) slide.classList.add('active');
-                else slide.classList.add('prev');
-            });
-            currentSlide = 0;
-            document.body.style.backgroundColor = slideBackgrounds[0];
-
-            // Запускаем фейерверки
+            activateSlider();
             startProposalFireworks();
         });
     }
@@ -70,37 +79,34 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             // уход вправо, приход слева
             current.classList.remove('active');
-            current.classList.add('prev');
+            // Устанавливаем начальную позицию для анимации слева
+            next.style.transition = 'none';
             next.classList.remove('prev');
             next.classList.add('active');
-            // чтобы анимация шла справа налево, меняем transform
             next.style.transform = 'translateX(-100%)';
+            // Запускаем анимацию
             requestAnimationFrame(() => {
+                next.style.transition = 'transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.6s ease';
                 next.style.transform = 'translateX(0)';
             });
+            // Предыдущий слайд уходит вправо
+            current.classList.add('prev');
+            current.classList.remove('active');
         }
 
         currentSlide = newSlide;
         document.body.style.backgroundColor = slideBackgrounds[currentSlide];
 
-        // Если дошли до последнего слайда (always-together) и скроллим вниз — переход к обычной прокрутке
+        // Если дошли до последнего слайда и скроллим вниз — переход к обычной прокрутке
         if (currentSlide === slides.length - 1 && direction > 0) {
             setTimeout(() => {
-                finishSlider();
+                showRegularContent();
             }, 600);
         }
 
         setTimeout(() => {
             transitionInProgress = false;
         }, 600);
-    }
-
-    function finishSlider() {
-        sliderActive = false;
-        document.body.style.overflow = '';
-        storySlidesContainer.style.display = 'none';
-        regularContent.classList.add('visible');
-        document.body.style.backgroundColor = '#fefafc';
     }
 
     // Обработчик колеса
@@ -110,7 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const delta = e.deltaY || e.deltaX || 0;
         if (delta > 0) {
             if (currentSlide === slides.length - 1) {
-                finishSlider();
+                showRegularContent();
             } else {
                 changeSlide(1);
             }
@@ -131,7 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const diff = touchStartY - touchY;
         if (Math.abs(diff) > 40) {
             if (diff > 0) {
-                if (currentSlide === slides.length - 1) finishSlider();
+                if (currentSlide === slides.length - 1) showRegularContent();
                 else changeSlide(1);
             } else {
                 changeSlide(-1);
@@ -140,6 +146,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         e.preventDefault();
     }
+
+    // Возврат к слайдеру при прокрутке вверх до самого верха
+    window.addEventListener('scroll', () => {
+        if (regularVisible && window.scrollY <= 5) {
+            activateSlider();
+        }
+    });
 
     window.addEventListener('wheel', handleWheel, { passive: false });
     window.addEventListener('touchstart', handleTouchStart, { passive: false });
