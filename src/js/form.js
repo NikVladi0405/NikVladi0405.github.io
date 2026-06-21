@@ -8,6 +8,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const guestsList = document.getElementById('guestsList');
     const addGuestBtn = document.getElementById('addGuestBtn');
 
+    // Ваш URL веб-приложения Google Apps Script
+    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw1mmr6KNrpRi8kwUBQs3_vM0pcRAjf37NRMo8KKyve6JL4bnTHaSWts4Ct2gF0vaiH/exec';
+
     let guestCount = 0;
 
     // Функция создания блока для одного гостя
@@ -38,11 +41,9 @@ document.addEventListener('DOMContentLoaded', () => {
             <button type="button" class="rsvp__remove-guest" style="position:absolute;top:0;right:0;background:none;border:none;color:#c9708a;cursor:pointer;font-size:1.2rem;">&times;</button>
         `;
 
-        // Кнопка удаления
         wrapper.querySelector('.rsvp__remove-guest').addEventListener('click', () => {
             wrapper.remove();
             guestCount--;
-            // Если не осталось гостей, скрываем контейнер и снимаем галочку
             if (guestCount === 0) {
                 guestsContainer.style.display = 'none';
                 comingAloneCheckbox.checked = false;
@@ -52,42 +53,99 @@ document.addEventListener('DOMContentLoaded', () => {
         return wrapper;
     }
 
-    // Добавление первого гостя при активации чекбокса
     comingAloneCheckbox.addEventListener('change', function() {
         if (this.checked) {
             guestsContainer.style.display = 'block';
-            // Если ещё нет гостей, добавляем одного автоматически
             if (guestCount === 0) {
                 const block = createGuestBlock(guestCount + 1);
                 guestsList.appendChild(block);
                 guestCount++;
             }
         } else {
-            // Удаляем всех гостей и скрываем контейнер
             guestsList.innerHTML = '';
             guestCount = 0;
             guestsContainer.style.display = 'none';
         }
     });
 
-    // Кнопка "Добавить гостя"
     addGuestBtn.addEventListener('click', () => {
         const block = createGuestBlock(guestCount + 1);
         guestsList.appendChild(block);
         guestCount++;
-        // Показываем контейнер на всякий случай
         guestsContainer.style.display = 'block';
     });
 
-    // Отправка формы
-    form.addEventListener('submit', function(e) {
+    // Сбор данных формы
+    function collectFormData() {
+        const mainName = document.getElementById('guestName').value.trim();
+        const mainDrink = document.querySelector('input[name="drinkChoice"]:checked')?.value || '';
+        const message = document.getElementById('message').value.trim();
+
+        const guests = [];
+        const guestItems = guestsList.querySelectorAll('.rsvp__guest-item');
+        guestItems.forEach((item) => {
+            const nameInput = item.querySelector('input[type="text"]');
+            const drinkYes = item.querySelector('input[value="yes"]');
+            const drinkNo = item.querySelector('input[value="no"]');
+            const guestName = nameInput?.value.trim() || '';
+            const guestDrink = drinkYes?.checked ? 'yes' : (drinkNo?.checked ? 'no' : '');
+            if (guestName) {
+                guests.push({ name: guestName, drink: guestDrink });
+            }
+        });
+
+        return {
+            guestName: mainName,
+            drinkChoice: mainDrink,
+            message: message,
+            guests: guests
+        };
+    }
+
+    // Отправка данных в Google Sheets
+    async function submitToGoogleSheets(data) {
+        try {
+            await fetch(GOOGLE_SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                cache: 'no-cache',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                redirect: 'follow',
+                body: JSON.stringify(data)
+            });
+            return true;
+        } catch (error) {
+            console.error('Ошибка отправки:', error);
+            return false;
+        }
+    }
+
+    // Обработка отправки формы
+    form.addEventListener('submit', async function(e) {
         e.preventDefault();
 
-        // Имитация запечатывания конверта
+        const mainName = document.getElementById('guestName').value.trim();
+        if (!mainName) {
+            alert('Пожалуйста, введите ваше имя');
+            return;
+        }
+
+        const formData = collectFormData();
+
         submitBtn.classList.add('rsvp__submit--sealing');
 
+        const success = await submitToGoogleSheets(formData);
+
         setTimeout(() => {
-            notification.classList.add('rsvp__notification--visible');
+            if (success) {
+                notification.classList.add('rsvp__notification--visible');
+                notification.querySelector('.rsvp__notification-text').textContent = 'Мы будем вас ждать!';
+            } else {
+                notification.classList.add('rsvp__notification--visible');
+                notification.querySelector('.rsvp__notification-text').textContent = 'Ошибка, попробуйте позже';
+            }
             submitBtn.classList.remove('rsvp__submit--sealing');
             submitBtn.classList.add('rsvp__submit--sealed');
         }, 800);
@@ -95,11 +153,10 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => {
             notification.classList.remove('rsvp__notification--visible');
             submitBtn.classList.remove('rsvp__submit--sealed');
-            // Сброс формы
             form.reset();
             guestsList.innerHTML = '';
             guestCount = 0;
             guestsContainer.style.display = 'none';
-        }, 4500);
+        }, 4000);
     });
 });
