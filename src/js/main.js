@@ -2,17 +2,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const openBtn = document.getElementById('openInvitation');
     const mainContent = document.getElementById('mainContent');
     const intro = document.getElementById('intro');
-
-    const storySlidesContainer = document.querySelector('.story-slides');
+    const storyStack = document.getElementById('storyStack');
     const slides = document.querySelectorAll('.slide');
     const regularContent = document.querySelector('.regular-content');
 
-    let currentSlide = 0;
-    let sliderActive = false;
-    let transitionInProgress = false;
-    let regularVisible = false;
+    const SLIDE_HEIGHT = window.innerHeight;
+    const TOTAL_SLIDES = slides.length;
+    const STACK_HEIGHT = SLIDE_HEIGHT * TOTAL_SLIDES;
+    storyStack.style.height = STACK_HEIGHT + 'px';
 
-    // Цвета фона для каждого слайда (нежные тона)
+    // Цвета фона для каждого слайда
     const slideBackgrounds = [
         '#fefafc', // greeting
         '#fff5f7', // story-begin
@@ -22,29 +21,61 @@ document.addEventListener('DOMContentLoaded', () => {
         '#fdf7f2'  // always-together
     ];
 
-    function activateSlider() {
-        sliderActive = true;
-        regularVisible = false;
-        document.body.style.overflow = 'hidden';
-        storySlidesContainer.style.display = 'block';
-        regularContent.classList.remove('visible');
-        // Показываем текущий слайд
+    let sliderActive = false;
+
+    function updateSlides() {
+        if (!sliderActive) return;
+        const scrollY = window.scrollY;
+        const stackTop = storyStack.offsetTop;
+        const relativeScroll = scrollY - stackTop;
+
+        if (relativeScroll < 0 || relativeScroll >= STACK_HEIGHT) return;
+
+        const activeIndex = Math.min(Math.floor(relativeScroll / SLIDE_HEIGHT), TOTAL_SLIDES - 1);
+        const progress = (relativeScroll % SLIDE_HEIGHT) / SLIDE_HEIGHT;
+
+        // Обновляем каждый слайд
         slides.forEach((slide, index) => {
-            slide.classList.remove('active', 'prev');
-            if (index === currentSlide) slide.classList.add('active');
-            else if (index < currentSlide) slide.classList.add('prev');
+            if (index < activeIndex) {
+                slide.style.transform = 'translateX(-100%)';
+            } else if (index === activeIndex) {
+                // Уходит влево
+                slide.style.transform = `translateX(${-progress * 100}%)`;
+            } else if (index === activeIndex + 1) {
+                // Выезжает справа
+                slide.style.transform = `translateX(${100 - progress * 100}%)`;
+            } else {
+                slide.style.transform = 'translateX(100%)';
+            }
         });
-        document.body.style.backgroundColor = slideBackgrounds[currentSlide];
+
+        // Обновляем фон
+        const currentBg = slideBackgrounds[activeIndex];
+        const nextBg = slideBackgrounds[Math.min(activeIndex + 1, TOTAL_SLIDES - 1)];
+        document.body.style.backgroundColor = interpolateColor(currentBg, nextBg, progress);
     }
 
-    function showRegularContent() {
-        sliderActive = false;
-        regularVisible = true;
-        document.body.style.overflow = '';
-        storySlidesContainer.style.display = 'none';
-        regularContent.classList.add('visible');
-        document.body.style.backgroundColor = '#fefafc';
+    // Простая интерполяция цвета (HEX)
+    function interpolateColor(color1, color2, factor) {
+        const c1 = hexToRgb(color1);
+        const c2 = hexToRgb(color2);
+        const r = Math.round(c1.r + (c2.r - c1.r) * factor);
+        const g = Math.round(c1.g + (c2.g - c1.g) * factor);
+        const b = Math.round(c1.b + (c2.b - c1.b) * factor);
+        return `rgb(${r},${g},${b})`;
     }
+    function hexToRgb(hex) {
+        const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        return result ? {
+            r: parseInt(result[1], 16),
+            g: parseInt(result[2], 16),
+            b: parseInt(result[3], 16)
+        } : {r:255,g:255,b:255};
+    }
+
+    window.addEventListener('scroll', () => {
+        if (sliderActive) updateSlides();
+    });
 
     if (openBtn) {
         openBtn.addEventListener('click', () => {
@@ -56,107 +87,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
             intro.style.display = 'none';
             mainContent.style.display = 'block';
-            activateSlider();
+
+            // Инициализируем слайды
+            sliderActive = true;
+            // Позиционируем слайды
+            slides.forEach((slide, index) => {
+                if (index === 0) slide.style.transform = 'translateX(0)';
+                else slide.style.transform = 'translateX(100%)';
+            });
+            document.body.style.backgroundColor = slideBackgrounds[0];
             startProposalFireworks();
         });
     }
-
-    function changeSlide(direction) {
-        if (transitionInProgress || !sliderActive) return;
-        const newSlide = currentSlide + direction;
-        if (newSlide < 0 || newSlide >= slides.length) return;
-
-        transitionInProgress = true;
-        const current = slides[currentSlide];
-        const next = slides[newSlide];
-
-        if (direction > 0) {
-            // уход влево, приход справа
-            current.classList.remove('active');
-            current.classList.add('prev');
-            next.classList.remove('prev');
-            next.classList.add('active');
-        } else {
-            // уход вправо, приход слева
-            current.classList.remove('active');
-            // Устанавливаем начальную позицию для анимации слева
-            next.style.transition = 'none';
-            next.classList.remove('prev');
-            next.classList.add('active');
-            next.style.transform = 'translateX(-100%)';
-            // Запускаем анимацию
-            requestAnimationFrame(() => {
-                next.style.transition = 'transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.6s ease';
-                next.style.transform = 'translateX(0)';
-            });
-            // Предыдущий слайд уходит вправо
-            current.classList.add('prev');
-            current.classList.remove('active');
-        }
-
-        currentSlide = newSlide;
-        document.body.style.backgroundColor = slideBackgrounds[currentSlide];
-
-        // Если дошли до последнего слайда и скроллим вниз — переход к обычной прокрутке
-        if (currentSlide === slides.length - 1 && direction > 0) {
-            setTimeout(() => {
-                showRegularContent();
-            }, 600);
-        }
-
-        setTimeout(() => {
-            transitionInProgress = false;
-        }, 600);
-    }
-
-    // Обработчик колеса
-    function handleWheel(e) {
-        if (!sliderActive) return;
-        e.preventDefault();
-        const delta = e.deltaY || e.deltaX || 0;
-        if (delta > 0) {
-            if (currentSlide === slides.length - 1) {
-                showRegularContent();
-            } else {
-                changeSlide(1);
-            }
-        } else if (delta < 0) {
-            changeSlide(-1);
-        }
-    }
-
-    // Тач-события
-    let touchStartY = 0;
-    function handleTouchStart(e) {
-        if (!sliderActive) return;
-        touchStartY = e.touches[0].clientY;
-    }
-    function handleTouchMove(e) {
-        if (!sliderActive || transitionInProgress) return;
-        const touchY = e.touches[0].clientY;
-        const diff = touchStartY - touchY;
-        if (Math.abs(diff) > 40) {
-            if (diff > 0) {
-                if (currentSlide === slides.length - 1) showRegularContent();
-                else changeSlide(1);
-            } else {
-                changeSlide(-1);
-            }
-            touchStartY = touchY;
-        }
-        e.preventDefault();
-    }
-
-    // Возврат к слайдеру при прокрутке вверх до самого верха
-    window.addEventListener('scroll', () => {
-        if (regularVisible && window.scrollY <= 5) {
-            activateSlider();
-        }
-    });
-
-    window.addEventListener('wheel', handleWheel, { passive: false });
-    window.addEventListener('touchstart', handleTouchStart, { passive: false });
-    window.addEventListener('touchmove', handleTouchMove, { passive: false });
 
     // Таймер
     const weddingDate = new Date('2027-07-27T15:00:00+03:00').getTime();

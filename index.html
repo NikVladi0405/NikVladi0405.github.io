@@ -22,14 +22,12 @@
     <section class="intro" id="intro">
         <div class="intro__overlay"></div>
         <div class="intro__particles" id="introParticles"></div>
-
         <div class="intro__firework intro__firework--left">
             <span></span><span></span><span></span><span></span><span></span><span></span>
         </div>
         <div class="intro__firework intro__firework--right">
             <span></span><span></span><span></span><span></span><span></span><span></span>
         </div>
-
         <div class="intro__content">
             <h1 class="intro__names">Никита <span>&</span> Влада</h1>
             <p class="intro__subtitle">Приглашение на свадьбу</p>
@@ -45,11 +43,10 @@
     <!-- ===== ОСНОВНАЯ ЧАСТЬ ===== -->
     <main id="mainContent" class="main-content" style="display:none;">
 
-        <!-- КОНТЕЙНЕР ДЛЯ СЛАЙДОВ (история) -->
-        <div class="story-slides">
-
+        <!-- Контейнер для горизонтальных переходов (история) -->
+        <div class="story-stack" id="storyStack">
             <!-- Приветствие -->
-            <section class="slide greeting active" id="greeting">
+            <section class="slide" id="greeting">
                 <div class="greeting__photos">
                     <div class="greeting__photo greeting__photo--vlada">
                         <img src="src/img/portraits/vlada_1.webp" alt="Влада">
@@ -74,7 +71,7 @@
             </section>
 
             <!-- С чего всё началось -->
-            <section class="slide story-step" id="story-begin">
+            <section class="slide" id="story-begin">
                 <div class="story-step__photos">
                     <div class="story-step__photo story-step__photo--small">
                         <img src="src/img/gallery/story_01.webp" alt="Начало">
@@ -90,7 +87,7 @@
             </section>
 
             <!-- Первая прогулка -->
-            <section class="slide story-step" id="first-walk">
+            <section class="slide" id="first-walk">
                 <div class="story-step__photo story-step__photo--single">
                     <img src="src/img/gallery/story_03.webp" alt="Первая прогулка">
                 </div>
@@ -102,7 +99,7 @@
             </section>
 
             <!-- Совместный ответ -->
-            <section class="slide story-step" id="exam">
+            <section class="slide" id="exam">
                 <div class="story-step__photos">
                     <div class="story-step__photo">
                         <img src="src/img/gallery/story_04.webp" alt="Опрос">
@@ -119,7 +116,7 @@
             </section>
 
             <!-- Предложение -->
-            <section class="slide story-step" id="proposal">
+            <section class="slide" id="proposal">
                 <div class="story-step__photo story-step__photo--gold">
                     <img src="src/img/gallery/story_06.webp" alt="Предложение">
                 </div>
@@ -135,7 +132,7 @@
             </section>
 
             <!-- Мы всегда будем вместе -->
-            <section class="slide always-together" id="always-together">
+            <section class="slide" id="always-together">
                 <h2 class="gold-text">Мы всегда будем вместе</h2>
                 <div class="gold-lines">
                     <div class="gold-line gold-line--thick"></div>
@@ -157,7 +154,6 @@
 
         <!-- Обычная прокрутка после истории -->
         <div class="regular-content">
-
             <section class="media" id="media">
                 <div class="media__container">
                     <h3 class="media__heading">МЫ ЕСТЬ ДРУГ У ДРУГА, НАВСЕГДА.</h3>
@@ -177,22 +173,10 @@
                 <div class="program__container">
                     <h2>ПРОГРАММА ДНЯ</h2>
                     <div class="location__timeline">
-                        <div class="timeline__item">
-                            <div class="timeline__dot"></div>
-                            <div class="timeline__content"><span class="timeline__time">15:00</span><span class="timeline__desc">Встреча гостей — фуршет</span></div>
-                        </div>
-                        <div class="timeline__item timeline__item--ceremony">
-                            <div class="timeline__dot timeline__dot--rings">💍</div>
-                            <div class="timeline__content"><span class="timeline__time">16:00</span><span class="timeline__desc">Церемония «Вместе и навсегда»</span></div>
-                        </div>
-                        <div class="timeline__item">
-                            <div class="timeline__dot"></div>
-                            <div class="timeline__content"><span class="timeline__time">18:30</span><span class="timeline__desc">Ужин и тосты</span></div>
-                        </div>
-                        <div class="timeline__item timeline__item--fireworks">
-                            <div class="timeline__dot timeline__dot--firework">🎆</div>
-                            <div class="timeline__content"><span class="timeline__time">23:00</span><span class="timeline__desc">Салют в честь новобрачных</span></div>
-                        </div>
+                        <div class="timeline__item"><div class="timeline__dot"></div><div class="timeline__content"><span class="timeline__time">15:00</span><span class="timeline__desc">Встреча гостей — фуршет</span></div></div>
+                        <div class="timeline__item timeline__item--ceremony"><div class="timeline__dot timeline__dot--rings">💍</div><div class="timeline__content"><span class="timeline__time">16:00</span><span class="timeline__desc">Церемония «Вместе и навсегда»</span></div></div>
+                        <div class="timeline__item"><div class="timeline__dot"></div><div class="timeline__content"><span class="timeline__time">18:30</span><span class="timeline__desc">Ужин и тосты</span></div></div>
+                        <div class="timeline__item timeline__item--fireworks"><div class="timeline__dot timeline__dot--firework">🎆</div><div class="timeline__content"><span class="timeline__time">23:00</span><span class="timeline__desc">Салют в честь новобрачных</span></div></div>
                     </div>
                 </div>
                 <div class="wave wave--bottom"></div>
@@ -221,20 +205,8 @@
                         <div class="color-item" style="background: #556B2F;"></div>
                     </div>
                     <div class="dresscode__examples">
-                        <div class="dresscode__gender">
-                            <h4>Девушки</h4>
-                            <div class="example-photos">
-                                <img src="src/img/dresscode/women1.jpg" alt="">
-                                <img src="src/img/dresscode/women2.jpg" alt="">
-                            </div>
-                        </div>
-                        <div class="dresscode__gender">
-                            <h4>Мужчины</h4>
-                            <div class="example-photos">
-                                <img src="src/img/dresscode/men1.jpg" alt="">
-                                <img src="src/img/dresscode/men2.jpg" alt="">
-                            </div>
-                        </div>
+                        <div class="dresscode__gender"><h4>Девушки</h4><div class="example-photos"><img src="src/img/dresscode/women1.jpg" alt=""><img src="src/img/dresscode/women2.jpg" alt=""></div></div>
+                        <div class="dresscode__gender"><h4>Мужчины</h4><div class="example-photos"><img src="src/img/dresscode/men1.jpg" alt=""><img src="src/img/dresscode/men2.jpg" alt=""></div></div>
                     </div>
                 </div>
             </section>
@@ -243,50 +215,14 @@
                 <div class="rsvp__container">
                     <h2>Ждём только вас <span>(и ваше настроение)</span></h2>
                     <form class="rsvp__form" id="rsvpForm">
-                        <div class="rsvp__field">
-                            <label for="guestName" class="rsvp__label">Ваше имя</label>
-                            <input type="text" id="guestName" name="guestName" class="rsvp__input" placeholder="Введите ваше имя" required />
-                        </div>
-                        <div class="rsvp__field rsvp__field--checkbox">
-                            <label class="rsvp__checkbox-label">
-                                <input type="checkbox" id="comingAlone" name="comingAlone" class="rsvp__checkbox-hidden" />
-                                <span class="rsvp__checkbox-custom"></span>
-                                <span class="rsvp__checkbox-text">Я приду с парой</span>
-                            </label>
-                        </div>
-                        <div class="rsvp__field rsvp__field--guest" id="partnerField" style="display:none;">
-                            <label for="partnerName" class="rsvp__label">Имя гостя/гостей</label>
-                            <input type="text" id="partnerName" name="partnerName" class="rsvp__input" placeholder="Имя вашего спутника" />
-                        </div>
-                        <fieldset class="rsvp__food">
-                            <legend class="rsvp__label">Выбор блюда</legend>
-                            <div class="rsvp__food-options">
-                                <label class="rsvp__food-card">
-                                    <input type="radio" name="foodChoice" value="chicken" required />
-                                    <span class="rsvp__food-circle"><span class="rsvp__food-emoji">🍗</span><span class="rsvp__food-name">Курица</span></span>
-                                </label>
-                                <label class="rsvp__food-card">
-                                    <input type="radio" name="foodChoice" value="fish" required />
-                                    <span class="rsvp__food-circle"><span class="rsvp__food-emoji">🐟</span><span class="rsvp__food-name">Рыба</span></span>
-                                </label>
-                            </div>
-                        </fieldset>
-                        <div class="rsvp__field">
-                            <label for="message" class="rsvp__label">Оставьте нам пару слов или музыкальный плейлист</label>
-                            <textarea id="message" name="message" class="rsvp__textarea" placeholder="Ваши пожелания, любимые треки..." rows="4"></textarea>
-                        </div>
-                        <button type="submit" class="rsvp__submit" id="rsvpSubmit">
-                            <span class="rsvp__envelope">
-                                <span class="rsvp__envelope-flap"></span>
-                                <span class="rsvp__envelope-body"><span class="rsvp__envelope-heart">♥</span></span>
-                            </span>
-                            <span class="rsvp__submit-text">Отправить</span>
-                        </button>
+                        <div class="rsvp__field"><label for="guestName" class="rsvp__label">Ваше имя</label><input type="text" id="guestName" name="guestName" class="rsvp__input" placeholder="Введите ваше имя" required /></div>
+                        <div class="rsvp__field rsvp__field--checkbox"><label class="rsvp__checkbox-label"><input type="checkbox" id="comingAlone" name="comingAlone" class="rsvp__checkbox-hidden" /><span class="rsvp__checkbox-custom"></span><span class="rsvp__checkbox-text">Я приду с парой</span></label></div>
+                        <div class="rsvp__field rsvp__field--guest" id="partnerField" style="display:none;"><label for="partnerName" class="rsvp__label">Имя гостя/гостей</label><input type="text" id="partnerName" name="partnerName" class="rsvp__input" placeholder="Имя вашего спутника" /></div>
+                        <fieldset class="rsvp__food"><legend class="rsvp__label">Выбор блюда</legend><div class="rsvp__food-options"><label class="rsvp__food-card"><input type="radio" name="foodChoice" value="chicken" required /><span class="rsvp__food-circle"><span class="rsvp__food-emoji">🍗</span><span class="rsvp__food-name">Курица</span></span></label><label class="rsvp__food-card"><input type="radio" name="foodChoice" value="fish" required /><span class="rsvp__food-circle"><span class="rsvp__food-emoji">🐟</span><span class="rsvp__food-name">Рыба</span></span></label></div></fieldset>
+                        <div class="rsvp__field"><label for="message" class="rsvp__label">Оставьте нам пару слов или музыкальный плейлист</label><textarea id="message" name="message" class="rsvp__textarea" placeholder="Ваши пожелания, любимые треки..." rows="4"></textarea></div>
+                        <button type="submit" class="rsvp__submit" id="rsvpSubmit"><span class="rsvp__envelope"><span class="rsvp__envelope-flap"></span><span class="rsvp__envelope-body"><span class="rsvp__envelope-heart">♥</span></span></span><span class="rsvp__submit-text">Отправить</span></button>
                     </form>
-                    <div class="rsvp__notification" id="rsvpNotification">
-                        <span class="rsvp__notification-icon">💌</span>
-                        <span class="rsvp__notification-text">Мы будем вас ждать!</span>
-                    </div>
+                    <div class="rsvp__notification" id="rsvpNotification"><span class="rsvp__notification-icon">💌</span><span class="rsvp__notification-text">Мы будем вас ждать!</span></div>
                 </div>
             </section>
 
@@ -303,9 +239,7 @@
                         <div class="timer__block" data-unit="seconds"><div class="timer__square"><span class="timer__number" id="seconds">00</span><span class="timer__unit">Секунды</span></div></div>
                     </div>
                     <p class="timer__quote">Любовь — она в нас</p>
-                    <div class="timer__photo">
-                        <img src="src/img/hero/background.webp" alt="Мы">
-                    </div>
+                    <div class="timer__photo"><img src="src/img/hero/background.webp" alt="Мы"></div>
                 </div>
             </section>
 
@@ -316,10 +250,7 @@
                         <a href="#" class="footer__social-link" aria-label="Instagram Влады"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.2"/></svg></a>
                         <a href="#" class="footer__social-link" aria-label="Instagram Никиты"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.2"/></svg></a>
                     </div>
-                    <p class="footer__contacts">
-                        Если заблудитесь, звоните Никите:
-                        <a href="tel:+79163934784" class="footer__phone">+7 (916) 393-47-84</a>
-                    </p>
+                    <p class="footer__contacts">Если заблудитесь, звоните Никите: <a href="tel:+79163934784" class="footer__phone">+7 (916) 393-47-84</a></p>
                     <p class="footer__credits">Сайт сделан с любовью Никитой и Владой в 2026</p>
                 </div>
             </footer>
