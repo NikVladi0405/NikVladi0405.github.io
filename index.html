@@ -138,14 +138,57 @@
                 <div class="rsvp__container">
                     <h2>Ждём только вас <span>(и ваше настроение)</span></h2>
                     <form class="rsvp__form" id="rsvpForm">
-                        <div class="rsvp__field"><label for="guestName" class="rsvp__label">Ваше имя</label><input type="text" id="guestName" name="guestName" class="rsvp__input" placeholder="Введите ваше имя" required /></div>
-                        <div class="rsvp__field rsvp__field--checkbox"><label class="rsvp__checkbox-label"><input type="checkbox" id="comingAlone" name="comingAlone" class="rsvp__checkbox-hidden" /><span class="rsvp__checkbox-custom"></span><span class="rsvp__checkbox-text">Я приду с парой</span></label></div>
-                        <div class="rsvp__field rsvp__field--guest" id="partnerField" style="display:none;"><label for="partnerName" class="rsvp__label">Имя гостя/гостей</label><input type="text" id="partnerName" name="partnerName" class="rsvp__input" placeholder="Имя вашего спутника" /></div>
-                        <fieldset class="rsvp__food"><legend class="rsvp__label">Выбор блюда</legend><div class="rsvp__food-options"><label class="rsvp__food-card"><input type="radio" name="foodChoice" value="chicken" required /><span class="rsvp__food-circle"><span class="rsvp__food-emoji">🍗</span><span class="rsvp__food-name">Курица</span></span></label><label class="rsvp__food-card"><input type="radio" name="foodChoice" value="fish" required /><span class="rsvp__food-circle"><span class="rsvp__food-emoji">🐟</span><span class="rsvp__food-name">Рыба</span></span></label></div></fieldset>
-                        <div class="rsvp__field"><label for="message" class="rsvp__label">Оставьте нам пару слов или музыкальный плейлист</label><textarea id="message" name="message" class="rsvp__textarea" placeholder="Ваши пожелания, любимые треки..." rows="4"></textarea></div>
-                        <button type="submit" class="rsvp__submit" id="rsvpSubmit"><span class="rsvp__envelope"><span class="rsvp__envelope-flap"></span><span class="rsvp__envelope-body"><span class="rsvp__envelope-heart">♥</span></span></span><span class="rsvp__submit-text">Отправить</span></button>
+                        <div class="rsvp__field">
+                            <label for="guestName" class="rsvp__label">Ваше имя</label>
+                            <input type="text" id="guestName" name="guestName" class="rsvp__input" placeholder="Введите ваше имя" required />
+                        </div>
+
+                        <!-- Выбор напитка для основного гостя -->
+                        <fieldset class="rsvp__drink">
+                            <legend class="rsvp__label">Буду пить алкоголь</legend>
+                            <div class="rsvp__food-options">
+                                <label class="rsvp__food-card">
+                                    <input type="radio" name="drinkChoice" value="yes" required />
+                                    <span class="rsvp__food-circle"><span class="rsvp__food-emoji">🍷</span><span class="rsvp__food-name">Буду пить</span></span>
+                                </label>
+                                <label class="rsvp__food-card">
+                                    <input type="radio" name="drinkChoice" value="no" required />
+                                    <span class="rsvp__food-circle"><span class="rsvp__food-emoji">🚫</span><span class="rsvp__food-name">Не буду пить</span></span>
+                                </label>
+                            </div>
+                        </fieldset>
+
+                        <!-- Блок добавления гостей -->
+                        <div class="rsvp__field rsvp__field--checkbox">
+                            <label class="rsvp__checkbox-label">
+                                <input type="checkbox" id="comingAlone" name="comingAlone" class="rsvp__checkbox-hidden" />
+                                <span class="rsvp__checkbox-custom"></span>
+                                <span class="rsvp__checkbox-text">Я приду не один / не одна</span>
+                            </label>
+                        </div>
+
+                        <div id="guestsContainer" style="display:none;">
+                            <div id="guestsList"></div>
+                            <button type="button" class="rsvp__add-guest" id="addGuestBtn">+ Добавить гостя</button>
+                        </div>
+
+                        <div class="rsvp__field">
+                            <label for="message" class="rsvp__label">Оставьте нам пару слов или музыкальный плейлист</label>
+                            <textarea id="message" name="message" class="rsvp__textarea" placeholder="Ваши пожелания, любимые треки..." rows="4"></textarea>
+                        </div>
+
+                        <button type="submit" class="rsvp__submit" id="rsvpSubmit">
+                            <span class="rsvp__envelope">
+                                <span class="rsvp__envelope-flap"></span>
+                                <span class="rsvp__envelope-body"><span class="rsvp__envelope-heart">♥</span></span>
+                            </span>
+                            <span class="rsvp__submit-text">Отправить</span>
+                        </button>
                     </form>
-                    <div class="rsvp__notification" id="rsvpNotification"><span class="rsvp__notification-icon">💌</span><span class="rsvp__notification-text">Мы будем вас ждать!</span></div>
+                    <div class="rsvp__notification" id="rsvpNotification">
+                        <span class="rsvp__notification-icon">💌</span>
+                        <span class="rsvp__notification-text">Мы будем вас ждать!</span>
+                    </div>
                 </div>
             </section>
 
