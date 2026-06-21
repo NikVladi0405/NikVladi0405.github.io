@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const regularContent = document.querySelector('.regular-content');
 
     const SLIDE_HEIGHT = window.innerHeight;
-    storyStack.style.height = SLIDE_HEIGHT + 'px'; // один слайд
+    storyStack.style.height = SLIDE_HEIGHT + 'px';
 
     let sliderActive = false;
 
@@ -21,10 +21,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (relativeScroll > SLIDE_HEIGHT) relativeScroll = SLIDE_HEIGHT;
 
         const progress = relativeScroll / SLIDE_HEIGHT;
-        // Слайд уезжает влево
         slide.style.transform = `translateX(${-progress * 100}%)`;
 
-        // Меняем фон body на цвет regular-content, когда слайд полностью уехал
         if (progress >= 1) {
             document.body.style.backgroundColor = '#fefafc';
         } else {
@@ -47,7 +45,6 @@ document.addEventListener('DOMContentLoaded', () => {
             intro.style.display = 'none';
             mainContent.style.display = 'block';
 
-            // Инициализация слайда
             sliderActive = true;
             slide.style.transform = 'translateX(0)';
             document.body.style.backgroundColor = '#fdf7f2';

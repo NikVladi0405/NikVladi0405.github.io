@@ -63,10 +63,10 @@ body {
 /* ---------- ОСНОВНОЙ КОНТЕНТ ---------- */
 .main-content { position: relative; }
 
-/* Контейнер для горизонтальных переходов */
+/* Контейнер для слайда */
 .story-stack {
     position: relative;
-    height: 100vh; /* один слайд */
+    height: 100vh;
 }
 .slide {
     position: fixed;
@@ -78,7 +78,7 @@ body {
     justify-content: center;
     padding: 2rem; box-sizing: border-box;
     transform: translateX(0);
-    transition: transform 0.2s ease;
+    transition: transform 0.1s ease; /* быстрее */
     will-change: transform;
     background: #fdf7f2;
 }
@@ -91,17 +91,19 @@ body {
     background: #fefafc;
 }
 
-/* ---------- ЗОЛОТАЯ НАДПИСЬ ---------- */
+/* ---------- ЛИПКАЯ ЗОЛОТАЯ НАДПИСЬ ---------- */
 .golden-names {
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
     background: #fdf7f2;
+    padding: 0.8rem 0;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
 }
 .golden-names__title {
     font-family: 'Great Vibes', 'Cormorant Garamond', serif;
-    font-size: clamp(4rem, 12vw, 8rem);
+    font-size: clamp(2rem, 4vw, 3rem);
     font-weight: 700;
     background: linear-gradient(135deg, #c49a2c 0%, #f5e6d3 25%, #d4af37 50%, #8b6914 75%, #c49a2c 100%);
     background-size: 400% 400%;
@@ -109,8 +111,6 @@ body {
     background-clip: text;
     color: transparent;
     animation: goldShine 8s ease infinite, gentlePulse 3s ease-in-out infinite;
-    text-align: center;
-    line-height: 1.2;
 }
 
 @keyframes goldShine {
@@ -120,7 +120,7 @@ body {
 }
 @keyframes gentlePulse {
     0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
+    50% { transform: scale(1.03); }
     100% { transform: scale(1); }
 }
 
@@ -210,4 +210,5 @@ body {
     .intro__names { font-size: 2.5rem; }
     .intro__subtitle { font-size: 1.2rem; }
     .slide { padding: 1rem; }
+    .golden-names__title { font-size: 1.8rem; }
 }
