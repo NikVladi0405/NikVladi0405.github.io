@@ -4,16 +4,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const mainContent = document.getElementById('mainContent');
     const intro = document.getElementById('intro');
 
-    // Слайдер и регулярный контент
     const storySlider = document.getElementById('storySlider');
     const slides = document.querySelectorAll('#storySlider .slide');
     const regularContent = document.querySelector('.regular-content');
     let currentSlide = 0;
-    let sliderActive = false; // флаг, чтобы знать, что слайдер ещё не закончился
+    let sliderActive = false;
 
     if (openBtn) {
         openBtn.addEventListener('click', () => {
-            // Музыка
             const music = document.getElementById('bgMusic');
             if (music) {
                 music.volume = 0.3;
@@ -25,13 +23,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Инициализация слайдера
             sliderActive = true;
-            document.body.style.overflow = 'hidden'; // блокируем скролл body
+            document.body.style.overflow = 'hidden';
+            storySlider.style.display = 'flex'; // на всякий случай, если был скрыт ранее
             storySlider.style.transform = 'translateX(0)';
             storySlider.style.transition = 'none';
             currentSlide = 0;
             updateSlidePosition();
 
-            // Запускаем фейерверки в предложении (когда дойдём до 4 слайда)
+            // Запускаем фейерверки в предложении (4-й слайд)
             startProposalFireworks();
         });
     }
@@ -48,13 +47,13 @@ document.addEventListener('DOMContentLoaded', () => {
             currentSlide--;
             updateSlidePosition();
         }
-        // Если достигли последнего слайда и пытаемся скроллить вниз – завершаем слайдер
+        // Если на последнем слайде и скроллим вниз – завершаем слайдер
         if (currentSlide === slides.length - 1 && delta > 0) {
             finishSlider();
         }
     }
 
-    // Обработчик touchmove для мобильных
+    // Обработчики тач-событий для мобильных
     let touchStartY = 0;
     function handleTouchStart(e) {
         if (!sliderActive) return;
@@ -84,17 +83,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function finishSlider() {
         sliderActive = false;
-        document.body.style.overflow = ''; // разблокируем скролл
-        // Прячем слайдер? Нет, просто обычная прокрутка дальше пойдёт через regularContent.
-        // Можно было бы скрыть слайдер, но он и так останется сверху. Лучше зафиксировать его на последнем слайде.
+        // Скрываем слайдер и разблокируем скролл
+        storySlider.style.display = 'none';
+        document.body.style.overflow = '';
+        // Принудительно активируем видимые скролл-анимации
+        regularContent.querySelectorAll('.scroll-animate').forEach(el => {
+            if (el.getBoundingClientRect().top < window.innerHeight) {
+                el.classList.add('revealed');
+            }
+        });
     }
 
-    // Прикрепляем обработчики
+    // Навешиваем обработчики
     window.addEventListener('wheel', handleWheel, { passive: false });
     window.addEventListener('touchstart', handleTouchStart, { passive: false });
     window.addEventListener('touchmove', handleTouchMove, { passive: false });
-
-    // Если после загрузки страницы слайдер не активен (начальный экран), то ничего не делаем.
 
     // ===== ТАЙМЕР =====
     const weddingDate = new Date('2027-07-27T15:00:00+03:00').getTime();
@@ -149,7 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
         for (let i=0; i<20; i++) setTimeout(createParticle, i*150);
     }
 
-    // ===== ФЕЙЕРВЕРКИ В ПРЕДЛОЖЕНИИ (4-й слайд) =====
+    // ===== ФЕЙЕРВЕРКИ В ПРЕДЛОЖЕНИИ =====
     function startProposalFireworks() {
         const proposalSlide = document.getElementById('proposal');
         if (!proposalSlide) return;
