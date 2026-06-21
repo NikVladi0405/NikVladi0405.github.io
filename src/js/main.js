@@ -3,78 +3,37 @@ document.addEventListener('DOMContentLoaded', () => {
     const mainContent = document.getElementById('mainContent');
     const intro = document.getElementById('intro');
     const storyStack = document.getElementById('storyStack');
-    const slides = document.querySelectorAll('.slide');
+    const slide = document.querySelector('.slide');
     const regularContent = document.querySelector('.regular-content');
 
     const SLIDE_HEIGHT = window.innerHeight;
-    const TOTAL_SLIDES = slides.length;
-    const STACK_HEIGHT = SLIDE_HEIGHT * TOTAL_SLIDES;
-    storyStack.style.height = STACK_HEIGHT + 'px';
-
-    // Цвета фона для каждого слайда
-    const slideBackgrounds = [
-        '#fefafc', // greeting
-        '#fff5f7', // story-begin
-        '#fdf7f2', // first-walk
-        '#fefafc', // exam
-        '#fff5f7', // proposal
-        '#fdf7f2'  // always-together
-    ];
+    storyStack.style.height = SLIDE_HEIGHT + 'px'; // один слайд
 
     let sliderActive = false;
 
-    function updateSlides() {
+    function updateSlide() {
         if (!sliderActive) return;
         const scrollY = window.scrollY;
         const stackTop = storyStack.offsetTop;
-        const relativeScroll = scrollY - stackTop;
+        let relativeScroll = scrollY - stackTop;
 
-        if (relativeScroll < 0 || relativeScroll >= STACK_HEIGHT) return;
+        if (relativeScroll < 0) relativeScroll = 0;
+        if (relativeScroll > SLIDE_HEIGHT) relativeScroll = SLIDE_HEIGHT;
 
-        const activeIndex = Math.min(Math.floor(relativeScroll / SLIDE_HEIGHT), TOTAL_SLIDES - 1);
-        const progress = (relativeScroll % SLIDE_HEIGHT) / SLIDE_HEIGHT;
+        const progress = relativeScroll / SLIDE_HEIGHT;
+        // Слайд уезжает влево
+        slide.style.transform = `translateX(${-progress * 100}%)`;
 
-        // Обновляем каждый слайд
-        slides.forEach((slide, index) => {
-            if (index < activeIndex) {
-                slide.style.transform = 'translateX(-100%)';
-            } else if (index === activeIndex) {
-                // Уходит влево
-                slide.style.transform = `translateX(${-progress * 100}%)`;
-            } else if (index === activeIndex + 1) {
-                // Выезжает справа
-                slide.style.transform = `translateX(${100 - progress * 100}%)`;
-            } else {
-                slide.style.transform = 'translateX(100%)';
-            }
-        });
-
-        // Обновляем фон
-        const currentBg = slideBackgrounds[activeIndex];
-        const nextBg = slideBackgrounds[Math.min(activeIndex + 1, TOTAL_SLIDES - 1)];
-        document.body.style.backgroundColor = interpolateColor(currentBg, nextBg, progress);
-    }
-
-    // Простая интерполяция цвета (HEX)
-    function interpolateColor(color1, color2, factor) {
-        const c1 = hexToRgb(color1);
-        const c2 = hexToRgb(color2);
-        const r = Math.round(c1.r + (c2.r - c1.r) * factor);
-        const g = Math.round(c1.g + (c2.g - c1.g) * factor);
-        const b = Math.round(c1.b + (c2.b - c1.b) * factor);
-        return `rgb(${r},${g},${b})`;
-    }
-    function hexToRgb(hex) {
-        const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-        return result ? {
-            r: parseInt(result[1], 16),
-            g: parseInt(result[2], 16),
-            b: parseInt(result[3], 16)
-        } : {r:255,g:255,b:255};
+        // Меняем фон body на цвет regular-content, когда слайд полностью уехал
+        if (progress >= 1) {
+            document.body.style.backgroundColor = '#fefafc';
+        } else {
+            document.body.style.backgroundColor = '#fdf7f2';
+        }
     }
 
     window.addEventListener('scroll', () => {
-        if (sliderActive) updateSlides();
+        if (sliderActive) updateSlide();
     });
 
     if (openBtn) {
@@ -88,15 +47,10 @@ document.addEventListener('DOMContentLoaded', () => {
             intro.style.display = 'none';
             mainContent.style.display = 'block';
 
-            // Инициализируем слайды
+            // Инициализация слайда
             sliderActive = true;
-            // Позиционируем слайды
-            slides.forEach((slide, index) => {
-                if (index === 0) slide.style.transform = 'translateX(0)';
-                else slide.style.transform = 'translateX(100%)';
-            });
-            document.body.style.backgroundColor = slideBackgrounds[0];
-            startProposalFireworks();
+            slide.style.transform = 'translateX(0)';
+            document.body.style.backgroundColor = '#fdf7f2';
         });
     }
 
@@ -129,22 +83,5 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         setInterval(createParticle, 300);
         for(let i=0;i<20;i++) setTimeout(createParticle, i*150);
-    }
-
-    // Фейерверки в предложении
-    function startProposalFireworks() {
-        const proposalSlide = document.getElementById('proposal');
-        if (!proposalSlide) return;
-        const heart = proposalSlide.querySelector('.proposal__heart');
-        if (!heart) return;
-        const container = heart.querySelector('.firework-particles');
-        if (!container) return;
-        setInterval(() => {
-            const span = document.createElement('span');
-            span.style.cssText = 'position:absolute;width:4px;height:4px;background:#d4af37;border-radius:50%;opacity:0;animation:fireworkBurst 2s ease-out forwards;left:50%;top:50%;';
-            span.style.transform = `rotate(${Math.random()*360}deg) translateY(-20px)`;
-            container.appendChild(span);
-            setTimeout(() => span.remove(), 2000);
-        }, 800);
     }
 });
