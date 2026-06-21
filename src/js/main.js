@@ -49,8 +49,8 @@ document.addEventListener('DOMContentLoaded', () => {
             slide.style.transform = 'translateX(0)';
             document.body.style.backgroundColor = '#fdf7f2';
 
-            // Запускаем частицы для золотой надписи
             startGoldenParticles();
+            startMediaEffects();
         });
     }
 
@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const p = document.createElement('span');
             p.classList.add('golden-particle');
             p.style.left = Math.random() * 100 + '%';
-            p.style.animationDuration = (Math.random() * 3 + 3) + 's'; // 3-6s
+            p.style.animationDuration = (Math.random() * 3 + 3) + 's';
             p.style.animationDelay = Math.random() * 2 + 's';
             const symbols = ['✦', '✧', '•', '·'];
             p.textContent = symbols[Math.floor(Math.random() * symbols.length)];
@@ -103,5 +103,33 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         setInterval(createGoldenParticle, 400);
         for (let i = 0; i < 10; i++) setTimeout(createGoldenParticle, i * 200);
+    }
+
+    // ===== МАГИЧЕСКИЕ ЭФФЕКТЫ ДЛЯ СЕКЦИИ "МЫ ЕСТЬ ДРУГ У ДРУГА" =====
+    function startMediaEffects() {
+        const container = document.getElementById('mediaParticles');
+        if (!container) return;
+
+        // Фейерверки
+        setInterval(() => {
+            const firework = document.createElement('span');
+            firework.className = 'media-firework';
+            firework.style.left = Math.random() * 100 + '%';
+            firework.style.top = Math.random() * 100 + '%';
+            container.appendChild(firework);
+            setTimeout(() => firework.remove(), 2000);
+        }, 700);
+
+        // Расширяющиеся круги
+        setInterval(() => {
+            const circle = document.createElement('div');
+            circle.className = 'media-circle';
+            circle.style.left = Math.random() * 100 + '%';
+            circle.style.top = Math.random() * 100 + '%';
+            circle.style.width = '20px';
+            circle.style.height = '20px';
+            container.appendChild(circle);
+            setTimeout(() => circle.remove(), 3000);
+        }, 1500);
     }
 });
