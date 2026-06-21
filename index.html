@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Никита & Влада — Приглашение на свадьбу</title>
+    <link rel="icon" type="image/svg+xml" href="src/img/icons/favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -13,15 +14,15 @@
 </head>
 <body>
 
-        <audio id="bgMusic" loop preload="auto">
-            <source src="src/video/wedding-music.mp3" type="audio/mpeg">
-        </audio>
+    <audio id="bgMusic" loop preload="auto">
+        <source src="src/video/wedding-music.mp3" type="audio/mpeg">
+    </audio>
+
     <!-- ===== 1. НАЧАЛЬНЫЙ ЭКРАН ===== -->
     <section class="intro" id="intro">
         <div class="intro__overlay"></div>
         <div class="intro__particles" id="introParticles"></div>
 
-        <!-- Салюты -->
         <div class="intro__firework intro__firework--left">
             <span></span><span></span><span></span><span></span><span></span><span></span>
         </div>
@@ -41,10 +42,10 @@
         </div>
     </section>
 
-    <!-- ===== ОСНОВНАЯ ЧАСТЬ (открывается после кнопки) ===== -->
+    <!-- ===== ОСНОВНАЯ ЧАСТЬ ===== -->
     <main id="mainContent" class="main-content" style="display:none;">
 
-        <!-- 2. ПРИВЕТСТВИЕ -->
+        <!-- Приветствие -->
         <section class="greeting" id="greeting">
             <div class="greeting__photos">
                 <div class="greeting__photo greeting__photo--vlada scroll-animate" data-animation="tilt-up">
@@ -69,7 +70,7 @@
             </div>
         </section>
 
-        <!-- 3. С ЧЕГО ВСЕ НАЧАЛОСЬ -->
+        <!-- С чего всё началось -->
         <section class="story-step" id="story-begin">
             <div class="story-step__photos story-step__photos--wide">
                 <div class="story-step__photo story-step__photo--small scroll-animate" data-animation="slide-right-tilt">
@@ -85,7 +86,7 @@
             </div>
         </section>
 
-        <!-- 4. ПЕРВАЯ ПРОГУЛКА -->
+        <!-- Первая прогулка -->
         <section class="story-step" id="first-walk">
             <div class="story-step__photo story-step__photo--single scroll-animate" data-animation="slide-left-tilt">
                 <img src="src/img/gallery/story_03.webp" alt="Первая прогулка">
@@ -97,7 +98,7 @@
             </div>
         </section>
 
-        <!-- 5. СОВМЕСТНЫЙ ОТВЕТ -->
+        <!-- Совместный ответ -->
         <section class="story-step" id="exam">
             <div class="story-step__photos story-step__photos--narrow">
                 <div class="story-step__photo scroll-animate" data-animation="tilt-down-small">
@@ -114,7 +115,7 @@
             </div>
         </section>
 
-        <!-- 6. ПРЕДЛОЖЕНИЕ -->
+        <!-- Предложение -->
         <section class="story-step" id="proposal">
             <div class="story-step__photo story-step__photo--gold scroll-animate" data-animation="fade-in-scale">
                 <img src="src/img/gallery/story_06.webp" alt="Предложение">
@@ -130,7 +131,7 @@
             </div>
         </section>
 
-        <!-- 7. МЫ ВСЕГДА БУДЕМ ВМЕСТЕ -->
+        <!-- Мы всегда будем вместе -->
         <section class="always-together" id="always-together">
             <h2 class="gold-text">Мы всегда будем вместе</h2>
             <div class="gold-lines">
@@ -150,7 +151,7 @@
             </div>
         </section>
 
-        <!-- 8. МЫ ЕСТЬ ДРУГ У ДРУГА, НАВСЕГДА -->
+        <!-- Мы есть друг у друга, навсегда -->
         <section class="media" id="media">
             <div class="media__container">
                 <h3 class="media__heading scroll-animate" data-animation="fade-in">МЫ ЕСТЬ ДРУГ У ДРУГА, НАВСЕГДА.</h3>
@@ -165,7 +166,7 @@
             </div>
         </section>
 
-        <!-- 9. ПРОГРАММА ДНЯ -->
+        <!-- Программа дня -->
         <section class="program" id="program">
             <div class="wave wave--top"></div>
             <div class="program__container">
@@ -192,7 +193,7 @@
             <div class="wave wave--bottom"></div>
         </section>
 
-        <!-- 10. ЛОКАЦИЯ -->
+        <!-- Локация -->
         <section class="location" id="location">
             <div class="location__container">
                 <h2 class="scroll-animate" data-animation="fade-in">ЛОКАЦИЯ</h2>
@@ -205,7 +206,7 @@
             </div>
         </section>
 
-        <!-- 11. ДРЕСС-КОД -->
+        <!-- Дресс-код -->
         <section class="dresscode" id="dresscode">
             <div class="dresscode__container">
                 <h2 class="scroll-animate" data-animation="fade-in">ДРЕСС-КОД</h2>
@@ -235,7 +236,7 @@
             </div>
         </section>
 
-        <!-- 12. АНКЕТА ГОСТЯ -->
+        <!-- Анкета гостя -->
         <section class="rsvp" id="rsvp">
             <div class="rsvp__container">
                 <h2 class="scroll-animate" data-animation="fade-in-up">Ждём только вас <span>(и ваше настроение)</span></h2>
@@ -287,7 +288,7 @@
             </div>
         </section>
 
-        <!-- 13. ТАЙМЕР -->
+        <!-- Таймер -->
         <section class="timer" id="timer">
             <div class="timer__container">
                 <h2 class="timer__headline scroll-animate" data-animation="fade-in">ДО СВАДЬБЫ ОСТАЛОСЬ</h2>
@@ -307,7 +308,7 @@
             </div>
         </section>
 
-        <!-- 14. КОНТАКТЫ -->
+        <!-- Контакты -->
         <footer class="footer">
             <div class="footer__container">
                 <p class="footer__thanks">Спасибо, что будете с нами</p>
