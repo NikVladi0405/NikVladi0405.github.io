@@ -8,12 +8,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const guestsList = document.getElementById('guestsList');
     const addGuestBtn = document.getElementById('addGuestBtn');
 
-    // Ваш URL веб-приложения Google Apps Script
-    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw1mmr6KNrpRi8kwUBQs3_vM0pcRAjf37NRMo8KKyve6JL4bnTHaSWts4Ct2gF0vaiH/exec';
+    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/ВАШ_НОВЫЙ_ID/exec';
 
     let guestCount = 0;
 
-    // Функция создания блока для одного гостя
     function createGuestBlock(index) {
         const wrapper = document.createElement('div');
         wrapper.className = 'rsvp__guest-item';
@@ -75,7 +73,6 @@ document.addEventListener('DOMContentLoaded', () => {
         guestsContainer.style.display = 'block';
     });
 
-    // Сбор данных формы
     function collectFormData() {
         const mainName = document.getElementById('guestName').value.trim();
         const mainDrink = document.querySelector('input[name="drinkChoice"]:checked')?.value || '';
@@ -102,16 +99,13 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     }
 
-    // Отправка данных в Google Sheets
     async function submitToGoogleSheets(data) {
         try {
             await fetch(GOOGLE_SCRIPT_URL, {
                 method: 'POST',
                 mode: 'no-cors',
                 cache: 'no-cache',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: { 'Content-Type': 'application/json' },
                 redirect: 'follow',
                 body: JSON.stringify(data)
             });
@@ -122,7 +116,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Обработка отправки формы
     form.addEventListener('submit', async function(e) {
         e.preventDefault();
 

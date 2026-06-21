@@ -1,10 +1,12 @@
 /* ===== style.css ===== */
+/* Все размеры теперь адаптивные через clamp() и min(), позиции жёстко привязаны к контейнерам */
 body {
     font-family: 'Inter', 'Playfair Display', serif;
     background-color: #fdf7f2;
     color: #2e1a20;
     overflow-x: hidden;
     transition: background-color 0.4s ease;
+    -webkit-text-size-adjust: 100%;
 }
 
 /* ---------- НАЧАЛЬНЫЙ ЭКРАН (INTRO) ---------- */
@@ -22,7 +24,7 @@ body {
 .intro__overlay { position: absolute; inset: 0; background: rgba(20, 10, 14, 0.5); }
 .intro__particles { position: absolute; inset: 0; pointer-events: none; z-index: 1; }
 .particle {
-    position: absolute; bottom: -10px; color: #d4af37; font-size: 1.2rem; opacity: 0;
+    position: absolute; bottom: -10px; color: #d4af37; font-size: clamp(0.8rem, 2vw, 1.2rem); opacity: 0;
     animation: floatUpParticle 5s linear infinite;
 }
 .intro__firework { position: absolute; top: 25%; z-index: 1; pointer-events: none; }
@@ -43,14 +45,15 @@ body {
 
 .intro__content { position: relative; z-index: 2; }
 .intro__names {
-    font-family: 'Great Vibes', cursive; font-size: clamp(3rem, 8vw, 6rem);
+    font-family: 'Great Vibes', cursive; font-size: clamp(3rem, 10vw, 6rem);
     color: #d4af37; text-shadow: 0 4px 16px rgba(0,0,0,0.5); margin-bottom: 0.5rem;
 }
 .intro__names span { color: #fff; }
-.intro__subtitle { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; margin-bottom: 3rem; }
+.intro__subtitle { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.2rem, 3vw, 1.8rem); margin-bottom: 3rem; }
 .intro__cta {
     background: rgba(212, 175, 55, 0.15); border: 2px solid #d4af37; border-radius: 50px;
-    padding: 1rem 2.5rem; color: #d4af37; font-size: 1.2rem; cursor: pointer;
+    padding: clamp(0.8rem, 1.5vw, 1rem) clamp(2rem, 4vw, 2.5rem);
+    color: #d4af37; font-size: clamp(1rem, 2vw, 1.2rem); cursor: pointer;
     backdrop-filter: blur(5px); transition: all 0.3s ease; animation: pulseButton 2s infinite;
 }
 @keyframes pulseButton { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
@@ -76,7 +79,7 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 2rem; box-sizing: border-box;
+    padding: clamp(1rem, 3vw, 2rem); box-sizing: border-box;
     transform: translateX(0);
     transition: transform 0.1s ease;
     will-change: transform;
@@ -97,7 +100,7 @@ body {
     top: 0;
     z-index: 100;
     background: #fdf7f2;
-    padding: 0.8rem 0;
+    padding: clamp(0.5rem, 1.5vw, 0.8rem) 0;
     text-align: center;
     box-shadow: 0 2px 10px rgba(0,0,0,0.05);
     overflow: hidden;
@@ -112,7 +115,7 @@ body {
     position: absolute;
     bottom: -10px;
     color: #d4af37;
-    font-size: 1rem;
+    font-size: clamp(0.7rem, 1.5vw, 1rem);
     opacity: 0;
     animation: goldenFloatUp 4s linear infinite;
 }
@@ -124,7 +127,7 @@ body {
 }
 .golden-names__title {
     font-family: 'Great Vibes', 'Cormorant Garamond', serif;
-    font-size: clamp(2rem, 4vw, 3rem);
+    font-size: clamp(2rem, 5vw, 3rem);
     font-weight: 700;
     background: linear-gradient(135deg, #c49a2c 0%, #f5e6d3 25%, #d4af37 50%, #8b6914 75%, #c49a2c 100%);
     background-size: 400% 400%;
@@ -149,18 +152,18 @@ body {
 
 /* ---------- МЫ ВСЕГДА БУДЕМ ВМЕСТЕ ---------- */
 .always-together { text-align: center; }
-.gold-text { font-family: 'Great Vibes', cursive; font-size: 3rem; color: #d4af37; }
+.gold-text { font-family: 'Great Vibes', cursive; font-size: clamp(2.5rem, 5vw, 3rem); color: #d4af37; }
 .gold-lines { display: flex; flex-direction: column; align-items: center; margin: 1rem 0; }
 .gold-line { width: 80%; height: 2px; background: #d4af37; margin: 4px 0; }
 .gold-line--thin { width: 60%; height: 1px; }
-.together__text { max-width: 600px; margin: 2rem auto; line-height: 1.8; }
-.together__text h3 { font-family: 'Cormorant Garamond', serif; font-size: 2rem; margin-bottom: 1rem; }
-.date { font-size: 2rem; font-weight: 700; margin: 1.5rem 0; }
-.signature { font-style: italic; }
+.together__text { max-width: 600px; margin: 2rem auto; line-height: 1.8; padding: 0 1rem; }
+.together__text h3 { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.8rem, 3vw, 2rem); margin-bottom: 1rem; }
+.date { font-size: clamp(1.8rem, 3vw, 2rem); font-weight: 700; margin: 1.5rem 0; }
+.signature { font-style: italic; font-size: clamp(1rem, 2vw, 1.2rem); }
 
 /* ---------- МЕДИА (видео + фото с рамками и эффектами) ---------- */
 .media {
-    padding: 6rem 2rem;
+    padding: clamp(3rem, 6vw, 6rem) clamp(1rem, 3vw, 2rem);
     background: #fff;
     text-align: center;
     position: relative;
@@ -172,15 +175,16 @@ body {
 }
 .media__heading {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 2rem;
+    font-size: clamp(1.6rem, 3vw, 2rem);
     margin-bottom: 2rem;
     color: #8b3a50;
 }
 .media__content {
     display: flex;
-    gap: 2rem;
+    gap: clamp(1rem, 3vw, 2rem);
     align-items: center;
     justify-content: center;
+    flex-wrap: wrap;
     position: relative;
     z-index: 2;
     margin-bottom: 2rem;
@@ -192,11 +196,10 @@ body {
     box-shadow: 0 8px 24px rgba(0,0,0,0.1);
     background: #fff;
     padding: 4px;
-    border: 2px solid #d4af37; /* контур без анимации */
+    border: 2px solid #d4af37;
 }
 .media__frame--video {
-    width: 45%;
-    max-width: 380px;
+    width: min(45%, 380px);
 }
 .media__frame--video .media__video {
     width: 100%;
@@ -205,8 +208,7 @@ body {
     display: block;
 }
 .media__frame--photo {
-    width: 35%;
-    max-width: 260px;
+    width: min(35%, 260px);
     transform: rotate(5deg);
     margin-top: 30px;
     margin-left: -40px;
@@ -219,7 +221,7 @@ body {
     border-radius: 12px;
 }
 
-/* Золотой текст в стиле Никита & Влада */
+/* Золотой текст */
 .media__golden-section {
     position: relative;
     z-index: 2;
@@ -229,7 +231,7 @@ body {
     margin-top: 1rem;
 }
 .media__wave {
-    width: 200px;
+    width: clamp(150px, 30vw, 200px);
     height: 20px;
     background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 20'%3E%3Cpath d='M0,10 Q25,0 50,10 T100,10 T150,10 T200,10' fill='none' stroke='%23d4af37' stroke-width='1'/%3E%3C/svg%3E") repeat-x;
     opacity: 0.8;
@@ -249,7 +251,7 @@ body {
 }
 .media__golden-text {
     font-family: 'Great Vibes', 'Cormorant Garamond', serif;
-    font-size: 2.2rem;
+    font-size: clamp(1.8rem, 4vw, 2.2rem);
     font-weight: 700;
     background: linear-gradient(135deg, #c49a2c 0%, #f5e6d3 25%, #d4af37 50%, #8b6914 75%, #c49a2c 100%);
     background-size: 400% 400%;
@@ -295,7 +297,7 @@ body {
 }
 
 /* ---------- ОСТАЛЬНЫЕ СЕКЦИИ ---------- */
-.program { padding: 6rem 2rem; background: #fefafc; position: relative; }
+.program { padding: clamp(3rem, 6vw, 6rem) clamp(1rem, 3vw, 2rem); background: #fefafc; position: relative; }
 .program__container { max-width: 600px; margin: 0 auto; }
 .location__timeline { position: relative; padding-left: 2rem; border-left: 2px dashed #d4af37; margin-top: 2rem; }
 .timeline__item { position: relative; margin-bottom: 2rem; }
@@ -304,22 +306,22 @@ body {
 .timeline__dot--firework { background: transparent; font-size: 1.2rem; left: -1.1rem; top: -0.2rem; }
 .timeline__time { font-weight: 700; color: #8b3a50; }
 
-.location { padding: 6rem 2rem; background: #fff; text-align: center; }
+.location { padding: clamp(3rem, 6vw, 6rem) clamp(1rem, 3vw, 2rem); background: #fff; text-align: center; }
 .location__container { max-width: 800px; margin: 0 auto; }
-.location__name { font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; color: #d4af37; margin: 1rem 0; }
-.location__address { font-size: 1.2rem; margin-bottom: 2rem; }
+.location__name { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.8rem, 3.5vw, 2.2rem); color: #d4af37; margin: 1rem 0; }
+.location__address { font-size: clamp(1rem, 2vw, 1.2rem); margin-bottom: 2rem; }
 .location__map { border-radius: 16px; overflow: hidden; box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
 
-.dresscode { padding: 6rem 2rem; background: #fefafc; text-align: center; }
+.dresscode { padding: clamp(3rem, 6vw, 6rem) clamp(1rem, 3vw, 2rem); background: #fefafc; text-align: center; }
 .dresscode__container { max-width: 800px; margin: 0 auto; }
 .dresscode__colors { display: flex; justify-content: center; gap: 1rem; margin: 2rem 0; flex-wrap: wrap; }
 .color-item { width: 40px; height: 40px; border-radius: 50%; border: 2px solid #d4af37; }
-.dresscode__examples { display: flex; justify-content: center; gap: 4rem; margin-top: 2rem; }
+.dresscode__examples { display: flex; justify-content: center; gap: 4rem; margin-top: 2rem; flex-wrap: wrap; }
 .example-photos img { width: 150px; height: 200px; object-fit: cover; border-radius: 12px; margin: 0.5rem; }
 
-.rsvp { padding: 6rem 2rem; background: #fff; }
+.rsvp { padding: clamp(3rem, 6vw, 6rem) clamp(1rem, 3vw, 2rem); background: #fff; }
 .rsvp__container { max-width: 650px; margin: 0 auto; padding: 3rem 2.5rem; border-radius: 32px; box-shadow: 0 15px 40px rgba(0,0,0,0.08); background: #fff; }
-.rsvp__heading { font-family: 'Cormorant Garamond', serif; font-size: 2.4rem; color: #8b3a50; text-align: center; margin-bottom: 2.5rem; }
+.rsvp__heading { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 4vw, 2.4rem); color: #8b3a50; text-align: center; margin-bottom: 2.5rem; }
 .rsvp__field { margin-bottom: 1.8rem; }
 .rsvp__label { display: block; font-weight: 500; margin-bottom: 0.5rem; }
 .rsvp__input, .rsvp__textarea { width: 100%; padding: 1rem; border: 1px solid #e5d5d9; border-radius: 16px; background: #fdfbfc; }
@@ -336,79 +338,33 @@ body {
 .rsvp__notification { position: fixed; bottom: 2rem; right: 2rem; background: #c9708a; color: #fff; padding: 1rem 2rem; border-radius: 40px; transform: translateY(120px); opacity: 0; transition: 0.4s; z-index: 1000; }
 .rsvp__notification--visible { transform: translateY(0); opacity: 1; }
 
-.timer { background: #2e1a20; color: #f0e1e5; padding: 6rem 2rem; text-align: center; }
-.timer__headline { font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; color: #d4af37; margin-bottom: 2rem; }
+.timer { background: #2e1a20; color: #f0e1e5; padding: clamp(3rem, 6vw, 6rem) clamp(1rem, 3vw, 2rem); text-align: center; }
+.timer__headline { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 4vw, 2.5rem); color: #d4af37; margin-bottom: 2rem; }
 .timer__grid { display: flex; justify-content: center; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap; }
 .timer__square { background: rgba(255,255,255,0.1); border: 2px solid #d4af37; border-radius: 20px; padding: 1.5rem 1rem; min-width: 100px; }
-.timer__number { font-family: 'Playfair Display', serif; font-size: 2.8rem; color: #d4af37; }
-.timer__quote { font-size: 2rem; font-weight: 700; margin: 1.5rem 0; }
-.timer__photo { width: 250px; margin: 2rem auto; border-radius: 20px; overflow: hidden; border: 2px solid #d4af37; }
+.timer__number { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 4vw, 2.8rem); color: #d4af37; }
+.timer__quote { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 700; margin: 1.5rem 0; }
+.timer__photo { width: min(250px, 80vw); margin: 2rem auto; border-radius: 20px; overflow: hidden; border: 2px solid #d4af37; }
 
 .footer { background: #000; color: #d4af37; padding: 3rem 2rem; text-align: center; }
 .footer__socials { display: flex; justify-content: center; gap: 2rem; margin: 1.5rem 0; }
 .footer__phone { color: #e8c97a; font-weight: 600; }
 
-/* ---------- АДАПТИВНОСТЬ ---------- */
-@media (max-width: 768px) {
-    .intro__names { font-size: 2.5rem; }
-    .intro__subtitle { font-size: 1.2rem; }
-    .intro__cta { padding: 0.8rem 1.8rem; font-size: 1rem; }
-    .slide { padding: 1rem; }
-    .gold-text { font-size: 2.2rem; }
-    .gold-lines .gold-line { width: 90%; }
-    .gold-lines .gold-line--thin { width: 70%; }
-    .together__text { padding: 0 1rem; }
-    .together__text h3 { font-size: 1.6rem; }
-    .date { font-size: 1.8rem; }
-    .signature { font-size: 1rem; }
-    .golden-names { padding: 0.5rem 0; }
-    .golden-names__title { font-size: clamp(1.5rem, 6vw, 2rem); }
-    .media { padding: 3rem 1rem; }
-    .media__heading { font-size: 1.6rem; }
-    .media__content { flex-direction: column; }
-    .media__frame--video { width: 80%; }
-    .media__frame--photo { width: 60%; margin-left: 0; margin-top: 2rem; transform: rotate(3deg); }
-    .media__golden-text { font-size: 1.6rem; }
-    .media__wave { width: 150px; }
-    .program { padding: 4rem 1rem; }
-    .program h2 { font-size: 1.8rem; }
-    .location__timeline { padding-left: 1.5rem; }
-    .timeline__time { font-size: 1rem; }
-    .timeline__desc { font-size: 0.9rem; }
-    .location { padding: 3rem 1rem; }
-    .location__name { font-size: 1.8rem; }
-    .location__address { font-size: 1rem; }
-    .dresscode { padding: 3rem 1rem; }
-    .dresscode__examples { flex-direction: column; gap: 2rem; }
-    .example-photos img { width: 120px; height: 160px; }
-    .color-item { width: 30px; height: 30px; }
-    .rsvp { padding: 3rem 1rem; }
-    .rsvp__container { padding: 2rem 1.5rem; border-radius: 24px; }
-    .rsvp__heading { font-size: 2rem; }
-    .rsvp__food-options { flex-direction: column; gap: 1rem; }
-    .rsvp__food-circle { padding: 1.5rem; }
-    .rsvp__submit { padding: 1rem; font-size: 1rem; }
-    .timer { padding: 4rem 1rem; }
-    .timer__headline { font-size: 2rem; }
-    .timer__square { min-width: 70px; padding: 1rem 0.8rem; }
-    .timer__number { font-size: 2rem; }
-    .timer__quote { font-size: 1.5rem; }
-    .timer__photo { width: 200px; }
-    .footer { padding: 2rem 1rem; }
-    .footer__thanks { font-size: 1.8rem; }
-    .footer__socials { gap: 1.5rem; }
-    .footer__contacts { font-size: 0.9rem; }
-    .regular-content > section:not(.golden-names) {
-        padding-left: 1rem;
-        padding-right: 1rem;
-    }
-}
-
+/* Только критическая коррекция для очень узких экранов */
 @media (max-width: 400px) {
-    .intro__names { font-size: 2rem; }
-    .intro__subtitle { font-size: 1rem; }
-    .golden-names__title { font-size: 1.4rem; }
-    .timer__grid { gap: 0.5rem; }
-    .timer__square { min-width: 60px; padding: 0.8rem 0.5rem; }
-    .timer__number { font-size: 1.6rem; }
+    .media__content {
+        flex-direction: column;
+    }
+    .media__frame--video {
+        width: 80%;
+    }
+    .media__frame--photo {
+        width: 70%;
+        margin-left: 0;
+        margin-top: 2rem;
+        transform: rotate(3deg);
+    }
+    .media__golden-text {
+        font-size: 1.4rem;
+    }
 }
