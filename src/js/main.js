@@ -10,7 +10,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentSlide = 0;
     let sliderActive = false;
     let transitionInProgress = false;
-    let regularVisible = false; // флаг, что сейчас показывается обычный контент
+    let regularVisible = false;
+    let touchHandled = false; // чтобы не листать дважды за один свайп
 
     if (openBtn) {
         openBtn.addEventListener('click', () => {
@@ -23,10 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
             intro.style.display = 'none';
             mainContent.style.display = 'block';
 
-            // Инициализация слайдера
             activateSlider();
-
-            // Запускаем фейерверки в предложении
             startProposalFireworks();
         });
     }
@@ -37,14 +35,15 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.style.overflow = 'hidden';
         storySlider.style.display = 'block';
         regularContent.style.display = 'none';
-        // Устанавливаем текущий слайд (если уже был показ, оставляем тот же индекс)
+
+        // показываем текущий слайд (последний, если возвращаемся)
         slides.forEach((slide, index) => {
-            slide.classList.remove('active', 'prev', 'next', 'leave-left', 'leave-right', 'enter-left', 'enter-right');
+            slide.classList.remove('active', 'leave-left', 'leave-right', 'enter-left', 'enter-right');
             if (index === currentSlide) slide.classList.add('active');
         });
-        // Сбрасываем позицию слайдера
-        storySlider.style.transform = 'translateX(0)';
-        storySlider.style.transition = 'none';
+
+        // плавно скроллим к слайдеру
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function showRegularContent() {
@@ -53,7 +52,8 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.style.overflow = '';
         storySlider.style.display = 'none';
         regularContent.style.display = 'block';
-        // Активируем скролл-анимации видимых элементов
+
+        // активируем скролл-анимации
         regularContent.querySelectorAll('.scroll-animate').forEach(el => {
             if (el.getBoundingClientRect().top < window.innerHeight) {
                 el.classList.add('revealed');
@@ -61,13 +61,14 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Функция смены слайда
+    // Смена слайда с защитой от двойного срабатывания
     function changeSlide(direction) {
         if (transitionInProgress || !sliderActive) return;
         const newSlide = currentSlide + direction;
         if (newSlide < 0 || newSlide >= slides.length) return;
 
         transitionInProgress = true;
+        touchHandled = true; // блокируем повторные touchmove
 
         const current = slides[currentSlide];
         const next = slides[newSlide];
@@ -91,51 +92,41 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (index !== currentSlide) slide.classList.remove('active');
             });
             transitionInProgress = false;
+            touchHandled = false;
         }, 600);
     }
 
-    // Обработчик скролла колесиком
+    // Обработчик колеса (ПК)
     function handleWheel(e) {
-        if (sliderActive) {
-            e.preventDefault();
-            const delta = e.deltaY || e.deltaX || e.wheelDelta || -e.detail;
-            if (delta > 0) {
-                if (currentSlide === slides.length - 1) {
-                    // Переход к обычному контенту
-                    showRegularContent();
-                } else {
-                    changeSlide(1);
-                }
-            } else if (delta < 0) {
-                if (currentSlide > 0) {
-                    changeSlide(-1);
-                }
-                // Если на первом слайде и скроллим вверх – ничего не делаем
+        if (!sliderActive) return;
+        e.preventDefault();
+        const delta = e.deltaY || e.deltaX || e.wheelDelta || -e.detail;
+        if (delta > 0) {
+            if (currentSlide === slides.length - 1) {
+                showRegularContent();
+            } else {
+                changeSlide(1);
+            }
+        } else if (delta < 0) {
+            if (currentSlide > 0) {
+                changeSlide(-1);
             }
         }
-        // Если обычный контент виден, скролл работает стандартно
     }
 
-    // Отслеживание возврата к слайдеру при прокрутке вверх до самого верха
-    window.addEventListener('scroll', () => {
-        if (regularVisible && window.scrollY === 0) {
-            // Вернулись наверх – показываем слайдер
-            activateSlider();
-            window.scrollTo(0, 0); // на всякий случай
-        }
-    });
-
-    // Обработчики тач-событий для мобильных
+    // Тач-события (телефон)
     let touchStartY = 0;
     function handleTouchStart(e) {
         if (!sliderActive) return;
         touchStartY = e.touches[0].clientY;
+        touchHandled = false; // новый жест — можно листать
     }
+
     function handleTouchMove(e) {
-        if (!sliderActive) return;
+        if (!sliderActive || touchHandled) return;
         const touchY = e.touches[0].clientY;
         const diff = touchStartY - touchY;
-        if (Math.abs(diff) > 30) {
+        if (Math.abs(diff) > 40) { // порог чуть выше для надёжности
             if (diff > 0) {
                 if (currentSlide === slides.length - 1) {
                     showRegularContent();
@@ -148,10 +139,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
             touchStartY = touchY;
+            e.preventDefault();
         }
-        e.preventDefault();
     }
 
+    // Возврат к слайдеру, когда доскроллили до самого верха
+    window.addEventListener('scroll', () => {
+        if (regularVisible && window.scrollY <= 5) {
+            // небольшой запас, чтобы не дёргалось
+            activateSlider();
+        }
+    });
+
+    // Навешиваем обработчики
     window.addEventListener('wheel', handleWheel, { passive: false });
     window.addEventListener('touchstart', handleTouchStart, { passive: false });
     window.addEventListener('touchmove', handleTouchMove, { passive: false });
@@ -190,7 +190,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     scrollElements.forEach(el => elementObserver.observe(el));
 
-    // ===== ГЕНЕРАТОР ЗОЛОТЫХ ЧАСТИЦ НА ИНТРО =====
+    // ===== ГЕНЕРАТОР ЗОЛОТЫХ ЧАСТИЦ =====
     const particlesContainer = document.getElementById('introParticles');
     if (particlesContainer) {
         function createParticle() {
