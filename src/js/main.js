@@ -4,19 +4,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const mainContent = document.getElementById('mainContent');
     const intro = document.getElementById('intro');
 
-    const storySlider = document.getElementById('storySlider');
-    const slides = document.querySelectorAll('#storySlider .slide');
-    const regularContent = document.querySelector('.regular-content');
-
-    // Параметры горизонтальной ленты
-    const maxTranslate = (slides.length - 1) * window.innerWidth;
-    let currentTranslate = 0;
-    let sliderActive = false;
-    let regularVisible = false;
-
-    // Фейерверки
-    let fireworkInterval;
-
     if (openBtn) {
         openBtn.addEventListener('click', () => {
             const music = document.getElementById('bgMusic');
@@ -27,130 +14,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
             intro.style.display = 'none';
             mainContent.style.display = 'block';
+            // Плавная прокрутка к приветствию
+            document.getElementById('greeting').scrollIntoView({ behavior: 'smooth' });
 
-            activateSlider();
-            startSliderFireworks();
+            // Запускаем фоновые фейерверки
+            startBgFireworks();
+            // Запускаем фейерверки в предложении
+            startProposalFireworks();
         });
     }
 
-    function activateSlider() {
-        sliderActive = true;
-        regularVisible = false;
-        document.body.style.overflow = 'hidden';
-        storySlider.style.display = 'flex';
-        regularContent.style.display = 'none';
-        // Устанавливаем позицию
-        storySlider.style.transition = 'none';
-        storySlider.style.transform = `translateX(-${currentTranslate}px)`;
-    }
-
-    function showRegularContent() {
-        sliderActive = false;
-        regularVisible = true;
-        document.body.style.overflow = '';
-        storySlider.style.display = 'none';
-        regularContent.style.display = 'block';
-        stopSliderFireworks();
-
-        // Активируем видимые анимации
-        regularContent.querySelectorAll('.scroll-animate').forEach(el => {
-            if (el.getBoundingClientRect().top < window.innerHeight) {
-                el.classList.add('revealed');
+    // ===== АНИМАЦИЯ ПОЯВЛЕНИЯ БЛОКОВ =====
+    const storyAnimateElements = document.querySelectorAll('.story-animate');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('revealed');
+                observer.unobserve(entry.target);
             }
         });
-    }
+    }, { threshold: 0.2 });
 
-    // Горизонтальное перемещение
-    function moveSlider(deltaX) {
-        if (!sliderActive) return;
-        currentTranslate = Math.max(0, Math.min(maxTranslate, currentTranslate + deltaX));
-        storySlider.style.transform = `translateX(-${currentTranslate}px)`;
-
-        // Если дошли до последнего слайда и продолжаем двигаться вправо — показываем регулярный контент
-        if (currentTranslate >= maxTranslate && deltaX > 0) {
-            showRegularContent();
-        }
-    }
-
-    // Обработчик колеса (ПК)
-    function handleWheel(e) {
-        if (!sliderActive) return;
-        e.preventDefault();
-        const delta = e.deltaY || e.deltaX || 0;
-        moveSlider(delta);
-    }
-
-    // Тач-события (телефон)
-    let touchStartX = 0;
-    let touchStartY = 0;
-    let lastTranslate = 0;
-
-    function handleTouchStart(e) {
-        if (!sliderActive) return;
-        touchStartX = e.touches[0].clientX;
-        touchStartY = e.touches[0].clientY;
-        lastTranslate = currentTranslate;
-    }
-
-    function handleTouchMove(e) {
-        if (!sliderActive) return;
-        const touchX = e.touches[0].clientX;
-        const touchY = e.touches[0].clientY;
-        const diffX = touchStartX - touchX;
-        const diffY = touchStartY - touchY;
-
-        if (Math.abs(diffX) > Math.abs(diffY)) {
-            e.preventDefault();
-            currentTranslate = Math.max(0, Math.min(maxTranslate, lastTranslate + diffX));
-            storySlider.style.transform = `translateX(-${currentTranslate}px)`;
-        }
-    }
-
-    function handleTouchEnd(e) {
-        if (!sliderActive) return;
-        if (currentTranslate >= maxTranslate && lastTranslate < maxTranslate) {
-            showRegularContent();
-        }
-    }
-
-    // Возврат к слайдеру при прокрутке вверх до самого верха
-    window.addEventListener('scroll', () => {
-        if (regularVisible && window.scrollY <= 5) {
-            activateSlider();
-            startSliderFireworks();
-        }
-    });
-
-    window.addEventListener('wheel', handleWheel, { passive: false });
-    window.addEventListener('touchstart', handleTouchStart, { passive: false });
-    window.addEventListener('touchmove', handleTouchMove, { passive: false });
-    window.addEventListener('touchend', handleTouchEnd);
-
-    // ===== ФЕЙЕРВЕРКИ ВНУТРИ СЛАЙДЕРА =====
-    function createFireworkParticle(x, y) {
-        const particle = document.createElement('span');
-        particle.className = 'firework-particle';
-        particle.style.left = x + 'px';
-        particle.style.top = y + 'px';
-        storySlider.appendChild(particle);
-        setTimeout(() => particle.remove(), 2000);
-    }
-
-    function randomFirework() {
-        const x = Math.random() * window.innerWidth;
-        const y = Math.random() * window.innerHeight;
-        createFireworkParticle(x, y);
-    }
-
-    function startSliderFireworks() {
-        stopSliderFireworks();
-        fireworkInterval = setInterval(randomFirework, 600);
-    }
-
-    function stopSliderFireworks() {
-        clearInterval(fireworkInterval);
-        document.querySelectorAll('.firework-particle').forEach(p => p.remove());
-    }
+    storyAnimateElements.forEach(el => observer.observe(el));
 
     // ===== ТАЙМЕР =====
     const weddingDate = new Date('2027-07-27T15:00:00+03:00').getTime();
@@ -168,23 +53,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     setInterval(updateTimer, 1000);
     updateTimer();
-
-    // ===== СКРОЛЛ-АНИМАЦИИ для обычных секций =====
-    const scrollElements = document.querySelectorAll('.regular-content .scroll-animate');
-    const elementObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const el = entry.target;
-                const delay = el.dataset.delay || 0;
-                setTimeout(() => {
-                    el.classList.add('revealed');
-                }, parseInt(delay));
-                elementObserver.unobserve(el);
-            }
-        });
-    }, { threshold: 0.25 });
-
-    scrollElements.forEach(el => elementObserver.observe(el));
 
     // ===== ГЕНЕРАТОР ЗОЛОТЫХ ЧАСТИЦ НА ИНТРО =====
     const particlesContainer = document.getElementById('introParticles');
@@ -205,14 +73,29 @@ document.addEventListener('DOMContentLoaded', () => {
         for (let i=0; i<20; i++) setTimeout(createParticle, i*150);
     }
 
-    // ===== ФЕЙЕРВЕРКИ В ПРЕДЛОЖЕНИИ (СЕРДЕЧКО) =====
+    // ===== ФОНОВЫЕ ФЕЙЕРВЕРКИ =====
+    function startBgFireworks() {
+        const container = document.getElementById('bgFireworks');
+        if (!container) return;
+        function createFirework() {
+            const span = document.createElement('span');
+            span.className = 'firework-bg';
+            span.style.left = Math.random() * 100 + '%';
+            span.style.top = Math.random() * 100 + '%';
+            container.appendChild(span);
+            setTimeout(() => span.remove(), 2000);
+        }
+        setInterval(createFirework, 500);
+    }
+
+    // ===== ФЕЙЕРВЕРКИ В ПРЕДЛОЖЕНИИ =====
     function startProposalFireworks() {
-        const proposalSlide = document.getElementById('proposal');
-        if (!proposalSlide) return;
-        const heart = proposalSlide.querySelector('.proposal__heart');
+        const proposalSection = document.getElementById('proposal');
+        if (!proposalSection) return;
+        const heart = proposalSection.querySelector('.proposal__heart');
         if (!heart) return;
         const fireworkContainer = heart.querySelector('.firework-particles');
-        function createFirework() {
+        function createProposalFirework() {
             const span = document.createElement('span');
             span.style.position = 'absolute';
             span.style.width = '4px';
@@ -227,7 +110,6 @@ document.addEventListener('DOMContentLoaded', () => {
             fireworkContainer.appendChild(span);
             setTimeout(() => span.remove(), 2000);
         }
-        setInterval(createFirework, 800);
+        setInterval(createProposalFirework, 800);
     }
-    startProposalFireworks();
 });
