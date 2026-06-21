@@ -34,8 +34,15 @@
     <!-- ===== 1. HERO ===== -->
     <section class="hero" id="hero">
         <div class="hero__overlay"></div>
-        <!-- КОНТЕЙНЕР ДЛЯ ЗОЛОТЫХ ЧАСТИЦ -->
         <div class="hero-particles" id="heroParticles"></div>
+
+        <div class="hero__side-photo hero__side-photo--left">
+            <img src="src/img/portraits/vlada_1.webp" alt="Влада" loading="lazy" />
+        </div>
+        <div class="hero__side-photo hero__side-photo--right">
+            <img src="src/img/portraits/nikita_1.webp" alt="Никита" loading="lazy" />
+        </div>
+
         <div class="hero__content">
             <div class="hero__names-wrapper">
                 <h1 class="hero__names">
@@ -90,7 +97,6 @@
             <div class="timer__bg-ring timer__bg-ring--2"></div>
             <div class="timer__bg-ring timer__bg-ring--3"></div>
         </div>
-        <!-- Фейерверк -->
         <div class="timer__fireworks">
             <div class="firework firework--1">
                 <span></span><span></span><span></span><span></span><span></span><span></span>
@@ -102,7 +108,6 @@
                 <span></span><span></span><span></span><span></span><span></span><span></span>
             </div>
         </div>
-        <!-- Парящие огоньки -->
         <div class="timer__sparkles">
             <span class="sparkle-t" style="--x: 10%; --delay: 0s;"></span>
             <span class="sparkle-t" style="--x: 90%; --delay: 1s;"></span>
@@ -172,56 +177,39 @@
         <div class="story__container">
             <h2 class="story__heading">Наша история</h2>
             <div class="story__album">
-                <div class="story__photo-wrapper story__photo-wrapper--left" id="photoVlada">
+                <!-- Портреты с выездом из углов -->
+                <div class="story__photo-wrapper story__photo-wrapper--left scroll-animate" data-animation="slide-in-right-top" data-delay="0">
                     <div class="story__photo story__photo--vlada">
-                        <img src="src\img\hero\Vlada.jpg" alt="Влада" loading="lazy" />
+                        <img src="src/img/portraits/vlada_1.webp" alt="Влада" loading="lazy" />
                         <div class="story__photo-frame"></div>
                     </div>
                     <span class="story__photo-label">Влада</span>
                 </div>
-                <div class="story__heart" id="storyHeart">
-                    <svg viewBox="0 0 100 100" width="80" height="80">
-                        <defs>
-                            <radialGradient id="heartGradient" cx="30%" cy="30%">
-                                <stop offset="0%" stop-color="#e8a0b4" />
-                                <stop offset="50%" stop-color="#c9708a" />
-                                <stop offset="100%" stop-color="#8b3a50" />
-                            </radialGradient>
-                            <filter id="heartGlow">
-                                <feGaussianBlur stdDeviation="4" result="blur" />
-                                <feMerge>
-                                    <feMergeNode in="blur" />
-                                    <feMergeNode in="SourceGraphic" />
-                                </feMerge>
-                            </filter>
-                        </defs>
-                        <path d="M50,85 C20,60 5,45 5,28 C5,14 16,5 28,5 C36,5 43,10 50,20 C57,10 64,5 72,5 C84,5 95,14 95,28 C95,45 80,60 50,85Z" fill="url(#heartGradient)" filter="url(#heartGlow)" />
-                    </svg>
-                </div>
-                <div class="story__photo-wrapper story__photo-wrapper--right" id="photoNikita">
+                <div class="story__photo-wrapper story__photo-wrapper--right scroll-animate" data-animation="slide-in-left-top" data-delay="200">
                     <div class="story__photo story__photo--nikita">
-                        <img src="src\img\hero\Nikita.jpg" alt="Никита" loading="lazy" />
+                        <img src="src/img/portraits/nikita_1.webp" alt="Никита" loading="lazy" />
                         <div class="story__photo-frame"></div>
                     </div>
                     <span class="story__photo-label">Никита</span>
                 </div>
             </div>
+            <!-- Тексты истории -->
             <div class="story__texts">
-                <div class="story__text story__text--left">
+                <div class="story__text story__text--left scroll-animate" data-animation="fade-in-up" data-delay="400">
                     <p>Это был тот самый миг, который обычно теряется в шуме города, но для нас двоих он стал звуком зарождающейся вселенной. Без лишних свидетелей, лишь под прицелом наших сердец, мы встретились, чтобы уже не когда не расстаться и создать наше счастье.</p>
                 </div>
-                <div class="story__text story__text--right">
+                <div class="story__text story__text--right scroll-animate" data-animation="fade-in-up" data-delay="600">
                     <p>С той самой прогулки начала зарождаться наша история. Этот день позволил впустить нам краски в жизнь - именно тогда прозвучало начало нашей первой главы.</p>
                 </div>
             </div>
-            <p class="story__first-date"><span>Первая встреча:</span> 11 марта 2025 года</p>
+            <p class="story__first-date scroll-animate" data-animation="fade-in-up" data-delay="800"><span>Первая встреча:</span> 11 марта 2025 года</p>
         </div>
     </section>
 
     <!-- ===== 4. ЛОКАЦИЯ И ПРОГРАММА ===== -->
     <section class="location" id="location">
         <div class="location__container">
-            <div class="location__half location__half--place">
+            <div class="location__half location__half--place scroll-animate" data-animation="fade-in-up" data-delay="0">
                 <h2 class="location__heading">Место</h2>
                 <div class="location__map-wrapper">
                     <iframe 
@@ -246,17 +234,29 @@
                     <p class="location__address-parking">🏆 Любовь — это игра, в которую могут играть двое и оба выигрывать</p>
                 </div>
             </div>
-            <div class="location__half location__half--program">
+            <div class="location__half location__half--program scroll-animate" data-animation="fade-in-up" data-delay="200">
                 <h2 class="location__heading">Программа</h2>
                 <div class="location__timeline">
-                    <div class="timeline__item"><div class="timeline__dot"></div><div class="timeline__content"><span class="timeline__time">15:00</span><span class="timeline__desc">Встреча гостей — фуршет</span></div></div>
-                    <div class="timeline__item timeline__item--ceremony"><div class="timeline__dot timeline__dot--rings">💍</div><div class="timeline__content"><span class="timeline__time">16:00</span><span class="timeline__desc">Церемония «Вместе и навсегда»</span></div></div>
-                    <div class="timeline__item"><div class="timeline__dot"></div><div class="timeline__content"><span class="timeline__time">18:30</span><span class="timeline__desc">Ужин и тосты</span></div></div>
-                    <div class="timeline__item timeline__item--fireworks"><div class="timeline__dot timeline__dot--firework">🎆</div><div class="timeline__content"><span class="timeline__time">23:00</span><span class="timeline__desc">Салют в честь новобрачных</span></div></div>
+                    <div class="timeline__item scroll-animate" data-animation="fade-in-left" data-delay="0">
+                        <div class="timeline__dot"></div>
+                        <div class="timeline__content"><span class="timeline__time">15:00</span><span class="timeline__desc">Встреча гостей — фуршет</span></div>
+                    </div>
+                    <div class="timeline__item timeline__item--ceremony scroll-animate" data-animation="fade-in-left" data-delay="200">
+                        <div class="timeline__dot timeline__dot--rings">💍</div>
+                        <div class="timeline__content"><span class="timeline__time">16:00</span><span class="timeline__desc">Церемония «Вместе и навсегда»</span></div>
+                    </div>
+                    <div class="timeline__item scroll-animate" data-animation="fade-in-left" data-delay="400">
+                        <div class="timeline__dot"></div>
+                        <div class="timeline__content"><span class="timeline__time">18:30</span><span class="timeline__desc">Ужин и тосты</span></div>
+                    </div>
+                    <div class="timeline__item timeline__item--fireworks scroll-animate" data-animation="fade-in-left" data-delay="600">
+                        <div class="timeline__dot timeline__dot--firework">🎆</div>
+                        <div class="timeline__content"><span class="timeline__time">23:00</span><span class="timeline__desc">Салют в честь новобрачных</span></div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="location__dresscode">
+        <div class="location__dresscode scroll-animate" data-animation="fade-in-up" data-delay="800">
             <svg class="location__dresscode-icon" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#8b3a50" stroke-width="1.5">
                 <path d="M4 16c1 1 3 3 4 3s3-2 4-3 3-3 4-3 3 2 4 3"/><path d="M3 20h18"/><circle cx="12" cy="8" r="4"/>
             </svg>
@@ -264,11 +264,54 @@
         </div>
     </section>
 
-    <!-- ===== 5. ФОРМА ===== -->
+    <!-- ===== 5. ГАЛЕРЕЯ ===== -->
+    <section class="gallery" id="gallery">
+        <div class="gallery__container">
+            <h2 class="gallery__heading scroll-animate" data-animation="fade-in-up">Наши мгновения</h2>
+            <div class="gallery__grid">
+                <div class="gallery__item gallery__item--tall scroll-animate" data-animation="photo-text-pair" data-delay="0">
+                    <div class="gallery__photo-wrapper"><img src="src/img/gallery/story_01.webp" alt="Момент 1" loading="lazy" /></div>
+                    <div class="gallery__caption">Первый взгляд</div>
+                </div>
+                <div class="gallery__item gallery__item--wide scroll-animate" data-animation="photo-text-pair" data-delay="200">
+                    <div class="gallery__photo-wrapper"><img src="src/img/gallery/story_02.webp" alt="Момент 2" loading="lazy" /></div>
+                    <div class="gallery__caption">Счастливые улыбки</div>
+                </div>
+                <div class="gallery__item scroll-animate" data-animation="photo-text-pair" data-delay="400">
+                    <div class="gallery__photo-wrapper"><img src="src/img/gallery/story_03.webp" alt="Момент 3" loading="lazy" /></div>
+                    <div class="gallery__caption">Вместе навсегда</div>
+                </div>
+                <div class="gallery__item gallery__item--tall scroll-animate" data-animation="photo-text-pair" data-delay="600">
+                    <div class="gallery__photo-wrapper"><img src="src/img/gallery/story_04.webp" alt="Момент 4" loading="lazy" /></div>
+                    <div class="gallery__caption">Объятия</div>
+                </div>
+                <div class="gallery__item scroll-animate" data-animation="photo-text-pair" data-delay="800">
+                    <div class="gallery__photo-wrapper"><img src="src/img/gallery/story_05.webp" alt="Момент 5" loading="lazy" /></div>
+                    <div class="gallery__caption">Поцелуй</div>
+                </div>
+                <div class="gallery__item gallery__item--wide scroll-animate" data-animation="photo-text-pair" data-delay="1000">
+                    <div class="gallery__photo-wrapper"><img src="src/img/gallery/story_06.webp" alt="Момент 6" loading="lazy" /></div>
+                    <div class="gallery__caption">Наше будущее</div>
+                </div>
+                <div class="gallery__item scroll-animate" data-animation="photo-text-pair" data-delay="1200">
+                    <div class="gallery__photo-wrapper"><img src="src/img/gallery/story_07.webp" alt="Момент 7" loading="lazy" /></div>
+                    <div class="gallery__caption">Любовь</div>
+                </div>
+            </div>
+            <a href="#" class="gallery__download scroll-animate" data-animation="fade-in-up" data-delay="1400" download>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+                </svg>
+                Скачать все наши фото
+            </a>
+        </div>
+    </section>
+
+    <!-- ===== 6. ФОРМА ===== -->
     <section class="rsvp" id="rsvp">
         <div class="rsvp__container">
-            <h2 class="rsvp__heading">Ждём только вас <span>(и ваше настроение)</span></h2>
-            <form class="rsvp__form" id="rsvpForm">
+            <h2 class="rsvp__heading scroll-animate" data-animation="fade-in-up">Ждём только вас <span>(и ваше настроение)</span></h2>
+            <form class="rsvp__form scroll-animate" data-animation="fade-in-up" data-delay="300" id="rsvpForm">
                 <div class="rsvp__field">
                     <label for="guestName" class="rsvp__label">Ваше имя</label>
                     <input type="text" id="guestName" name="guestName" class="rsvp__input" placeholder="Введите ваше имя" required />
@@ -313,28 +356,6 @@
                 <span class="rsvp__notification-icon">💌</span>
                 <span class="rsvp__notification-text">Мы будем вас ждать!</span>
             </div>
-        </div>
-    </section>
-
-    <!-- ===== 6. ГАЛЕРЕЯ ===== -->
-    <section class="gallery" id="gallery">
-        <div class="gallery__container">
-            <h2 class="gallery__heading">Наши мгновения</h2>
-            <div class="gallery__grid">
-                <div class="gallery__item gallery__item--tall"><img src="src/img/gallery/story_01.webp" alt="Момент 1" loading="lazy" /></div>
-                <div class="gallery__item gallery__item--wide"><img src="src/img/gallery/story_02.webp" alt="Момент 2" loading="lazy" /></div>
-                <div class="gallery__item"><img src="src/img/gallery/story_03.webp" alt="Момент 3" loading="lazy" /></div>
-                <div class="gallery__item gallery__item--tall"><img src="src/img/gallery/story_04.webp" alt="Момент 4" loading="lazy" /></div>
-                <div class="gallery__item"><img src="src/img/gallery/story_05.webp" alt="Момент 5" loading="lazy" /></div>
-                <div class="gallery__item gallery__item--wide"><img src="src/img/gallery/story_06.webp" alt="Момент 6" loading="lazy" /></div>
-                <div class="gallery__item"><img src="src/img/gallery/story_07.webp" alt="Момент 7" loading="lazy" /></div>
-            </div>
-            <a href="#" class="gallery__download" download>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
-                </svg>
-                Скачать все наши фото
-            </a>
         </div>
     </section>
 

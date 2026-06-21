@@ -64,7 +64,6 @@ document.addEventListener('DOMContentLoaded', () => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('section--visible');
-                entry.target.classList.remove('section--hidden');
                 observer.unobserve(entry.target);
             }
         });
@@ -80,6 +79,23 @@ document.addEventListener('DOMContentLoaded', () => {
         heroSection.classList.add('section--visible');
         heroSection.classList.remove('section--hidden');
     }
+
+    // ===== СКРОЛЛ-АНИМАЦИИ ДЛЯ ЭЛЕМЕНТОВ =====
+    const scrollElements = document.querySelectorAll('.scroll-animate');
+    const elementObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const el = entry.target;
+                const delay = el.dataset.delay || 0;
+                setTimeout(() => {
+                    el.classList.add('revealed');
+                }, parseInt(delay));
+                elementObserver.unobserve(el);
+            }
+        });
+    }, { threshold: 0.25, rootMargin: '0px 0px -50px 0px' });
+
+    scrollElements.forEach(el => elementObserver.observe(el));
 
     // ===== ГЕНЕРАТОР ЗОЛОТЫХ ЧАСТИЦ =====
     const particlesContainer = document.getElementById('heroParticles');
