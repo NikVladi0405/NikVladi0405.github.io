@@ -9,10 +9,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const regularContent = document.querySelector('.regular-content');
 
     // Параметры горизонтальной ленты
-    const maxTranslate = (slides.length - 1) * window.innerWidth; // максимальное смещение влево
+    const maxTranslate = (slides.length - 1) * window.innerWidth;
     let currentTranslate = 0;
     let sliderActive = false;
     let regularVisible = false;
+
+    // Фейерверки
+    let fireworkInterval;
 
     if (openBtn) {
         openBtn.addEventListener('click', () => {
@@ -26,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
             mainContent.style.display = 'block';
 
             activateSlider();
-            startProposalFireworks();
+            startSliderFireworks();
         });
     }
 
@@ -36,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.style.overflow = 'hidden';
         storySlider.style.display = 'flex';
         regularContent.style.display = 'none';
-        // Устанавливаем позицию на последнем слайде, если возвращаемся
+        // Устанавливаем позицию
         storySlider.style.transition = 'none';
         storySlider.style.transform = `translateX(-${currentTranslate}px)`;
     }
@@ -47,6 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.style.overflow = '';
         storySlider.style.display = 'none';
         regularContent.style.display = 'block';
+        stopSliderFireworks();
 
         // Активируем видимые анимации
         regularContent.querySelectorAll('.scroll-animate').forEach(el => {
@@ -62,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
         currentTranslate = Math.max(0, Math.min(maxTranslate, currentTranslate + deltaX));
         storySlider.style.transform = `translateX(-${currentTranslate}px)`;
 
-        // Если дошли до последнего слайда и пытаемся двигаться дальше вправо – переходим к обычному контенту
+        // Если дошли до последнего слайда и продолжаем двигаться вправо — показываем регулярный контент
         if (currentTranslate >= maxTranslate && deltaX > 0) {
             showRegularContent();
         }
@@ -72,7 +76,6 @@ document.addEventListener('DOMContentLoaded', () => {
     function handleWheel(e) {
         if (!sliderActive) return;
         e.preventDefault();
-        // Используем deltaY (вертикальное колесо) для горизонтального скролла
         const delta = e.deltaY || e.deltaX || 0;
         moveSlider(delta);
     }
@@ -96,7 +99,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const diffX = touchStartX - touchX;
         const diffY = touchStartY - touchY;
 
-        // Если горизонтальное движение преобладает
         if (Math.abs(diffX) > Math.abs(diffY)) {
             e.preventDefault();
             currentTranslate = Math.max(0, Math.min(maxTranslate, lastTranslate + diffX));
@@ -106,7 +108,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function handleTouchEnd(e) {
         if (!sliderActive) return;
-        // Если дошли до края и был свайп вправо – открываем обычный контент
         if (currentTranslate >= maxTranslate && lastTranslate < maxTranslate) {
             showRegularContent();
         }
@@ -116,6 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('scroll', () => {
         if (regularVisible && window.scrollY <= 5) {
             activateSlider();
+            startSliderFireworks();
         }
     });
 
@@ -123,6 +125,32 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('touchstart', handleTouchStart, { passive: false });
     window.addEventListener('touchmove', handleTouchMove, { passive: false });
     window.addEventListener('touchend', handleTouchEnd);
+
+    // ===== ФЕЙЕРВЕРКИ ВНУТРИ СЛАЙДЕРА =====
+    function createFireworkParticle(x, y) {
+        const particle = document.createElement('span');
+        particle.className = 'firework-particle';
+        particle.style.left = x + 'px';
+        particle.style.top = y + 'px';
+        storySlider.appendChild(particle);
+        setTimeout(() => particle.remove(), 2000);
+    }
+
+    function randomFirework() {
+        const x = Math.random() * window.innerWidth;
+        const y = Math.random() * window.innerHeight;
+        createFireworkParticle(x, y);
+    }
+
+    function startSliderFireworks() {
+        stopSliderFireworks();
+        fireworkInterval = setInterval(randomFirework, 600);
+    }
+
+    function stopSliderFireworks() {
+        clearInterval(fireworkInterval);
+        document.querySelectorAll('.firework-particle').forEach(p => p.remove());
+    }
 
     // ===== ТАЙМЕР =====
     const weddingDate = new Date('2027-07-27T15:00:00+03:00').getTime();
@@ -158,7 +186,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     scrollElements.forEach(el => elementObserver.observe(el));
 
-    // ===== ГЕНЕРАТОР ЗОЛОТЫХ ЧАСТИЦ =====
+    // ===== ГЕНЕРАТОР ЗОЛОТЫХ ЧАСТИЦ НА ИНТРО =====
     const particlesContainer = document.getElementById('introParticles');
     if (particlesContainer) {
         function createParticle() {
@@ -177,7 +205,7 @@ document.addEventListener('DOMContentLoaded', () => {
         for (let i=0; i<20; i++) setTimeout(createParticle, i*150);
     }
 
-    // ===== ФЕЙЕРВЕРКИ В ПРЕДЛОЖЕНИИ =====
+    // ===== ФЕЙЕРВЕРКИ В ПРЕДЛОЖЕНИИ (СЕРДЕЧКО) =====
     function startProposalFireworks() {
         const proposalSlide = document.getElementById('proposal');
         if (!proposalSlide) return;
@@ -201,4 +229,5 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         setInterval(createFirework, 800);
     }
+    startProposalFireworks();
 });

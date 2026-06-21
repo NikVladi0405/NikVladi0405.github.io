@@ -644,12 +644,29 @@ body {
     width: 100vw;
     height: 100vh;
     overflow: hidden;
-    background: #fff;
+    background: url('../img/hero/background.webp') center/cover no-repeat;
     z-index: 10;
     display: flex;
     flex-wrap: nowrap;
     will-change: transform;
     transition: transform 0.1s ease-out;
+}
+.story-slider::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(20, 10, 14, 0.5);
+    z-index: 0;
+}
+.story-slider .firework-particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: #d4af37;
+    border-radius: 50%;
+    opacity: 0;
+    animation: fireworkBurst 2s ease-out forwards;
+    z-index: 1;
 }
 .slide {
     min-width: 100vw;
@@ -660,6 +677,8 @@ body {
     justify-content: center;
     padding: 2rem;
     box-sizing: border-box;
+    position: relative;
+    z-index: 2;
     background: transparent;
 }
 .slide .greeting,
