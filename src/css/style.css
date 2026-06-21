@@ -183,6 +183,7 @@ body {
     justify-content: center;
     position: relative;
     z-index: 2;
+    margin-bottom: 2rem;
 }
 .media__frame {
     position: relative;
@@ -223,23 +224,39 @@ body {
     display: block;
     border-radius: 12px;
 }
+
+/* Золотой текст с волнистыми линиями */
+.media__golden-section {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 1rem;
+}
+.media__wave {
+    width: 200px;
+    height: 20px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 20'%3E%3Cpath d='M0,10 Q25,0 50,10 T100,10 T150,10 T200,10' fill='none' stroke='%23d4af37' stroke-width='1'/%3E%3C/svg%3E") repeat-x;
+    opacity: 0.8;
+    margin: 0.5rem 0;
+}
 .media__golden-text {
-    position: absolute;
-    bottom: -25px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: linear-gradient(135deg, #c49a2c, #f5e6d3, #d4af37, #8b6914);
+    font-family: 'Great Vibes', cursive;
+    font-size: 2.2rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #c49a2c 0%, #f5e6d3 25%, #d4af37 50%, #8b6914 75%, #c49a2c 100%);
+    background-size: 400% 400%;
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    font-family: 'Great Vibes', cursive;
-    font-size: 1.8rem;
+    animation: goldShine 8s ease infinite, textGlow 2s ease-in-out infinite alternate;
     white-space: nowrap;
-    animation: textGlow 2s ease-in-out infinite alternate;
+    line-height: 1.2;
 }
 @keyframes textGlow {
-    from { text-shadow: 0 0 8px rgba(212,175,55,0.5); }
-    to { text-shadow: 0 0 16px rgba(212,175,55,1); }
+    from { text-shadow: 0 0 8px rgba(212,175,55,0.5), 0 0 16px rgba(212,175,55,0.3); }
+    to { text-shadow: 0 0 16px rgba(212,175,55,1), 0 0 32px rgba(212,175,55,0.6); }
 }
 
 /* Частицы и круги */
@@ -349,7 +366,8 @@ body {
     .media__content { flex-direction: column; }
     .media__frame--video { width: 80%; }
     .media__frame--photo { width: 60%; margin-left: 0; margin-top: 2rem; transform: rotate(3deg); }
-    .media__golden-text { font-size: 1.4rem; bottom: -20px; }
+    .media__golden-text { font-size: 1.6rem; }
+    .media__wave { width: 150px; }
     .program { padding: 4rem 1rem; }
     .program h2 { font-size: 1.8rem; }
     .location__timeline { padding-left: 1.5rem; }
