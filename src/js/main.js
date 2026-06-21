@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const regularContent = document.querySelector('.regular-content');
     let currentSlide = 0;
     let sliderActive = false;
+    let transitionInProgress = false;
 
     if (openBtn) {
         openBtn.addEventListener('click', () => {
@@ -24,15 +25,58 @@ document.addEventListener('DOMContentLoaded', () => {
             // Инициализация слайдера
             sliderActive = true;
             document.body.style.overflow = 'hidden';
-            storySlider.style.display = 'flex'; // на всякий случай, если был скрыт ранее
-            storySlider.style.transform = 'translateX(0)';
-            storySlider.style.transition = 'none';
+            storySlider.style.display = 'block';
+            // Делаем первый слайд активным
+            slides.forEach((slide, index) => {
+                slide.classList.remove('active', 'prev', 'next');
+                if (index === 0) slide.classList.add('active');
+            });
             currentSlide = 0;
-            updateSlidePosition();
 
-            // Запускаем фейерверки в предложении (4-й слайд)
+            // Запускаем фейерверки в предложении
             startProposalFireworks();
         });
+    }
+
+    // Функция смены слайда
+    function changeSlide(direction) {
+        if (transitionInProgress || !sliderActive) return;
+        const newSlide = currentSlide + direction;
+        if (newSlide < 0 || newSlide >= slides.length) return;
+
+        transitionInProgress = true;
+
+        const current = slides[currentSlide];
+        const next = slides[newSlide];
+
+        // Направление: 1 - вперёд, -1 - назад
+        if (direction > 0) {
+            current.classList.add('leave-left');
+            next.classList.add('enter-right', 'active');
+            current.classList.remove('active');
+        } else {
+            current.classList.add('leave-right');
+            next.classList.add('enter-left', 'active');
+            current.classList.remove('active');
+        }
+
+        currentSlide = newSlide;
+
+        // После завершения анимации убираем классы
+        setTimeout(() => {
+            current.classList.remove('leave-left', 'leave-right');
+            next.classList.remove('enter-left', 'enter-right');
+            // Убираем активность с остальных
+            slides.forEach((slide, index) => {
+                if (index !== currentSlide) slide.classList.remove('active');
+            });
+            transitionInProgress = false;
+
+            // Если дошли до последнего слайда (proposal) и пытаемся скроллить дальше - завершаем слайдер
+            if (currentSlide === slides.length - 1) {
+                // Разрешаем завершить при следующем скролле вниз
+            }
+        }, 600); // Должно совпадать с длительностью transition
     }
 
     // Обработчик скролла колесиком
@@ -40,16 +84,16 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!sliderActive) return;
         e.preventDefault();
         const delta = e.deltaY || e.deltaX || e.wheelDelta || -e.detail;
-        if (delta > 0 && currentSlide < slides.length - 1) {
-            currentSlide++;
-            updateSlidePosition();
-        } else if (delta < 0 && currentSlide > 0) {
-            currentSlide--;
-            updateSlidePosition();
-        }
-        // Если на последнем слайде и скроллим вниз – завершаем слайдер
-        if (currentSlide === slides.length - 1 && delta > 0) {
-            finishSlider();
+        if (delta > 0) {
+            if (currentSlide === slides.length - 1) {
+                finishSlider();
+            } else {
+                changeSlide(1);
+            }
+        } else if (delta < 0) {
+            if (currentSlide > 0) {
+                changeSlide(-1);
+            }
         }
     }
 
@@ -64,34 +108,34 @@ document.addEventListener('DOMContentLoaded', () => {
         const touchY = e.touches[0].clientY;
         const diff = touchStartY - touchY;
         if (Math.abs(diff) > 30) {
-            if (diff > 0 && currentSlide < slides.length - 1) {
-                currentSlide++;
-                updateSlidePosition();
-            } else if (diff < 0 && currentSlide > 0) {
-                currentSlide--;
-                updateSlidePosition();
+            if (diff > 0) {
+                if (currentSlide === slides.length - 1) {
+                    finishSlider();
+                } else {
+                    changeSlide(1);
+                }
+            } else if (diff < 0) {
+                if (currentSlide > 0) {
+                    changeSlide(-1);
+                }
             }
             touchStartY = touchY;
         }
         e.preventDefault();
     }
 
-    function updateSlidePosition() {
-        storySlider.style.transition = 'transform 0.5s ease';
-        storySlider.style.transform = `translateX(-${currentSlide * 100}vw)`;
-    }
-
     function finishSlider() {
         sliderActive = false;
-        // Скрываем слайдер и разблокируем скролл
         storySlider.style.display = 'none';
         document.body.style.overflow = '';
-        // Принудительно активируем видимые скролл-анимации
+        // Активируем видимые скролл-анимации
         regularContent.querySelectorAll('.scroll-animate').forEach(el => {
             if (el.getBoundingClientRect().top < window.innerHeight) {
                 el.classList.add('revealed');
             }
         });
+        // Запускаем IntersectionObserver для дальнейших анимаций
+        elementObserverCallback();
     }
 
     // Навешиваем обработчики
@@ -131,7 +175,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }, { threshold: 0.25 });
 
-    scrollElements.forEach(el => elementObserver.observe(el));
+    function elementObserverCallback() {
+        scrollElements.forEach(el => elementObserver.observe(el));
+    }
+    elementObserverCallback();
 
     // ===== ГЕНЕРАТОР ЗОЛОТЫХ ЧАСТИЦ НА ИНТРО =====
     const particlesContainer = document.getElementById('introParticles');

@@ -18,7 +18,7 @@
         <source src="src/video/wedding-music.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- ===== 1. НАЧАЛЬНЫЙ ЭКРАН ===== -->
+    <!-- ===== НАЧАЛЬНЫЙ ЭКРАН ===== -->
     <section class="intro" id="intro">
         <div class="intro__overlay"></div>
         <div class="intro__particles" id="introParticles"></div>
@@ -42,13 +42,13 @@
         </div>
     </section>
 
-    <!-- ===== ОСНОВНАЯ ЧАСТЬ (открывается после кнопки) ===== -->
+    <!-- ===== ОСНОВНАЯ ЧАСТЬ ===== -->
     <main id="mainContent" class="main-content" style="display:none;">
 
-        <!-- ГОРИЗОНТАЛЬНЫЙ СЛАЙДЕР (до "Мы всегда будем вместе") -->
+        <!-- ФИКСИРОВАННЫЙ КОНТЕЙНЕР ДЛЯ СЛАЙДОВ -->
         <div class="story-slider" id="storySlider">
             <!-- Приветствие -->
-            <section class="slide" id="greeting">
+            <section class="slide active" id="greeting">
                 <div class="greeting__photos">
                     <div class="greeting__photo greeting__photo--vlada">
                         <img src="src/img/portraits/vlada_1.webp" alt="Влада">
@@ -132,9 +132,12 @@
                     <div class="firework-particles"></div>
                 </div>
             </section>
+        </div>
 
+        <!-- ОБЫЧНЫЙ КОНТЕНТ (открывается после завершения слайдера) -->
+        <div class="regular-content">
             <!-- Мы всегда будем вместе -->
-            <section class="slide" id="always-together">
+            <section class="always-together" id="always-together">
                 <h2 class="gold-text">Мы всегда будем вместе</h2>
                 <div class="gold-lines">
                     <div class="gold-line gold-line--thick"></div>
@@ -152,10 +155,7 @@
                     <div class="gold-line gold-line--thick"></div>
                 </div>
             </section>
-        </div>
 
-        <!-- Остальные секции с обычной прокруткой -->
-        <div class="regular-content">
             <section class="media" id="media">
                 <div class="media__container">
                     <h3 class="media__heading scroll-animate" data-animation="fade-in">МЫ ЕСТЬ ДРУГ У ДРУГА, НАВСЕГДА.</h3>
