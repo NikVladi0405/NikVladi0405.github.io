@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentSlide = 0;
     let sliderActive = false;
     let transitionInProgress = false;
+    let regularVisible = false; // флаг, что сейчас показывается обычный контент
 
     if (openBtn) {
         openBtn.addEventListener('click', () => {
@@ -23,18 +24,40 @@ document.addEventListener('DOMContentLoaded', () => {
             mainContent.style.display = 'block';
 
             // Инициализация слайдера
-            sliderActive = true;
-            document.body.style.overflow = 'hidden';
-            storySlider.style.display = 'block';
-            // Делаем первый слайд активным
-            slides.forEach((slide, index) => {
-                slide.classList.remove('active', 'prev', 'next');
-                if (index === 0) slide.classList.add('active');
-            });
-            currentSlide = 0;
+            activateSlider();
 
             // Запускаем фейерверки в предложении
             startProposalFireworks();
+        });
+    }
+
+    function activateSlider() {
+        sliderActive = true;
+        regularVisible = false;
+        document.body.style.overflow = 'hidden';
+        storySlider.style.display = 'block';
+        regularContent.style.display = 'none';
+        // Устанавливаем текущий слайд (если уже был показ, оставляем тот же индекс)
+        slides.forEach((slide, index) => {
+            slide.classList.remove('active', 'prev', 'next', 'leave-left', 'leave-right', 'enter-left', 'enter-right');
+            if (index === currentSlide) slide.classList.add('active');
+        });
+        // Сбрасываем позицию слайдера
+        storySlider.style.transform = 'translateX(0)';
+        storySlider.style.transition = 'none';
+    }
+
+    function showRegularContent() {
+        sliderActive = false;
+        regularVisible = true;
+        document.body.style.overflow = '';
+        storySlider.style.display = 'none';
+        regularContent.style.display = 'block';
+        // Активируем скролл-анимации видимых элементов
+        regularContent.querySelectorAll('.scroll-animate').forEach(el => {
+            if (el.getBoundingClientRect().top < window.innerHeight) {
+                el.classList.add('revealed');
+            }
         });
     }
 
@@ -49,7 +72,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const current = slides[currentSlide];
         const next = slides[newSlide];
 
-        // Направление: 1 - вперёд, -1 - назад
         if (direction > 0) {
             current.classList.add('leave-left');
             next.classList.add('enter-right', 'active');
@@ -62,40 +84,46 @@ document.addEventListener('DOMContentLoaded', () => {
 
         currentSlide = newSlide;
 
-        // После завершения анимации убираем классы
         setTimeout(() => {
             current.classList.remove('leave-left', 'leave-right');
             next.classList.remove('enter-left', 'enter-right');
-            // Убираем активность с остальных
             slides.forEach((slide, index) => {
                 if (index !== currentSlide) slide.classList.remove('active');
             });
             transitionInProgress = false;
-
-            // Если дошли до последнего слайда (proposal) и пытаемся скроллить дальше - завершаем слайдер
-            if (currentSlide === slides.length - 1) {
-                // Разрешаем завершить при следующем скролле вниз
-            }
-        }, 600); // Должно совпадать с длительностью transition
+        }, 600);
     }
 
     // Обработчик скролла колесиком
     function handleWheel(e) {
-        if (!sliderActive) return;
-        e.preventDefault();
-        const delta = e.deltaY || e.deltaX || e.wheelDelta || -e.detail;
-        if (delta > 0) {
-            if (currentSlide === slides.length - 1) {
-                finishSlider();
-            } else {
-                changeSlide(1);
-            }
-        } else if (delta < 0) {
-            if (currentSlide > 0) {
-                changeSlide(-1);
+        if (sliderActive) {
+            e.preventDefault();
+            const delta = e.deltaY || e.deltaX || e.wheelDelta || -e.detail;
+            if (delta > 0) {
+                if (currentSlide === slides.length - 1) {
+                    // Переход к обычному контенту
+                    showRegularContent();
+                } else {
+                    changeSlide(1);
+                }
+            } else if (delta < 0) {
+                if (currentSlide > 0) {
+                    changeSlide(-1);
+                }
+                // Если на первом слайде и скроллим вверх – ничего не делаем
             }
         }
+        // Если обычный контент виден, скролл работает стандартно
     }
+
+    // Отслеживание возврата к слайдеру при прокрутке вверх до самого верха
+    window.addEventListener('scroll', () => {
+        if (regularVisible && window.scrollY === 0) {
+            // Вернулись наверх – показываем слайдер
+            activateSlider();
+            window.scrollTo(0, 0); // на всякий случай
+        }
+    });
 
     // Обработчики тач-событий для мобильных
     let touchStartY = 0;
@@ -110,7 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (Math.abs(diff) > 30) {
             if (diff > 0) {
                 if (currentSlide === slides.length - 1) {
-                    finishSlider();
+                    showRegularContent();
                 } else {
                     changeSlide(1);
                 }
@@ -124,21 +152,6 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
     }
 
-    function finishSlider() {
-        sliderActive = false;
-        storySlider.style.display = 'none';
-        document.body.style.overflow = '';
-        // Активируем видимые скролл-анимации
-        regularContent.querySelectorAll('.scroll-animate').forEach(el => {
-            if (el.getBoundingClientRect().top < window.innerHeight) {
-                el.classList.add('revealed');
-            }
-        });
-        // Запускаем IntersectionObserver для дальнейших анимаций
-        elementObserverCallback();
-    }
-
-    // Навешиваем обработчики
     window.addEventListener('wheel', handleWheel, { passive: false });
     window.addEventListener('touchstart', handleTouchStart, { passive: false });
     window.addEventListener('touchmove', handleTouchMove, { passive: false });
@@ -175,10 +188,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }, { threshold: 0.25 });
 
-    function elementObserverCallback() {
-        scrollElements.forEach(el => elementObserver.observe(el));
-    }
-    elementObserverCallback();
+    scrollElements.forEach(el => elementObserver.observe(el));
 
     // ===== ГЕНЕРАТОР ЗОЛОТЫХ ЧАСТИЦ НА ИНТРО =====
     const particlesContainer = document.getElementById('introParticles');
