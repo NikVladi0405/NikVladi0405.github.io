@@ -1,31 +1,100 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // ===== ОТКРЫТИЕ ПРИГЛАШЕНИЯ + МУЗЫКА =====
+    // ===== ОТКРЫТИЕ ПРИГЛАШЕНИЯ =====
     const openBtn = document.getElementById('openInvitation');
     const mainContent = document.getElementById('mainContent');
     const intro = document.getElementById('intro');
 
+    // Слайдер и регулярный контент
+    const storySlider = document.getElementById('storySlider');
+    const slides = document.querySelectorAll('#storySlider .slide');
+    const regularContent = document.querySelector('.regular-content');
+    let currentSlide = 0;
+    let sliderActive = false; // флаг, чтобы знать, что слайдер ещё не закончился
+
     if (openBtn) {
         openBtn.addEventListener('click', () => {
-            // ЗАПУСК МУЗЫКИ
+            // Музыка
             const music = document.getElementById('bgMusic');
             if (music) {
                 music.volume = 0.3;
-                music.play().catch(err => console.log('Музыка не заиграла:', err));
+                music.play().catch(() => {});
             }
 
             intro.style.display = 'none';
             mainContent.style.display = 'block';
-            window.scrollTo({ top: 0, behavior: 'smooth' });
 
-            setTimeout(() => {
-                document.querySelectorAll('.scroll-animate').forEach(el => {
-                    if (el.getBoundingClientRect().top < window.innerHeight) {
-                        el.classList.add('revealed');
-                    }
-                });
-            }, 100);
+            // Инициализация слайдера
+            sliderActive = true;
+            document.body.style.overflow = 'hidden'; // блокируем скролл body
+            storySlider.style.transform = 'translateX(0)';
+            storySlider.style.transition = 'none';
+            currentSlide = 0;
+            updateSlidePosition();
+
+            // Запускаем фейерверки в предложении (когда дойдём до 4 слайда)
+            startProposalFireworks();
         });
     }
+
+    // Обработчик скролла колесиком
+    function handleWheel(e) {
+        if (!sliderActive) return;
+        e.preventDefault();
+        const delta = e.deltaY || e.deltaX || e.wheelDelta || -e.detail;
+        if (delta > 0 && currentSlide < slides.length - 1) {
+            currentSlide++;
+            updateSlidePosition();
+        } else if (delta < 0 && currentSlide > 0) {
+            currentSlide--;
+            updateSlidePosition();
+        }
+        // Если достигли последнего слайда и пытаемся скроллить вниз – завершаем слайдер
+        if (currentSlide === slides.length - 1 && delta > 0) {
+            finishSlider();
+        }
+    }
+
+    // Обработчик touchmove для мобильных
+    let touchStartY = 0;
+    function handleTouchStart(e) {
+        if (!sliderActive) return;
+        touchStartY = e.touches[0].clientY;
+    }
+    function handleTouchMove(e) {
+        if (!sliderActive) return;
+        const touchY = e.touches[0].clientY;
+        const diff = touchStartY - touchY;
+        if (Math.abs(diff) > 30) {
+            if (diff > 0 && currentSlide < slides.length - 1) {
+                currentSlide++;
+                updateSlidePosition();
+            } else if (diff < 0 && currentSlide > 0) {
+                currentSlide--;
+                updateSlidePosition();
+            }
+            touchStartY = touchY;
+        }
+        e.preventDefault();
+    }
+
+    function updateSlidePosition() {
+        storySlider.style.transition = 'transform 0.5s ease';
+        storySlider.style.transform = `translateX(-${currentSlide * 100}vw)`;
+    }
+
+    function finishSlider() {
+        sliderActive = false;
+        document.body.style.overflow = ''; // разблокируем скролл
+        // Прячем слайдер? Нет, просто обычная прокрутка дальше пойдёт через regularContent.
+        // Можно было бы скрыть слайдер, но он и так останется сверху. Лучше зафиксировать его на последнем слайде.
+    }
+
+    // Прикрепляем обработчики
+    window.addEventListener('wheel', handleWheel, { passive: false });
+    window.addEventListener('touchstart', handleTouchStart, { passive: false });
+    window.addEventListener('touchmove', handleTouchMove, { passive: false });
+
+    // Если после загрузки страницы слайдер не активен (начальный экран), то ничего не делаем.
 
     // ===== ТАЙМЕР =====
     const weddingDate = new Date('2027-07-27T15:00:00+03:00').getTime();
@@ -44,8 +113,8 @@ document.addEventListener('DOMContentLoaded', () => {
     setInterval(updateTimer, 1000);
     updateTimer();
 
-    // ===== СКРОЛЛ-АНИМАЦИИ =====
-    const scrollElements = document.querySelectorAll('.scroll-animate');
+    // ===== СКРОЛЛ-АНИМАЦИИ для обычных секций =====
+    const scrollElements = document.querySelectorAll('.regular-content .scroll-animate');
     const elementObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -80,9 +149,12 @@ document.addEventListener('DOMContentLoaded', () => {
         for (let i=0; i<20; i++) setTimeout(createParticle, i*150);
     }
 
-    // ===== ФЕЙЕРВЕРКИ В ПРЕДЛОЖЕНИИ =====
-    const heart = document.querySelector('.proposal__heart');
-    if (heart) {
+    // ===== ФЕЙЕРВЕРКИ В ПРЕДЛОЖЕНИИ (4-й слайд) =====
+    function startProposalFireworks() {
+        const proposalSlide = document.getElementById('proposal');
+        if (!proposalSlide) return;
+        const heart = proposalSlide.querySelector('.proposal__heart');
+        if (!heart) return;
         const fireworkContainer = heart.querySelector('.firework-particles');
         function createFirework() {
             const span = document.createElement('span');

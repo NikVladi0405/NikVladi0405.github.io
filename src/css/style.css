@@ -636,6 +636,35 @@ body {
     font-weight: 600;
 }
 
+/* ---------- ГОРИЗОНТАЛЬНЫЙ СЛАЙДЕР ---------- */
+.story-slider {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    overflow: hidden;
+    z-index: 10;
+    background: #fff;
+}
+.slide {
+    min-width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    box-sizing: border-box;
+}
+/* Адаптив для слайдов */
+@media (max-width: 768px) {
+    .slide {
+        padding: 1rem;
+    }
+}
+
 /* ---------- АДАПТИВНОСТЬ ---------- */
 @media (max-width: 768px) {
     .greeting__photos { flex-direction: column; }
