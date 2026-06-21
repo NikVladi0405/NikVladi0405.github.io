@@ -67,8 +67,9 @@
 
         <!-- Обычная прокрутка после слайда -->
         <div class="regular-content">
-            <!-- Липкая надпись -->
+            <!-- Липкая надпись с волшебными частицами -->
             <section class="golden-names" id="golden-names">
+                <div class="golden-names__particles" id="goldenParticles"></div>
                 <h2 class="golden-names__title">Никита & Влада</h2>
             </section>
 
@@ -142,8 +143,6 @@
                             <label for="guestName" class="rsvp__label">Ваше имя</label>
                             <input type="text" id="guestName" name="guestName" class="rsvp__input" placeholder="Введите ваше имя" required />
                         </div>
-
-                        <!-- Выбор напитка для основного гостя -->
                         <fieldset class="rsvp__drink">
                             <legend class="rsvp__label">Буду пить алкоголь</legend>
                             <div class="rsvp__food-options">
@@ -157,8 +156,6 @@
                                 </label>
                             </div>
                         </fieldset>
-
-                        <!-- Блок добавления гостей -->
                         <div class="rsvp__field rsvp__field--checkbox">
                             <label class="rsvp__checkbox-label">
                                 <input type="checkbox" id="comingAlone" name="comingAlone" class="rsvp__checkbox-hidden" />
@@ -166,17 +163,14 @@
                                 <span class="rsvp__checkbox-text">Я приду не один / не одна</span>
                             </label>
                         </div>
-
                         <div id="guestsContainer" style="display:none;">
                             <div id="guestsList"></div>
                             <button type="button" class="rsvp__add-guest" id="addGuestBtn">+ Добавить гостя</button>
                         </div>
-
                         <div class="rsvp__field">
                             <label for="message" class="rsvp__label">Оставьте нам пару слов или музыкальный плейлист</label>
                             <textarea id="message" name="message" class="rsvp__textarea" placeholder="Ваши пожелания, любимые треки..." rows="4"></textarea>
                         </div>
-
                         <button type="submit" class="rsvp__submit" id="rsvpSubmit">
                             <span class="rsvp__envelope">
                                 <span class="rsvp__envelope-flap"></span>

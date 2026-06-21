@@ -48,6 +48,9 @@ document.addEventListener('DOMContentLoaded', () => {
             sliderActive = true;
             slide.style.transform = 'translateX(0)';
             document.body.style.backgroundColor = '#fdf7f2';
+
+            // Запускаем частицы для золотой надписи
+            startGoldenParticles();
         });
     }
 
@@ -80,5 +83,25 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         setInterval(createParticle, 300);
         for(let i=0;i<20;i++) setTimeout(createParticle, i*150);
+    }
+
+    // Волшебные частицы для липкой надписи
+    function startGoldenParticles() {
+        const goldenContainer = document.getElementById('goldenParticles');
+        if (!goldenContainer) return;
+        function createGoldenParticle() {
+            const p = document.createElement('span');
+            p.classList.add('golden-particle');
+            p.style.left = Math.random() * 100 + '%';
+            p.style.animationDuration = (Math.random() * 3 + 3) + 's'; // 3-6s
+            p.style.animationDelay = Math.random() * 2 + 's';
+            const symbols = ['✦', '✧', '•', '·'];
+            p.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+            p.style.fontSize = (Math.random() * 0.8 + 0.6) + 'rem';
+            goldenContainer.appendChild(p);
+            setTimeout(() => { if (p.parentNode) p.remove(); }, 6000);
+        }
+        setInterval(createGoldenParticle, 400);
+        for (let i = 0; i < 10; i++) setTimeout(createGoldenParticle, i * 200);
     }
 });

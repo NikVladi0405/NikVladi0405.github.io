@@ -91,7 +91,7 @@ body {
     background: #fefafc;
 }
 
-/* ---------- ЛИПКАЯ ЗОЛОТАЯ НАДПИСЬ ---------- */
+/* ---------- ЛИПКАЯ ЗОЛОТАЯ НАДПИСЬ + ВОЛШЕБСТВО ---------- */
 .golden-names {
     position: sticky;
     top: 0;
@@ -100,6 +100,27 @@ body {
     padding: 0.8rem 0;
     text-align: center;
     box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    overflow: hidden; /* чтобы частицы не вылезали */
+}
+.golden-names__particles {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+}
+.golden-particle {
+    position: absolute;
+    bottom: -10px;
+    color: #d4af37;
+    font-size: 1rem;
+    opacity: 0;
+    animation: goldenFloatUp 4s linear infinite;
+}
+@keyframes goldenFloatUp {
+    0% { transform: translateY(0) scale(0.5); opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 0.8; }
+    100% { transform: translateY(-60px) scale(1.2); opacity: 0; }
 }
 .golden-names__title {
     font-family: 'Great Vibes', 'Cormorant Garamond', serif;
@@ -111,6 +132,8 @@ body {
     background-clip: text;
     color: transparent;
     animation: goldShine 8s ease infinite, gentlePulse 3s ease-in-out infinite;
+    position: relative;
+    z-index: 2;
 }
 
 @keyframes goldShine {
@@ -161,7 +184,7 @@ body {
 
 .dresscode { padding: 6rem 2rem; background: #fefafc; text-align: center; }
 .dresscode__container { max-width: 800px; margin: 0 auto; }
-.dresscode__colors { display: flex; justify-content: center; gap: 1rem; margin: 2rem 0; }
+.dresscode__colors { display: flex; justify-content: center; gap: 1rem; margin: 2rem 0; flex-wrap: wrap; }
 .color-item { width: 40px; height: 40px; border-radius: 50%; border: 2px solid #d4af37; }
 .dresscode__examples { display: flex; justify-content: center; gap: 4rem; margin-top: 2rem; }
 .example-photos img { width: 150px; height: 200px; object-fit: cover; border-radius: 12px; margin: 0.5rem; }
@@ -176,11 +199,12 @@ body {
 .rsvp__checkbox-hidden { position: absolute; opacity: 0; }
 .rsvp__checkbox-custom { width: 24px; height: 24px; border: 2px solid #c9708a; border-radius: 6px; display: inline-block; position: relative; }
 .rsvp__checkbox-hidden:checked + .rsvp__checkbox-custom { background: #c9708a; }
-.rsvp__food-options { display: flex; gap: 2rem; }
+.rsvp__food-options { display: flex; gap: 2rem; flex-wrap: wrap; }
 .rsvp__food-card input { display: none; }
 .rsvp__food-circle { display: flex; flex-direction: column; align-items: center; padding: 2rem 1rem; border-radius: 20px; background: #fdf6f9; border: 2px solid transparent; cursor: pointer; transition: 0.3s; }
 .rsvp__food-card input:checked + .rsvp__food-circle { border-color: #d4af37; background: #fff9ea; }
 .rsvp__submit { width: 100%; padding: 1.2rem; background: #c9708a; color: #fff; border: none; border-radius: 50px; font-size: 1.2rem; cursor: pointer; }
+.rsvp__add-guest { background: none; border: 1px dashed #d4af37; color: #8b3a50; padding: 0.5rem 1rem; border-radius: 20px; cursor: pointer; margin-top: 1rem; font-size: 0.9rem; }
 .rsvp__notification { position: fixed; bottom: 2rem; right: 2rem; background: #c9708a; color: #fff; padding: 1rem 2rem; border-radius: 40px; transform: translateY(120px); opacity: 0; transition: 0.4s; z-index: 1000; }
 .rsvp__notification--visible { transform: translateY(0); opacity: 1; }
 
@@ -198,11 +222,9 @@ body {
 
 /* ---------- АДАПТИВНОСТЬ (мобильные) ---------- */
 @media (max-width: 768px) {
-    /* Интро */
     .intro__names { font-size: 2.5rem; }
     .intro__subtitle { font-size: 1.2rem; }
     .intro__cta { padding: 0.8rem 1.8rem; font-size: 1rem; }
-    /* Слайд */
     .slide { padding: 1rem; }
     .gold-text { font-size: 2.2rem; }
     .gold-lines .gold-line { width: 90%; }
@@ -211,56 +233,46 @@ body {
     .together__text h3 { font-size: 1.6rem; }
     .date { font-size: 1.8rem; }
     .signature { font-size: 1rem; }
-    /* Золотая липкая надпись */
     .golden-names { padding: 0.5rem 0; }
     .golden-names__title { font-size: clamp(1.5rem, 6vw, 2rem); }
-    /* Медиа */
     .media { padding: 3rem 1rem; }
     .media__heading { font-size: 1.6rem; }
     .media__content { flex-direction: column; }
     .media__video, .media__photo { width: 100%; }
-    /* Программа */
     .program { padding: 4rem 1rem; }
     .program h2 { font-size: 1.8rem; }
     .location__timeline { padding-left: 1.5rem; }
     .timeline__time { font-size: 1rem; }
     .timeline__desc { font-size: 0.9rem; }
-    /* Локация */
     .location { padding: 3rem 1rem; }
     .location__name { font-size: 1.8rem; }
     .location__address { font-size: 1rem; }
-    /* Дресс-код */
     .dresscode { padding: 3rem 1rem; }
     .dresscode__examples { flex-direction: column; gap: 2rem; }
     .example-photos img { width: 120px; height: 160px; }
     .color-item { width: 30px; height: 30px; }
-    /* Анкета */
     .rsvp { padding: 3rem 1rem; }
     .rsvp__container { padding: 2rem 1.5rem; border-radius: 24px; }
     .rsvp__heading { font-size: 2rem; }
     .rsvp__food-options { flex-direction: column; gap: 1rem; }
     .rsvp__food-circle { padding: 1.5rem; }
     .rsvp__submit { padding: 1rem; font-size: 1rem; }
-    /* Таймер */
     .timer { padding: 4rem 1rem; }
     .timer__headline { font-size: 2rem; }
     .timer__square { min-width: 70px; padding: 1rem 0.8rem; }
     .timer__number { font-size: 2rem; }
     .timer__quote { font-size: 1.5rem; }
     .timer__photo { width: 200px; }
-    /* Футер */
     .footer { padding: 2rem 1rem; }
     .footer__thanks { font-size: 1.8rem; }
     .footer__socials { gap: 1.5rem; }
     .footer__contacts { font-size: 0.9rem; }
-    /* Убираем лишние горизонтальные отступы */
     .regular-content > section:not(.golden-names) {
         padding-left: 1rem;
         padding-right: 1rem;
     }
 }
 
-/* Для очень маленьких экранов (до 400px) */
 @media (max-width: 400px) {
     .intro__names { font-size: 2rem; }
     .intro__subtitle { font-size: 1rem; }
