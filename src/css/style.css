@@ -78,7 +78,7 @@ body {
     justify-content: center;
     padding: 2rem; box-sizing: border-box;
     transform: translateX(0);
-    transition: transform 0.1s ease; /* быстрее */
+    transition: transform 0.1s ease;
     will-change: transform;
     background: #fdf7f2;
 }
@@ -186,7 +186,7 @@ body {
 
 .timer { background: #2e1a20; color: #f0e1e5; padding: 6rem 2rem; text-align: center; }
 .timer__headline { font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; color: #d4af37; margin-bottom: 2rem; }
-.timer__grid { display: flex; justify-content: center; gap: 1rem; margin-bottom: 2rem; }
+.timer__grid { display: flex; justify-content: center; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap; }
 .timer__square { background: rgba(255,255,255,0.1); border: 2px solid #d4af37; border-radius: 20px; padding: 1.5rem 1rem; min-width: 100px; }
 .timer__number { font-family: 'Playfair Display', serif; font-size: 2.8rem; color: #d4af37; }
 .timer__quote { font-size: 2rem; font-weight: 700; margin: 1.5rem 0; }
@@ -196,19 +196,76 @@ body {
 .footer__socials { display: flex; justify-content: center; gap: 2rem; margin: 1.5rem 0; }
 .footer__phone { color: #e8c97a; font-weight: 600; }
 
-/* ---------- АДАПТИВНОСТЬ ---------- */
+/* ---------- АДАПТИВНОСТЬ (мобильные) ---------- */
 @media (max-width: 768px) {
-    .greeting__photos { flex-direction: column; }
-    .greeting__photo { width: 130px; height: 130px; }
-    .greeting__rings { position: relative; margin: 1rem 0; }
-    .media__content { flex-direction: column; }
-    .media__video, .media__photo { width: 100%; }
-    .dresscode__examples { flex-direction: column; }
-    .timer__grid { flex-wrap: wrap; }
-    .story-step__photos { flex-direction: column; align-items: center; }
-    .story-step__photo { margin-bottom: 1rem; }
+    /* Интро */
     .intro__names { font-size: 2.5rem; }
     .intro__subtitle { font-size: 1.2rem; }
+    .intro__cta { padding: 0.8rem 1.8rem; font-size: 1rem; }
+    /* Слайд */
     .slide { padding: 1rem; }
-    .golden-names__title { font-size: 1.8rem; }
+    .gold-text { font-size: 2.2rem; }
+    .gold-lines .gold-line { width: 90%; }
+    .gold-lines .gold-line--thin { width: 70%; }
+    .together__text { padding: 0 1rem; }
+    .together__text h3 { font-size: 1.6rem; }
+    .date { font-size: 1.8rem; }
+    .signature { font-size: 1rem; }
+    /* Золотая липкая надпись */
+    .golden-names { padding: 0.5rem 0; }
+    .golden-names__title { font-size: clamp(1.5rem, 6vw, 2rem); }
+    /* Медиа */
+    .media { padding: 3rem 1rem; }
+    .media__heading { font-size: 1.6rem; }
+    .media__content { flex-direction: column; }
+    .media__video, .media__photo { width: 100%; }
+    /* Программа */
+    .program { padding: 4rem 1rem; }
+    .program h2 { font-size: 1.8rem; }
+    .location__timeline { padding-left: 1.5rem; }
+    .timeline__time { font-size: 1rem; }
+    .timeline__desc { font-size: 0.9rem; }
+    /* Локация */
+    .location { padding: 3rem 1rem; }
+    .location__name { font-size: 1.8rem; }
+    .location__address { font-size: 1rem; }
+    /* Дресс-код */
+    .dresscode { padding: 3rem 1rem; }
+    .dresscode__examples { flex-direction: column; gap: 2rem; }
+    .example-photos img { width: 120px; height: 160px; }
+    .color-item { width: 30px; height: 30px; }
+    /* Анкета */
+    .rsvp { padding: 3rem 1rem; }
+    .rsvp__container { padding: 2rem 1.5rem; border-radius: 24px; }
+    .rsvp__heading { font-size: 2rem; }
+    .rsvp__food-options { flex-direction: column; gap: 1rem; }
+    .rsvp__food-circle { padding: 1.5rem; }
+    .rsvp__submit { padding: 1rem; font-size: 1rem; }
+    /* Таймер */
+    .timer { padding: 4rem 1rem; }
+    .timer__headline { font-size: 2rem; }
+    .timer__square { min-width: 70px; padding: 1rem 0.8rem; }
+    .timer__number { font-size: 2rem; }
+    .timer__quote { font-size: 1.5rem; }
+    .timer__photo { width: 200px; }
+    /* Футер */
+    .footer { padding: 2rem 1rem; }
+    .footer__thanks { font-size: 1.8rem; }
+    .footer__socials { gap: 1.5rem; }
+    .footer__contacts { font-size: 0.9rem; }
+    /* Убираем лишние горизонтальные отступы */
+    .regular-content > section:not(.golden-names) {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+}
+
+/* Для очень маленьких экранов (до 400px) */
+@media (max-width: 400px) {
+    .intro__names { font-size: 2rem; }
+    .intro__subtitle { font-size: 1rem; }
+    .golden-names__title { font-size: 1.4rem; }
+    .timer__grid { gap: 0.5rem; }
+    .timer__square { min-width: 60px; padding: 0.8rem 0.5rem; }
+    .timer__number { font-size: 1.6rem; }
 }
