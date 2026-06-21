@@ -158,7 +158,7 @@ body {
 .date { font-size: 2rem; font-weight: 700; margin: 1.5rem 0; }
 .signature { font-style: italic; }
 
-/* ---------- МЕДИА (видео + фото с рамками и эффектами) ---------- */
+/* ---------- МЕДИА (видео + фото) ---------- */
 .media {
     padding: 6rem 2rem;
     background: #fff;
@@ -201,8 +201,8 @@ body {
     100% { border-color: #d4af37; }
 }
 .media__frame--video {
-    width: 45%;
-    max-width: 380px;
+    width: 22.5%;
+    max-width: 190px;
 }
 .media__frame--video .media__video {
     width: 100%;
@@ -211,11 +211,11 @@ body {
     display: block;
 }
 .media__frame--photo {
-    width: 35%;
-    max-width: 260px;
+    width: 17.5%;
+    max-width: 130px;
     transform: rotate(5deg);
     margin-top: 30px;
-    margin-left: -40px;
+    margin-left: -20px;
     z-index: 3;
 }
 .media__frame--photo img {
@@ -225,7 +225,21 @@ body {
     border-radius: 12px;
 }
 
-/* Золотой текст с волнистыми линиями */
+/* Энергетическая оболочка */
+.media__energy-ring {
+    position: absolute;
+    inset: -6px;
+    border-radius: 20px;
+    background: conic-gradient(from 0deg, transparent, #d4af37, #f5e6d3, #d4af37, transparent);
+    animation: energySpin 3s linear infinite;
+    z-index: -1;
+}
+@keyframes energySpin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Золотой текст с движущимися волнами */
 .media__golden-section {
     position: relative;
     z-index: 2;
@@ -241,11 +255,25 @@ body {
     opacity: 0.8;
     margin: 0.5rem 0;
 }
+.media__wave--top {
+    animation: waveMoveRight 4s linear infinite;
+}
+.media__wave--bottom {
+    animation: waveMoveLeft 4s linear infinite;
+}
+@keyframes waveMoveRight {
+    0% { background-position-x: 0; }
+    100% { background-position-x: 200px; }
+}
+@keyframes waveMoveLeft {
+    0% { background-position-x: 0; }
+    100% { background-position-x: -200px; }
+}
 .media__golden-text {
     font-family: 'Great Vibes', cursive;
     font-size: 2.2rem;
     font-weight: 700;
-    background: linear-gradient(135deg, #c49a2c 0%, #f5e6d3 25%, #d4af37 50%, #8b6914 75%, #c49a2c 100%);
+    background: linear-gradient(135deg, #b8860b 0%, #ffd700 25%, #ffec8b 50%, #ffd700 75%, #b8860b 100%);
     background-size: 400% 400%;
     -webkit-background-clip: text;
     background-clip: text;
@@ -255,8 +283,8 @@ body {
     line-height: 1.2;
 }
 @keyframes textGlow {
-    from { text-shadow: 0 0 8px rgba(212,175,55,0.5), 0 0 16px rgba(212,175,55,0.3); }
-    to { text-shadow: 0 0 16px rgba(212,175,55,1), 0 0 32px rgba(212,175,55,0.6); }
+    from { text-shadow: 0 0 8px rgba(255,215,0,0.5), 0 0 16px rgba(255,215,0,0.3); }
+    to { text-shadow: 0 0 16px rgba(255,215,0,1), 0 0 32px rgba(255,215,0,0.6); }
 }
 
 /* Частицы и круги */
@@ -364,9 +392,9 @@ body {
     .media { padding: 3rem 1rem; }
     .media__heading { font-size: 1.6rem; }
     .media__content { flex-direction: column; }
-    .media__frame--video { width: 80%; }
-    .media__frame--photo { width: 60%; margin-left: 0; margin-top: 2rem; transform: rotate(3deg); }
-    .media__golden-text { font-size: 1.6rem; }
+    .media__frame--video { width: 40%; max-width: 150px; }
+    .media__frame--photo { width: 30%; max-width: 100px; margin-left: 0; margin-top: 2rem; transform: rotate(3deg); }
+    .media__golden-text { font-size: 1.4rem; }
     .media__wave { width: 150px; }
     .program { padding: 4rem 1rem; }
     .program h2 { font-size: 1.8rem; }
