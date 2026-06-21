@@ -1,86 +1,50 @@
-/* ===== main.js ===== */
 document.addEventListener('DOMContentLoaded', () => {
+    // ===== ОТКРЫТИЕ ПРИГЛАШЕНИЯ + МУЗЫКА =====
+    const openBtn = document.getElementById('openInvitation');
+    const mainContent = document.getElementById('mainContent');
+    const intro = document.getElementById('intro');
+
+    if (openBtn) {
+        openBtn.addEventListener('click', () => {
+            // ЗАПУСК МУЗЫКИ
+            const music = document.getElementById('bgMusic');
+            if (music) {
+                music.volume = 0.3;
+                music.play().catch(err => console.log('Музыка не заиграла:', err));
+            }
+
+            intro.style.display = 'none';
+            mainContent.style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            setTimeout(() => {
+                document.querySelectorAll('.scroll-animate').forEach(el => {
+                    if (el.getBoundingClientRect().top < window.innerHeight) {
+                        el.classList.add('revealed');
+                    }
+                });
+            }, 100);
+        });
+    }
 
     // ===== ТАЙМЕР =====
     const weddingDate = new Date('2027-07-27T15:00:00+03:00').getTime();
-
     function updateTimer() {
         const now = Date.now();
         const distance = weddingDate - now;
-
         const days = Math.floor(distance / (1000 * 60 * 60 * 24));
         const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-        const daysEl = document.getElementById('days');
-        const hoursEl = document.getElementById('hours');
-        const minutesEl = document.getElementById('minutes');
-        const secondsEl = document.getElementById('seconds');
-
-        if (daysEl) daysEl.textContent = String(Math.max(days, 0)).padStart(3, '0');
-        if (hoursEl) hoursEl.textContent = String(Math.max(hours, 0)).padStart(2, '0');
-        if (minutesEl) minutesEl.textContent = String(Math.max(minutes, 0)).padStart(2, '0');
-        if (secondsEl) secondsEl.textContent = String(Math.max(seconds, 0)).padStart(2, '0');
+        document.getElementById('days').textContent = String(Math.max(days,0)).padStart(3,'0');
+        document.getElementById('hours').textContent = String(Math.max(hours,0)).padStart(2,'0');
+        document.getElementById('minutes').textContent = String(Math.max(minutes,0)).padStart(2,'0');
+        document.getElementById('seconds').textContent = String(Math.max(seconds,0)).padStart(2,'0');
     }
-
-    updateTimer();
     setInterval(updateTimer, 1000);
+    updateTimer();
 
-    // ===== БУРГЕР-МЕНЮ =====
-    const burger = document.getElementById('burgerMenu');
-    const navOverlay = document.getElementById('navOverlay');
-    const navClose = document.getElementById('navClose');
-
-    if (burger && navOverlay && navClose) {
-        burger.addEventListener('click', () => {
-            navOverlay.classList.add('nav-overlay--active');
-            burger.classList.add('burger-menu--hidden');
-        });
-        navClose.addEventListener('click', () => {
-            navOverlay.classList.remove('nav-overlay--active');
-            burger.classList.remove('burger-menu--hidden');
-        });
-        document.querySelectorAll('.nav-link').forEach(link => {
-            link.addEventListener('click', () => {
-                navOverlay.classList.remove('nav-overlay--active');
-                burger.classList.remove('burger-menu--hidden');
-            });
-        });
-    }
-
-    // ===== ПЛАВНЫЙ СКРОЛЛ ДЛЯ CTA =====
-    const heroCta = document.getElementById('heroCta');
-    if (heroCta) {
-        heroCta.addEventListener('click', (e) => {
-            e.preventDefault();
-            const target = document.querySelector('#rsvp');
-            if (target) target.scrollIntoView({ behavior: 'smooth' });
-        });
-    }
-
-    // ===== ПОЯВЛЕНИЕ СЕКЦИЙ ПРИ СКРОЛЛЕ =====
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('section--visible');
-                observer.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
-
-    document.querySelectorAll('section').forEach(section => {
-        section.classList.add('section--hidden');
-        observer.observe(section);
-    });
-
-    const heroSection = document.getElementById('hero');
-    if (heroSection) {
-        heroSection.classList.add('section--visible');
-        heroSection.classList.remove('section--hidden');
-    }
-
-    // ===== СКРОЛЛ-АНИМАЦИИ ДЛЯ ЭЛЕМЕНТОВ =====
+    // ===== СКРОЛЛ-АНИМАЦИИ =====
     const scrollElements = document.querySelectorAll('.scroll-animate');
     const elementObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -93,12 +57,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 elementObserver.unobserve(el);
             }
         });
-    }, { threshold: 0.25, rootMargin: '0px 0px -50px 0px' });
+    }, { threshold: 0.25 });
 
     scrollElements.forEach(el => elementObserver.observe(el));
 
-    // ===== ГЕНЕРАТОР ЗОЛОТЫХ ЧАСТИЦ =====
-    const particlesContainer = document.getElementById('heroParticles');
+    // ===== ГЕНЕРАТОР ЗОЛОТЫХ ЧАСТИЦ НА ИНТРО =====
+    const particlesContainer = document.getElementById('introParticles');
     if (particlesContainer) {
         function createParticle() {
             const particle = document.createElement('span');
@@ -106,43 +70,35 @@ document.addEventListener('DOMContentLoaded', () => {
             particle.style.left = Math.random() * 100 + '%';
             particle.style.animationDuration = (Math.random() * 4 + 4) + 's';
             particle.style.animationDelay = Math.random() * 3 + 's';
-            const symbols = ['✦', '✧', '•', '·', '✶', '✷'];
+            const symbols = ['✦','✧','•','·','✶','✷'];
             particle.textContent = symbols[Math.floor(Math.random() * symbols.length)];
             particle.style.fontSize = (Math.random() * 1 + 0.8) + 'rem';
             particlesContainer.appendChild(particle);
-            setTimeout(() => {
-                if (particle.parentNode) particle.remove();
-            }, 8000);
+            setTimeout(() => { if (particle.parentNode) particle.remove(); }, 8000);
         }
         setInterval(createParticle, 300);
-        for (let i = 0; i < 20; i++) {
-            setTimeout(createParticle, i * 150);
-        }
+        for (let i=0; i<20; i++) setTimeout(createParticle, i*150);
     }
 
-    // ===== ЭФФЕКТ ПИШУЩЕЙ МАШИНКИ ДЛЯ ЭПИГРАФА =====
-    const epigraphEl = document.getElementById('timerEpigraph');
-    if (epigraphEl) {
-        const fullText = 'Самое долгое ожидание — это путь друг к другу';
-        let charIndex = 0;
-        
-        function typeWriter() {
-            if (charIndex < fullText.length) {
-                epigraphEl.textContent += fullText.charAt(charIndex);
-                charIndex++;
-                setTimeout(typeWriter, 60 + Math.random() * 40);
-            }
+    // ===== ФЕЙЕРВЕРКИ В ПРЕДЛОЖЕНИИ =====
+    const heart = document.querySelector('.proposal__heart');
+    if (heart) {
+        const fireworkContainer = heart.querySelector('.firework-particles');
+        function createFirework() {
+            const span = document.createElement('span');
+            span.style.position = 'absolute';
+            span.style.width = '4px';
+            span.style.height = '4px';
+            span.style.background = '#d4af37';
+            span.style.borderRadius = '50%';
+            span.style.opacity = '0';
+            span.style.animation = 'fireworkBurst 2s ease-out forwards';
+            span.style.left = '50%';
+            span.style.top = '50%';
+            span.style.transform = `rotate(${Math.random()*360}deg) translateY(-20px)`;
+            fireworkContainer.appendChild(span);
+            setTimeout(() => span.remove(), 2000);
         }
-        
-        const timerObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    setTimeout(typeWriter, 500);
-                    timerObserver.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.3 });
-        
-        timerObserver.observe(document.getElementById('timer'));
+        setInterval(createFirework, 800);
     }
 });

@@ -1,13 +1,12 @@
-/* ===== form.js ===== */
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('rsvpForm');
+    if (!form) return;
     const submitBtn = document.getElementById('rsvpSubmit');
     const notification = document.getElementById('rsvpNotification');
     const comingAloneCheckbox = document.getElementById('comingAlone');
     const partnerField = document.getElementById('partnerField');
     const partnerInput = document.getElementById('partnerName');
 
-    // Показать/скрыть поле спутника
     comingAloneCheckbox.addEventListener('change', function() {
         if (this.checked) {
             partnerField.style.display = 'block';
@@ -19,29 +18,20 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Отправка формы
     form.addEventListener('submit', function(e) {
         e.preventDefault();
-
-        // Имитация запечатывания конверта
         submitBtn.classList.add('rsvp__submit--sealing');
-
         setTimeout(() => {
             notification.classList.add('rsvp__notification--visible');
             submitBtn.classList.remove('rsvp__submit--sealing');
             submitBtn.classList.add('rsvp__submit--sealed');
         }, 800);
-
         setTimeout(() => {
             notification.classList.remove('rsvp__notification--visible');
             submitBtn.classList.remove('rsvp__submit--sealed');
-        }, 4500);
-
-        // Очистка формы (опционально)
-        setTimeout(() => {
             form.reset();
             partnerField.style.display = 'none';
             partnerInput.removeAttribute('required');
-        }, 2000);
+        }, 4500);
     });
 });
