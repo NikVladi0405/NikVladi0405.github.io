@@ -7,11 +7,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const storySlider = document.getElementById('storySlider');
     const slides = document.querySelectorAll('#storySlider .slide');
     const regularContent = document.querySelector('.regular-content');
-    let currentSlide = 0;
+
+    // Параметры горизонтальной ленты
+    const maxTranslate = (slides.length - 1) * window.innerWidth; // максимальное смещение влево
+    let currentTranslate = 0;
     let sliderActive = false;
-    let transitionInProgress = false;
     let regularVisible = false;
-    let touchHandled = false; // чтобы не листать дважды за один свайп
 
     if (openBtn) {
         openBtn.addEventListener('click', () => {
@@ -33,17 +34,11 @@ document.addEventListener('DOMContentLoaded', () => {
         sliderActive = true;
         regularVisible = false;
         document.body.style.overflow = 'hidden';
-        storySlider.style.display = 'block';
+        storySlider.style.display = 'flex';
         regularContent.style.display = 'none';
-
-        // показываем текущий слайд (последний, если возвращаемся)
-        slides.forEach((slide, index) => {
-            slide.classList.remove('active', 'leave-left', 'leave-right', 'enter-left', 'enter-right');
-            if (index === currentSlide) slide.classList.add('active');
-        });
-
-        // плавно скроллим к слайдеру
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        // Устанавливаем позицию на последнем слайде, если возвращаемся
+        storySlider.style.transition = 'none';
+        storySlider.style.transform = `translateX(-${currentTranslate}px)`;
     }
 
     function showRegularContent() {
@@ -53,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
         storySlider.style.display = 'none';
         regularContent.style.display = 'block';
 
-        // активируем скролл-анимации
+        // Активируем видимые анимации
         regularContent.querySelectorAll('.scroll-animate').forEach(el => {
             if (el.getBoundingClientRect().top < window.innerHeight) {
                 el.classList.add('revealed');
@@ -61,100 +56,73 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Смена слайда с защитой от двойного срабатывания
-    function changeSlide(direction) {
-        if (transitionInProgress || !sliderActive) return;
-        const newSlide = currentSlide + direction;
-        if (newSlide < 0 || newSlide >= slides.length) return;
+    // Горизонтальное перемещение
+    function moveSlider(deltaX) {
+        if (!sliderActive) return;
+        currentTranslate = Math.max(0, Math.min(maxTranslate, currentTranslate + deltaX));
+        storySlider.style.transform = `translateX(-${currentTranslate}px)`;
 
-        transitionInProgress = true;
-        touchHandled = true; // блокируем повторные touchmove
-
-        const current = slides[currentSlide];
-        const next = slides[newSlide];
-
-        if (direction > 0) {
-            current.classList.add('leave-left');
-            next.classList.add('enter-right', 'active');
-            current.classList.remove('active');
-        } else {
-            current.classList.add('leave-right');
-            next.classList.add('enter-left', 'active');
-            current.classList.remove('active');
+        // Если дошли до последнего слайда и пытаемся двигаться дальше вправо – переходим к обычному контенту
+        if (currentTranslate >= maxTranslate && deltaX > 0) {
+            showRegularContent();
         }
-
-        currentSlide = newSlide;
-
-        setTimeout(() => {
-            current.classList.remove('leave-left', 'leave-right');
-            next.classList.remove('enter-left', 'enter-right');
-            slides.forEach((slide, index) => {
-                if (index !== currentSlide) slide.classList.remove('active');
-            });
-            transitionInProgress = false;
-            touchHandled = false;
-        }, 600);
     }
 
     // Обработчик колеса (ПК)
     function handleWheel(e) {
         if (!sliderActive) return;
         e.preventDefault();
-        const delta = e.deltaY || e.deltaX || e.wheelDelta || -e.detail;
-        if (delta > 0) {
-            if (currentSlide === slides.length - 1) {
-                showRegularContent();
-            } else {
-                changeSlide(1);
-            }
-        } else if (delta < 0) {
-            if (currentSlide > 0) {
-                changeSlide(-1);
-            }
-        }
+        // Используем deltaY (вертикальное колесо) для горизонтального скролла
+        const delta = e.deltaY || e.deltaX || 0;
+        moveSlider(delta);
     }
 
     // Тач-события (телефон)
+    let touchStartX = 0;
     let touchStartY = 0;
+    let lastTranslate = 0;
+
     function handleTouchStart(e) {
         if (!sliderActive) return;
+        touchStartX = e.touches[0].clientX;
         touchStartY = e.touches[0].clientY;
-        touchHandled = false; // новый жест — можно листать
+        lastTranslate = currentTranslate;
     }
 
     function handleTouchMove(e) {
-        if (!sliderActive || touchHandled) return;
+        if (!sliderActive) return;
+        const touchX = e.touches[0].clientX;
         const touchY = e.touches[0].clientY;
-        const diff = touchStartY - touchY;
-        if (Math.abs(diff) > 40) { // порог чуть выше для надёжности
-            if (diff > 0) {
-                if (currentSlide === slides.length - 1) {
-                    showRegularContent();
-                } else {
-                    changeSlide(1);
-                }
-            } else if (diff < 0) {
-                if (currentSlide > 0) {
-                    changeSlide(-1);
-                }
-            }
-            touchStartY = touchY;
+        const diffX = touchStartX - touchX;
+        const diffY = touchStartY - touchY;
+
+        // Если горизонтальное движение преобладает
+        if (Math.abs(diffX) > Math.abs(diffY)) {
             e.preventDefault();
+            currentTranslate = Math.max(0, Math.min(maxTranslate, lastTranslate + diffX));
+            storySlider.style.transform = `translateX(-${currentTranslate}px)`;
         }
     }
 
-    // Возврат к слайдеру, когда доскроллили до самого верха
+    function handleTouchEnd(e) {
+        if (!sliderActive) return;
+        // Если дошли до края и был свайп вправо – открываем обычный контент
+        if (currentTranslate >= maxTranslate && lastTranslate < maxTranslate) {
+            showRegularContent();
+        }
+    }
+
+    // Возврат к слайдеру при прокрутке вверх до самого верха
     window.addEventListener('scroll', () => {
         if (regularVisible && window.scrollY <= 5) {
-            // небольшой запас, чтобы не дёргалось
             activateSlider();
         }
     });
 
-    // Навешиваем обработчики
     window.addEventListener('wheel', handleWheel, { passive: false });
     window.addEventListener('touchstart', handleTouchStart, { passive: false });
     window.addEventListener('touchmove', handleTouchMove, { passive: false });
+    window.addEventListener('touchend', handleTouchEnd);
 
     // ===== ТАЙМЕР =====
     const weddingDate = new Date('2027-07-27T15:00:00+03:00').getTime();
