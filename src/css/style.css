@@ -304,40 +304,61 @@ body {
                 radial-gradient(circle at 70% 80%, rgba(212,175,55,0.05), transparent 50%);
 }
 .vows__container { max-width: 1000px; margin: 0 auto; position: relative; z-index: 1; }
-.vow { display: flex; gap: 2rem; align-items: center; margin-bottom: 3rem; position: relative; }
+.vow {
+    display: flex;
+    gap: clamp(1rem, 3vw, 2rem);
+    align-items: center;
+    margin-bottom: 3rem;
+    flex-wrap: nowrap; /* критично: никогда не переносить на мобильных */
+}
 .vow--groom { justify-content: flex-start; }
 .vow--bride { justify-content: flex-end; flex-direction: row; }
 .vow__photo {
-    width: min(180px, 35vw); height: min(230px, 45vw);
-    border-radius: 20px; overflow: hidden; position: relative;
-    flex-shrink: 0; box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-    transition: transform 0.5s ease; cursor: pointer;
+    width: clamp(140px, 35vw, 180px);
+    height: clamp(180px, 45vw, 230px);
+    border-radius: 20px;
+    overflow: hidden;
+    flex-shrink: 0; /* не сжиматься */
+    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    transition: transform 0.5s ease;
+    cursor: pointer;
 }
-.vow__photo:hover { transform: scale(1.05) rotate(-2deg); }
-.vow--bride .vow__photo:hover { transform: scale(1.05) rotate(2deg); }
-.vow__photo img { width: 100%; height: 100%; object-fit: cover; }
+.vow__photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .vow__photo-glow {
     position: absolute; inset: -3px; border-radius: 22px;
     border: 2px solid var(--gold); animation: frameShine 3s ease-in-out infinite; pointer-events: none;
 }
 @keyframes frameShine { 0% { border-color: var(--gold); } 50% { border-color: var(--gold-light); } 100% { border-color: var(--gold); } }
-.vow__content { flex: 1; min-width: 250px; }
+.vow__content {
+    flex: 1 1 auto;
+    min-width: 0; /* позволяет тексту переноситься, но блок не ломается */
+}
 .vow--bride .vow__content { text-align: right; }
 .vow__label {
     font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(1rem, 2vw, 1.2rem); letter-spacing: 0.1em; margin-bottom: 0.5rem;
-    display: inline-block;
+    font-size: clamp(0.9rem, 2vw, 1.2rem);
+    letter-spacing: 0.1em;
+    margin-bottom: 0.3rem;
+    display: block;
 }
 .vow__name {
     font-family: 'Great Vibes', cursive;
-    font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 1.5rem;
-    display: inline-block;
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    margin-bottom: 1.2rem;
+    display: block;
     filter: drop-shadow(0 0 6px rgba(212,175,55,0.4));
 }
-.vow__text p { font-size: clamp(0.9rem, 1.5vw, 1rem); line-height: 1.8; margin-bottom: 1rem; color: #2e1a20; }
+.vow__text p {
+    font-size: clamp(0.85rem, 1.5vw, 1rem);
+    line-height: 1.7;
+    margin-bottom: 0.8rem;
+    color: #2e1a20;
+}
 .vows__ampersand {
-    text-align: center; font-size: clamp(3rem, 6vw, 5rem);
-    font-family: 'Great Vibes', cursive; margin: 2rem 0;
+    text-align: center;
+    font-size: clamp(3rem, 6vw, 5rem);
+    font-family: 'Great Vibes', cursive;
+    margin: 2rem 0;
     animation: ampersandPulse 4s ease-in-out infinite;
     filter: drop-shadow(0 0 8px rgba(212,175,55,0.5));
 }
@@ -440,7 +461,7 @@ body {
 }
 .color-item:hover::after, .color-item:active::after { opacity: 1; }
 @keyframes colorFloat { 0% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-6px) rotate(3deg); } 100% { transform: translateY(0) rotate(0deg); } }
-.dresscode__examples { display: flex; justify-content: center; gap: 4rem; margin-top: 2rem; flex-wrap: nowrap; align-items: flex-start; }
+.dresscode__examples { display: flex; justify-content: center; gap: clamp(2rem, 4vw, 4rem); margin-top: 2rem; flex-wrap: nowrap; align-items: flex-start; }
 .dresscode__gender { flex-shrink: 0; }
 .dresscode__gender--women { text-align: left; }
 .dresscode__gender--men { text-align: right; }
@@ -502,13 +523,25 @@ body {
 .footer__phone:hover { color: #fff; }
 
 /* ===== АДАПТИВНОСТЬ ===== */
-@media (max-width: 768px) {
-    .vow { flex-direction: column !important; text-align: center !important; }
-    .vow--bride { flex-direction: column-reverse !important; }
-    .vow--bride .vow__content { text-align: center !important; }
-    .vow__photo { margin: 0 auto 1.5rem; width: 60vw; height: 70vw; }
-    .dresscode__examples { gap: 2rem; }
-    .location__card { padding: 1.5rem; }
+@media (max-width: 600px) {
+    /* На маленьких экранах просто уменьшаем отступы и размеры, но не меняем flex-direction */
+    .vow {
+        gap: 1rem;
+    }
+    .vow__photo {
+        width: clamp(100px, 30vw, 140px);
+        height: clamp(130px, 40vw, 180px);
+    }
+    .vow__name {
+        font-size: clamp(1.5rem, 6vw, 2rem);
+    }
+    .vow__text p {
+        font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+        line-height: 1.6;
+    }
+    .dresscode__examples {
+        gap: 1.5rem;
+    }
 }
 
 @media (max-width: 374px) {
@@ -518,4 +551,8 @@ body {
     .media__golden-text { font-size: 1.3rem; }
     .golden-names__title { font-size: 1.5rem; }
     .together__text h3 { font-size: 1.3rem; }
+    .vow__photo {
+        width: 90px;
+        height: 120px;
+    }
 }
