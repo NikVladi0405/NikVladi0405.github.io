@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const intro = document.getElementById('intro');
     const storyStack = document.getElementById('storyStack');
     const slide = document.querySelector('.slide');
-    const regularContent = document.querySelector('.regular-content');
 
     const SLIDE_HEIGHT = window.innerHeight;
     if (storyStack) storyStack.style.height = SLIDE_HEIGHT + 'px';
@@ -16,60 +15,46 @@ document.addEventListener('DOMContentLoaded', () => {
         const scrollY = window.scrollY;
         const stackTop = storyStack.offsetTop;
         let relativeScroll = scrollY - stackTop;
-
         if (relativeScroll < 0) relativeScroll = 0;
         if (relativeScroll > SLIDE_HEIGHT) relativeScroll = SLIDE_HEIGHT;
-
         const progress = relativeScroll / SLIDE_HEIGHT;
         if (slide) slide.style.transform = `translateX(${-progress * 100}%)`;
         document.body.style.backgroundColor = progress >= 1 ? '#fefafc' : '#fdf7f2';
     }
 
-    window.addEventListener('scroll', () => {
-        if (sliderActive) updateSlide();
-    });
+    window.addEventListener('scroll', () => { if (sliderActive) updateSlide(); });
 
-    // Скролл-анимации для обычных секций
+    // Скролл-анимации
     const scrollElements = document.querySelectorAll('.regular-content .scroll-animate');
     const elementObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 const el = entry.target;
                 const delay = el.dataset.delay || 0;
-                setTimeout(() => {
-                    el.classList.add('revealed');
-                }, parseInt(delay));
+                setTimeout(() => el.classList.add('revealed'), parseInt(delay));
                 elementObserver.unobserve(el);
             }
         });
     }, { threshold: 0.2, rootMargin: '0px 0px -30px 0px' });
-
     scrollElements.forEach(el => elementObserver.observe(el));
 
     if (openBtn) {
         openBtn.addEventListener('click', () => {
             const music = document.getElementById('bgMusic');
-            if (music) {
-                music.volume = 0.3;
-                music.play().catch(() => {});
-            }
-
+            if (music) { music.volume = 0.3; music.play().catch(() => {}); }
             intro.style.display = 'none';
             mainContent.style.display = 'block';
-
             sliderActive = true;
             if (slide) slide.style.transform = 'translateX(0)';
             document.body.style.backgroundColor = '#fdf7f2';
-
             startGoldenParticles();
             startMediaEffects();
-
-            // Запуск анимаций для уже видимых элементов
+            startVowsParticles();
+            startProgramParticles();
+            startLocationParticles();
             setTimeout(() => {
                 document.querySelectorAll('.regular-content .scroll-animate').forEach(el => {
-                    if (el.getBoundingClientRect().top < window.innerHeight) {
-                        el.classList.add('revealed');
-                    }
+                    if (el.getBoundingClientRect().top < window.innerHeight) el.classList.add('revealed');
                 });
             }, 100);
         });
@@ -80,102 +65,118 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateTimer() {
         const now = Date.now();
         const distance = weddingDate - now;
-        const daysEl = document.getElementById('days');
-        const hoursEl = document.getElementById('hours');
-        const minutesEl = document.getElementById('minutes');
-        const secondsEl = document.getElementById('seconds');
-        if (daysEl) daysEl.textContent = String(Math.max(Math.floor(distance/86400000),0)).padStart(3,'0');
-        if (hoursEl) hoursEl.textContent = String(Math.max(Math.floor((distance%86400000)/3600000),0)).padStart(2,'0');
-        if (minutesEl) minutesEl.textContent = String(Math.max(Math.floor((distance%3600000)/60000),0)).padStart(2,'0');
-        if (secondsEl) secondsEl.textContent = String(Math.max(Math.floor((distance%60000)/1000),0)).padStart(2,'0');
+        const set = (id, val, pad) => { const el = document.getElementById(id); if (el) el.textContent = String(Math.max(val,0)).padStart(pad,'0'); };
+        set('days', Math.floor(distance/86400000), 3);
+        set('hours', Math.floor((distance%86400000)/3600000), 2);
+        set('minutes', Math.floor((distance%3600000)/60000), 2);
+        set('seconds', Math.floor((distance%60000)/1000), 2);
     }
     setInterval(updateTimer, 1000);
     updateTimer();
 
-    // Частицы интро
+    // Частицы интро (уменьшено)
     const particlesContainer = document.getElementById('introParticles');
     if (particlesContainer) {
         function createParticle() {
             const p = document.createElement('span');
-            const types = ['particle', 'particle star', 'particle spark', 'particle ring-particle'];
-            p.className = types[Math.floor(Math.random() * types.length)];
+            p.className = 'particle';
             p.style.left = Math.random()*100+'%';
-            p.style.animationDuration = (Math.random()*4+4)+'s';
-            p.style.animationDelay = Math.random()*3+'s';
-            if (!p.classList.contains('ring-particle')) {
-                p.textContent = ['✦','✧','•','·','✶','✷'][Math.floor(Math.random()*6)];
-            }
-            p.style.fontSize = (Math.random()*1+0.8)+'rem';
+            p.style.animationDuration = (Math.random()*5+5)+'s';
+            p.style.animationDelay = Math.random()*4+'s';
+            p.textContent = ['✦','✧','·'][Math.floor(Math.random()*3)];
+            p.style.fontSize = (Math.random()*0.8+0.6)+'rem';
             particlesContainer.appendChild(p);
             setTimeout(() => { if(p.parentNode) p.remove(); }, 8000);
         }
-        setInterval(createParticle, 200);
-        for(let i=0;i<30;i++) setTimeout(createParticle, i*100);
+        setInterval(createParticle, 400);
+        for(let i=0;i<15;i++) setTimeout(createParticle, i*200);
     }
 
-    // Частицы для липкой надписи
+    // Золотые частицы (уменьшено)
     function startGoldenParticles() {
         const goldenContainer = document.getElementById('goldenParticles');
         if (!goldenContainer) return;
-        function createGoldenParticle() {
+        function create() {
             const p = document.createElement('span');
-            p.className = Math.random() > 0.7 ? 'golden-particle sparkle' : 'golden-particle';
-            p.style.left = Math.random() * 100 + '%';
-            p.style.animationDuration = (Math.random() * 3 + 3) + 's';
-            p.style.animationDelay = Math.random() * 2 + 's';
-            p.textContent = ['✦', '✧', '•', '·', '✶', '✷'][Math.floor(Math.random() * 6)];
-            p.style.fontSize = (Math.random() * 0.8 + 0.6) + 'rem';
+            p.className = 'golden-particle';
+            p.style.left = Math.random()*100+'%';
+            p.style.animationDuration = (Math.random()*4+4)+'s';
+            p.style.animationDelay = Math.random()*3+'s';
+            p.textContent = ['✦','✧','·'][Math.floor(Math.random()*3)];
+            p.style.fontSize = (Math.random()*0.7+0.5)+'rem';
             goldenContainer.appendChild(p);
-            setTimeout(() => { if (p.parentNode) p.remove(); }, 6000);
+            setTimeout(() => { if(p.parentNode) p.remove(); }, 7000);
         }
-        setInterval(createGoldenParticle, 300);
-        for (let i = 0; i < 15; i++) setTimeout(createGoldenParticle, i * 150);
+        setInterval(create, 500);
+        for(let i=0;i<8;i++) setTimeout(create, i*250);
     }
 
-    // Магические эффекты для секции "МЫ ЕСТЬ ДРУГ У ДРУГА"
+    // Медиа эффекты (уменьшено)
     function startMediaEffects() {
         const container = document.getElementById('mediaParticles');
         if (!container) return;
-
         setInterval(() => {
-            for (let i = 0; i < 4; i++) {
-                const firework = document.createElement('span');
-                firework.className = 'media-firework';
-                firework.style.left = Math.random() * 100 + '%';
-                firework.style.top = Math.random() * 100 + '%';
-                firework.style.animationDelay = Math.random() * 0.5 + 's';
-                container.appendChild(firework);
-                setTimeout(() => firework.remove(), 2000);
+            for (let i=0;i<2;i++) {
+                const f = document.createElement('span');
+                f.className = 'media-firework';
+                f.style.left = Math.random()*100+'%';
+                f.style.top = Math.random()*100+'%';
+                container.appendChild(f);
+                setTimeout(() => f.remove(), 2500);
             }
-        }, 500);
-
+        }, 800);
         setInterval(() => {
-            for (let i = 0; i < 3; i++) {
-                const circle = document.createElement('div');
-                circle.className = 'media-circle';
-                circle.style.left = Math.random() * 100 + '%';
-                circle.style.top = Math.random() * 100 + '%';
-                circle.style.width = '30px';
-                circle.style.height = '30px';
-                circle.style.animationDelay = Math.random() * 0.5 + 's';
-                container.appendChild(circle);
-                setTimeout(() => circle.remove(), 3000);
+            for (let i=0;i<2;i++) {
+                const c = document.createElement('div');
+                c.className = 'media-circle';
+                c.style.left = Math.random()*100+'%';
+                c.style.top = Math.random()*100+'%';
+                c.style.width = '25px'; c.style.height = '25px';
+                container.appendChild(c);
+                setTimeout(() => c.remove(), 3500);
             }
+        }, 1500);
+    }
+
+    // Эффекты для слов
+    function startVowsParticles() {
+        const container = document.getElementById('vowsParticles');
+        if (!container) return;
+        setInterval(() => {
+            const f = document.createElement('span');
+            f.className = 'media-firework';
+            f.style.left = Math.random()*100+'%';
+            f.style.top = Math.random()*100+'%';
+            container.appendChild(f);
+            setTimeout(() => f.remove(), 2500);
         }, 1000);
+    }
 
+    // Эффекты для программы
+    function startProgramParticles() {
+        const container = document.getElementById('programParticles');
+        if (!container) return;
         setInterval(() => {
-            const x = Math.random() * 100;
-            const y = Math.random() * 100;
-            for (let i = 0; i < 10; i++) {
-                const particle = document.createElement('span');
-                particle.className = 'media-firework';
-                particle.style.left = x + '%';
-                particle.style.top = y + '%';
-                particle.style.animationDuration = '1.5s';
-                particle.style.transform = `rotate(${i * 36}deg) translateY(-15px)`;
-                container.appendChild(particle);
-                setTimeout(() => particle.remove(), 1500);
-            }
-        }, 2000);
+            const f = document.createElement('span');
+            f.className = 'media-firework';
+            f.style.left = Math.random()*100+'%';
+            f.style.top = Math.random()*100+'%';
+            container.appendChild(f);
+            setTimeout(() => f.remove(), 2500);
+        }, 900);
+    }
+
+    // Эффекты для локации
+    function startLocationParticles() {
+        const container = document.getElementById('locationParticles');
+        if (!container) return;
+        setInterval(() => {
+            const f = document.createElement('span');
+            f.className = 'media-firework';
+            f.style.left = Math.random()*100+'%';
+            f.style.top = Math.random()*100+'%';
+            container.appendChild(f);
+            setTimeout(() => f.remove(), 2500);
+        }, 1000);
     }
 });

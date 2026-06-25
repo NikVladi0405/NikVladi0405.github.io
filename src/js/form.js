@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const guestsList = document.getElementById('guestsList');
     const addGuestBtn = document.getElementById('addGuestBtn');
 
-    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/ВАШ_НОВЫЙ_ID/exec';
+    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw1mmr6KNrpRi8kwUBQs3_vM0pcRAjf37NRMo8KKyve6JL4bnTHaSWts4Ct2gF0vaiH/exec';
 
     let guestCount = 0;
 

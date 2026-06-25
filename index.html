@@ -23,14 +23,13 @@
         <div class="intro__overlay"></div>
         <div class="intro__particles" id="introParticles"></div>
         <div class="intro__firework intro__firework--left">
-            <span></span><span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span>
         </div>
         <div class="intro__firework intro__firework--right">
-            <span></span><span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span>
         </div>
         <div class="intro__content">
             <div class="intro__names-wrapper">
-                <div class="intro__names-glow"></div>
                 <h1 class="intro__names">Никита <span>&</span> Влада</h1>
             </div>
             <p class="intro__subtitle">Приглашение на свадьбу</p>
@@ -49,6 +48,7 @@
         <!-- Контейнер для слайда -->
         <div class="story-stack" id="storyStack">
             <section class="slide" id="always-together">
+                <div class="slide__bg-decor"></div>
                 <h2 class="gold-text">Мы всегда будем вместе</h2>
                 <div class="gold-lines">
                     <div class="gold-line gold-line--thick"></div>
@@ -102,12 +102,13 @@
 
             <!-- Слова жениха и невесты -->
             <section class="vows" id="vows">
+                <div class="vows__bg-decor"></div>
                 <div class="vows__container">
                     <!-- Жених -->
                     <div class="vow vow--groom scroll-animate" data-animation="fade-left">
                         <div class="vow__photo">
                             <img src="src/img/portraits/nikita_1.webp" alt="Никита">
-                            <div class="vow__photo-frame"></div>
+                            <div class="vow__photo-glow"></div>
                         </div>
                         <div class="vow__content">
                             <p class="vow__label">Жених</p>
@@ -132,10 +133,11 @@
                         </div>
                         <div class="vow__photo">
                             <img src="src/img/portraits/vlada_1.webp" alt="Влада">
-                            <div class="vow__photo-frame"></div>
+                            <div class="vow__photo-glow"></div>
                         </div>
                     </div>
                 </div>
+                <div class="vows__particles" id="vowsParticles"></div>
             </section>
 
             <!-- Программа мероприятия -->
@@ -155,11 +157,15 @@
                         </div>
                         <div class="timeline__item scroll-animate" data-animation="fade-left">
                             <div class="timeline__dot"></div>
-                            <div class="timeline__content"><span class="timeline__time">17:00</span><span class="timeline__desc">Ужин и тосты</span></div>
+                            <div class="timeline__content"><span class="timeline__time">16:00</span><span class="timeline__desc">Фотосессия с гостями</span></div>
+                        </div>
+                        <div class="timeline__item timeline__item--dance scroll-animate" data-animation="fade-left">
+                            <div class="timeline__dot timeline__dot--dance">💃</div>
+                            <div class="timeline__content"><span class="timeline__time">19:00</span><span class="timeline__desc">Первый танец молодожен</span></div>
                         </div>
                         <div class="timeline__item scroll-animate" data-animation="fade-left">
                             <div class="timeline__dot"></div>
-                            <div class="timeline__content"><span class="timeline__time">21:30</span><span class="timeline__desc">Первый танец молодожен</span></div>
+                            <div class="timeline__content"><span class="timeline__time">20:00</span><span class="timeline__desc">Ужин и тосты</span></div>
                         </div>
                         <div class="timeline__item scroll-animate" data-animation="fade-left">
                             <div class="timeline__dot"></div>
@@ -172,20 +178,24 @@
                     </div>
                 </div>
                 <div class="wave wave--bottom"></div>
+                <div class="program__particles" id="programParticles"></div>
             </section>
 
             <!-- Локация -->
             <section class="location" id="location">
+                <div class="location__decor"></div>
                 <div class="location__container">
                     <h2 class="scroll-animate" data-animation="fade-up">ЛОКАЦИЯ</h2>
-                    <p class="location__intro scroll-animate" data-animation="fade-up">Наш праздник пройдет в</p>
-                    <h3 class="location__name scroll-animate" data-animation="fade-up">ЗАГОРОДНОМ КЛУБЕ ЛЮБОВЬ</h3>
-                    <p class="location__address scroll-animate" data-animation="fade-up">Московская обл., Благовещенка, ул.Весенняя, дом 9</p>
-                    <div class="location__map scroll-animate" data-animation="fade-up">
-                        <iframe src="https://yandex.ru/map-widget/v1/?mode=search&text=Весенняя%20улица%2C%209%2C%20Благовещенка%2C%20Химки%2C%20Московская%20область%2C%20Загородный%20клуб%20Любовь&z=16&pt=37.6200,55.9000&ll=37.6200%2C55.9000" width="100%" height="320" style="border:0; border-radius: 16px;" allowfullscreen="" loading="lazy" title="Карта"></iframe>
+                    <div class="location__card scroll-animate" data-animation="fade-scale">
+                        <p class="location__intro">Наш праздник пройдет в</p>
+                        <h3 class="location__name">ЗАГОРОДНОМ КЛУБЕ ЛЮБОВЬ</h3>
+                        <p class="location__address">Московская обл., Благовещенка, ул.Весенняя, дом 9</p>
+                        <div class="location__map">
+                            <iframe src="https://yandex.ru/map-widget/v1/?mode=search&text=Весенняя%20улица%2C%209%2C%20Благовещенка%2C%20Химки%2C%20Московская%20область%2C%20Загородный%20клуб%20Любовь&z=16&pt=37.6200,55.9000&ll=37.6200%2C55.9000" width="100%" height="320" style="border:0; border-radius: 16px;" allowfullscreen="" loading="lazy" title="Карта"></iframe>
+                        </div>
                     </div>
                 </div>
-                <div class="location__decor"></div>
+                <div class="location__particles" id="locationParticles"></div>
             </section>
 
             <!-- Дресс-код -->
