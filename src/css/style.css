@@ -121,10 +121,8 @@ body {
 @keyframes ctaShimmer { 0% { left: -100%; } 100% { left: 100%; } }
 @keyframes pulseButton { 0% { transform: scale(1); } 50% { transform: scale(1.03); } 100% { transform: scale(1); } }
 .intro__cta:hover,
-.intro__cta:active { 
-    background: rgba(212, 175, 55, 0.25); 
-    transform: scale(1.06); 
-}
+.intro__cta:active,
+.intro__cta:focus-visible { background: rgba(212, 175, 55, 0.25); transform: scale(1.06); }
 .intro__footer {
     position: absolute; bottom: 0; left: 0; right: 0; background: #000;
     padding: 1rem; text-align: center; color: var(--gold); font-style: italic; z-index: 2;
@@ -242,7 +240,7 @@ body {
 }
 .media__content {
     display: flex; gap: clamp(0.5rem, 3vw, 2rem); align-items: center; justify-content: center;
-    flex-wrap: nowrap;
+    flex-wrap: nowrap; /* никогда не переносить */
     position: relative; z-index: 2; margin-bottom: clamp(1rem, 2vh, 2rem);
 }
 .media__frame {
@@ -252,7 +250,8 @@ body {
     flex-shrink: 0;
 }
 .media__frame:hover,
-.media__frame:active { transform: scale(1.03); box-shadow: 0 12px 40px rgba(0,0,0,0.2), 0 0 30px rgba(212,175,55,0.4); }
+.media__frame:active,
+.media__frame:focus-visible { transform: scale(1.03); box-shadow: 0 12px 40px rgba(0,0,0,0.2), 0 0 30px rgba(212,175,55,0.4); }
 .media__frame--video { width: min(45%, 380px); animation: frameFloat 8s ease-in-out infinite; }
 .media__frame--photo {
     width: min(35%, 260px); 
@@ -314,7 +313,7 @@ body {
     gap: clamp(1rem, 3vw, 2rem);
     align-items: center;
     margin-bottom: 3rem;
-    flex-wrap: nowrap;
+    flex-wrap: nowrap; /* критично: никогда не переносить на мобильных */
 }
 .vow--groom { justify-content: flex-start; }
 .vow--bride { justify-content: flex-end; flex-direction: row; }
@@ -323,20 +322,20 @@ body {
     height: clamp(180px, 45vw, 230px);
     border-radius: 20px;
     overflow: hidden;
-    flex-shrink: 0;
+    flex-shrink: 0; /* не сжиматься */
     box-shadow: 0 8px 24px rgba(0,0,0,0.2);
     transition: transform 0.5s ease;
     cursor: pointer;
 }
 .vow__photo:hover,
-.vow__photo:focus,
-.vow__photo:active { transform: scale(1.05); }
+.vow__photo:active,
+.vow__photo:focus-visible { transform: scale(1.05); }
 .vow--groom .vow__photo:hover,
-.vow--groom .vow__photo:focus,
-.vow--groom .vow__photo:active { transform: scale(1.05) rotate(-2deg); }
+.vow--groom .vow__photo:active,
+.vow--groom .vow__photo:focus-visible { transform: scale(1.05) rotate(-2deg); }
 .vow--bride .vow__photo:hover,
-.vow--bride .vow__photo:focus,
-.vow--bride .vow__photo:active { transform: scale(1.05) rotate(2deg); }
+.vow--bride .vow__photo:active,
+.vow--bride .vow__photo:focus-visible { transform: scale(1.05) rotate(2deg); }
 .vow__photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .vow__photo-glow {
     position: absolute; inset: -3px; border-radius: 22px;
@@ -345,7 +344,7 @@ body {
 @keyframes frameShine { 0% { border-color: var(--gold); } 50% { border-color: var(--gold-light); } 100% { border-color: var(--gold); } }
 .vow__content {
     flex: 1 1 auto;
-    min-width: 0;
+    min-width: 0; /* позволяет тексту переноситься, но блок не ломается */
 }
 .vow--bride .vow__content { text-align: right; }
 .vow__label {
@@ -438,7 +437,8 @@ body {
     transition: all 0.5s ease;
 }
 .location__card:hover,
-.location__card:active { box-shadow: 0 0 0 3px rgba(212,175,55,0.5), 0 20px 50px rgba(0,0,0,0.12); transform: translateY(-3px); }
+.location__card:active,
+.location__card:focus-visible { box-shadow: 0 0 0 3px rgba(212,175,55,0.5), 0 20px 50px rgba(0,0,0,0.12); transform: translateY(-3px); }
 .location__intro { font-size: clamp(1rem, 2vw, 1.2rem); margin-bottom: 0.5rem; }
 .location__name { 
     font-family: 'Cormorant Garamond', serif; 
@@ -450,7 +450,8 @@ body {
 .location__address { font-size: clamp(0.9rem, 2vw, 1.2rem); margin-bottom: 1.5rem; color: #666; }
 .location__map { border-radius: 16px; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,0.1); transition: box-shadow 0.3s ease; }
 .location__map:hover,
-.location__map:active { box-shadow: 0 8px 30px rgba(0,0,0,0.15); }
+.location__map:active,
+.location__map:focus-visible { box-shadow: 0 8px 30px rgba(0,0,0,0.15); }
 .location__particles { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
 
 /* ===== ДРЕСС-КОД ===== */
@@ -467,20 +468,19 @@ body {
     width: clamp(35px, 7vw, 45px); height: clamp(35px, 7vw, 45px); 
     border-radius: 50%; border: 2px solid var(--gold); transition: transform 0.3s ease, box-shadow 0.3s ease;
     animation: colorFloat 4s ease-in-out infinite; cursor: pointer; position: relative;
-    outline: none;
 }
 .color-item:nth-child(odd) { animation-delay: 0.5s; }
 .color-item:nth-child(even) { animation-delay: 1s; }
 .color-item:hover,
-.color-item:focus,
-.color-item:active { transform: scale(1.25) rotate(10deg); box-shadow: 0 0 20px rgba(212,175,55,0.5); }
+.color-item:active,
+.color-item:focus-visible { transform: scale(1.25) rotate(10deg); box-shadow: 0 0 20px rgba(212,175,55,0.5); }
 .color-item::after {
     content: attr(data-color); position: absolute; bottom: -25px; left: 50%; transform: translateX(-50%);
     font-size: 0.7rem; color: var(--rose); white-space: nowrap; opacity: 0; transition: opacity 0.3s ease; pointer-events: none;
 }
 .color-item:hover::after,
-.color-item:focus::after,
-.color-item:active::after { opacity: 1; }
+.color-item:active::after,
+.color-item:focus-visible::after { opacity: 1; }
 @keyframes colorFloat { 0% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-6px) rotate(3deg); } 100% { transform: translateY(0) rotate(0deg); } }
 .dresscode__examples { display: flex; justify-content: center; gap: clamp(2rem, 4vw, 4rem); margin-top: 2rem; flex-wrap: nowrap; align-items: flex-start; }
 .dresscode__gender { flex-shrink: 0; }
@@ -492,11 +492,10 @@ body {
     width: clamp(100px, 20vw, 150px); height: clamp(130px, 26vw, 200px); 
     object-fit: cover; border-radius: 12px;
     transition: transform 0.4s ease, box-shadow 0.4s ease; box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    cursor: pointer;
 }
 .example-photos img:hover,
-.example-photos img:focus,
-.example-photos img:active { transform: scale(1.05) rotate(-2deg); box-shadow: 0 8px 24px rgba(0,0,0,0.2), 0 0 20px rgba(212,175,55,0.4); }
+.example-photos img:active,
+.example-photos img:focus-visible { transform: scale(1.05) rotate(-2deg); box-shadow: 0 8px 24px rgba(0,0,0,0.2), 0 0 20px rgba(212,175,55,0.4); }
 
 /* ===== АНКЕТА ===== */
 .rsvp { padding: clamp(2rem, 5vw, 6rem) clamp(1rem, 3vw, 2rem); background: var(--bg-secondary); }
@@ -516,15 +515,18 @@ body {
 .rsvp__food-card input { display: none; }
 .rsvp__food-circle { display: flex; flex-direction: column; align-items: center; padding: clamp(1.5rem, 3vw, 2rem) clamp(0.8rem, 1.5vw, 1rem); border-radius: 20px; background: #fdf6f9; border: 2px solid transparent; cursor: pointer; transition: all 0.3s ease; }
 .rsvp__food-circle:hover,
-.rsvp__food-circle:active { border-color: rgba(212,175,55,0.5); transform: translateY(-3px); }
+.rsvp__food-circle:active,
+.rsvp__food-card input:focus-visible + .rsvp__food-circle { border-color: rgba(212,175,55,0.5); transform: translateY(-3px); }
 .rsvp__food-card input:checked + .rsvp__food-circle { border-color: var(--gold); background: #fff9ea; box-shadow: 0 8px 20px rgba(212,175,55,0.3); animation: selectedPulse 0.6s ease; }
 @keyframes selectedPulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
 .rsvp__submit { width: 100%; padding: clamp(1rem, 2vw, 1.2rem); background: linear-gradient(135deg, #c9708a, #b0556e); color: #fff; border: none; border-radius: 50px; font-size: clamp(1rem, 2vw, 1.2rem); cursor: pointer; transition: all 0.3s ease; }
 .rsvp__submit:hover,
-.rsvp__submit:active { background: linear-gradient(135deg, #d4809a, #c9708a); transform: translateY(-2px); box-shadow: 0 10px 25px rgba(201,112,138,0.4); }
+.rsvp__submit:active,
+.rsvp__submit:focus-visible { background: linear-gradient(135deg, #d4809a, #c9708a); transform: translateY(-2px); box-shadow: 0 10px 25px rgba(201,112,138,0.4); }
 .rsvp__add-guest { background: none; border: 1px dashed var(--gold); color: var(--rose); padding: 0.6rem 1.2rem; border-radius: 20px; cursor: pointer; margin-top: 1.5rem; font-size: clamp(0.8rem, 1.5vw, 0.9rem); transition: all 0.3s ease; display: inline-block; }
 .rsvp__add-guest:hover,
-.rsvp__add-guest:active { background: rgba(212,175,55,0.1); border-style: solid; }
+.rsvp__add-guest:active,
+.rsvp__add-guest:focus-visible { background: rgba(212,175,55,0.1); border-style: solid; }
 .rsvp__notification { position: fixed; bottom: 2rem; right: 2rem; background: linear-gradient(135deg, #c9708a, #b0556e); color: #fff; padding: clamp(0.8rem, 2vw, 1rem) clamp(1.5rem, 3vw, 2rem); border-radius: 40px; transform: translateY(120px); opacity: 0; transition: 0.4s ease; z-index: 1000; font-size: clamp(0.9rem, 1.5vw, 1.2rem); box-shadow: 0 10px 30px rgba(201,112,138,0.5); }
 .rsvp__notification--visible { transform: translateY(0); opacity: 1; animation: notificationBounce 0.6s ease; }
 @keyframes notificationBounce { 0% { transform: translateY(120px); } 60% { transform: translateY(-20px); } 100% { transform: translateY(0); } }
@@ -535,7 +537,8 @@ body {
 .timer__grid { display: flex; justify-content: center; gap: clamp(0.5rem, 2vw, 1rem); margin-bottom: 2rem; flex-wrap: wrap; }
 .timer__square { background: rgba(255,255,255,0.1); border: 2px solid var(--gold); border-radius: 20px; padding: clamp(1rem, 2vw, 1.5rem) clamp(0.8rem, 1.5vw, 1rem); min-width: clamp(80px, 15vw, 100px); transition: all 0.3s ease; }
 .timer__square:hover,
-.timer__square:active { background: rgba(212,175,55,0.2); transform: translateY(-5px); box-shadow: 0 10px 25px rgba(212,175,55,0.3); }
+.timer__square:active,
+.timer__square:focus-visible { background: rgba(212,175,55,0.2); transform: translateY(-5px); box-shadow: 0 10px 25px rgba(212,175,55,0.3); }
 .timer__number {
     font-family: 'Playfair Display', serif;
     font-size: clamp(1.8rem, 4vw, 2.8rem);
@@ -546,7 +549,8 @@ body {
 .timer__quote { font-size: clamp(1.3rem, 3vw, 2rem); font-weight: 700; margin: clamp(1rem, 2vh, 1.5rem) 0; }
 .timer__photo { width: min(250px, 80vw); margin: 2rem auto; border-radius: 20px; overflow: hidden; border: 2px solid var(--gold); transition: all 0.5s ease; }
 .timer__photo:hover,
-.timer__photo:active { transform: scale(1.03); box-shadow: 0 0 30px rgba(212,175,55,0.5); }
+.timer__photo:active,
+.timer__photo:focus-visible { transform: scale(1.03); box-shadow: 0 0 30px rgba(212,175,55,0.5); }
 
 /* ===== ФУТЕР ===== */
 .footer { background: #000; color: var(--gold); padding: clamp(2rem, 4vw, 3rem) clamp(1rem, 3vw, 2rem); text-align: center; font-size: clamp(0.8rem, 1.5vw, 1rem); }
@@ -554,10 +558,12 @@ body {
 .footer__socials { display: flex; justify-content: center; gap: 2rem; margin: 1.5rem 0; }
 .footer__social-link { transition: all 0.3s ease; }
 .footer__social-link:hover,
-.footer__social-link:active { transform: translateY(-3px); color: #fff; }
+.footer__social-link:active,
+.footer__social-link:focus-visible { transform: translateY(-3px); color: #fff; }
 .footer__phone { color: #e8c97a; font-weight: 600; transition: color 0.3s ease; }
 .footer__phone:hover,
-.footer__phone:active { color: #fff; }
+.footer__phone:active,
+.footer__phone:focus-visible { color: #fff; }
 
 /* ===== АДАПТИВНОСТЬ ===== */
 @media (max-width: 600px) {
