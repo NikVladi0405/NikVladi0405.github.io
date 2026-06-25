@@ -127,11 +127,15 @@ body {
     font-size: clamp(0.8rem, 2vw, 1rem);
 }
 .intro__footer-date {
-    font-size: clamp(1rem, 2.5vw, 1.3rem);
-    margin-top: 0.5rem;
     font-style: normal;
-    font-weight: 500;
-    letter-spacing: 0.05em;
+    font-weight: 600;
+    margin-top: 0.3rem;
+    background: var(--gold-gradient);
+    background-size: 400% 400%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: goldShine 10s ease infinite;
 }
 
 /* ===== СЛАЙД ===== */
@@ -213,7 +217,7 @@ body {
 @keyframes lineShine { 0% { opacity: 0.3; } 50% { opacity: 1; } 100% { opacity: 0.3; } }
 .together__text { max-width: 600px; margin: clamp(1rem, 2vh, 2rem) auto; line-height: 1.8; padding: 0 1rem; }
 .together__text h3 { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.5rem, 3vw, 2rem); margin-bottom: 1rem; color: var(--rose); }
-.date { font-size: clamp(1.8rem, 3.5vw, 2.5rem); font-weight: 700; margin: 1.5rem 0; }
+.date { font-size: clamp(1.8rem, 3.5vw, 2.5rem); font-weight: 700; margin: 1.5rem 0; display: inline-block; }
 .signature { font-style: italic; font-size: clamp(1rem, 2vw, 1.3rem); }
 
 /* ===== МЕДИА ===== */
@@ -231,12 +235,10 @@ body {
     font-family: 'Cormorant Garamond', serif; 
     font-size: clamp(1.4rem, 3vw, 2rem); 
     margin-bottom: clamp(1rem, 2vh, 2rem); 
-    /* убираем сильное свечение, оставляем только мягкую тень */
-    filter: drop-shadow(0 0 4px rgba(212,175,55,0.3));
 }
 .media__content {
     display: flex; gap: clamp(0.5rem, 3vw, 2rem); align-items: center; justify-content: center;
-    flex-wrap: nowrap; /* на всех экранах горизонтально */
+    flex-wrap: nowrap; /* никогда не переносить */
     position: relative; z-index: 2; margin-bottom: clamp(1rem, 2vh, 2rem);
 }
 .media__frame {
@@ -407,9 +409,7 @@ body {
     font-size: clamp(1.5rem, 3.5vw, 2.2rem); margin: 0.5rem 0;
     filter: drop-shadow(0 0 6px rgba(212,175,55,0.4));
 }
-.floating-text {
-    animation: nameFloat 4s ease-in-out infinite;
-}
+.floating-text { animation: nameFloat 4s ease-in-out infinite; }
 @keyframes nameFloat { 0% { transform: translateY(0); } 50% { transform: translateY(-6px); } 100% { transform: translateY(0); } }
 .location__address { font-size: clamp(0.9rem, 2vw, 1.2rem); margin-bottom: 1.5rem; color: #666; }
 .location__map { border-radius: 16px; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,0.1); transition: box-shadow 0.3s ease; }
@@ -419,15 +419,12 @@ body {
 /* ===== ДРЕСС-КОД ===== */
 .dresscode { padding: clamp(2rem, 5vw, 6rem) clamp(1rem, 3vw, 2rem); background: #fff; text-align: center; }
 .dresscode__container { max-width: 800px; margin: 0 auto; }
-.dresscode__title {
-    display: inline-block;
-    transform: rotate(-3deg);
-}
 .dresscode h2 {
     font-family: 'Cormorant Garamond', serif;
     font-size: clamp(1.8rem, 3.5vw, 2.5rem); margin-bottom: 1.5rem;
     filter: drop-shadow(0 0 6px rgba(212,175,55,0.4));
 }
+.tilted { display: inline-block; transform: rotate(-3deg); }
 .dresscode__colors { display: flex; justify-content: center; gap: clamp(0.8rem, 2vw, 1.5rem); margin: 2rem 0; flex-wrap: wrap; }
 .color-item { 
     width: clamp(35px, 7vw, 45px); height: clamp(35px, 7vw, 45px); 
@@ -436,18 +433,19 @@ body {
 }
 .color-item:nth-child(odd) { animation-delay: 0.5s; }
 .color-item:nth-child(even) { animation-delay: 1s; }
-.color-item:hover { transform: scale(1.25) rotate(10deg); box-shadow: 0 0 20px rgba(212,175,55,0.5); }
+.color-item:hover, .color-item:active { transform: scale(1.25) rotate(10deg); box-shadow: 0 0 20px rgba(212,175,55,0.5); }
 .color-item::after {
     content: attr(data-color); position: absolute; bottom: -25px; left: 50%; transform: translateX(-50%);
     font-size: 0.7rem; color: var(--rose); white-space: nowrap; opacity: 0; transition: opacity 0.3s ease; pointer-events: none;
 }
-.color-item:hover::after,
-.color-item:active::after { opacity: 1; } /* для телефонов */
+.color-item:hover::after, .color-item:active::after { opacity: 1; }
 @keyframes colorFloat { 0% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-6px) rotate(3deg); } 100% { transform: translateY(0) rotate(0deg); } }
-.dresscode__examples { display: flex; justify-content: center; gap: 4rem; margin-top: 2rem; flex-wrap: wrap; }
-.dresscode__gender { flex: 1; min-width: 200px; }
+.dresscode__examples { display: flex; justify-content: center; gap: 4rem; margin-top: 2rem; flex-wrap: nowrap; align-items: flex-start; }
+.dresscode__gender { flex-shrink: 0; }
+.dresscode__gender--women { text-align: left; }
+.dresscode__gender--men { text-align: right; }
 .dresscode__gender h4 { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.2rem, 2vw, 1.5rem); color: var(--rose); margin-bottom: 1rem; }
-.example-photos { display: flex; gap: 0.5rem; justify-content: center; }
+.example-photos { display: flex; flex-direction: column; gap: 0.5rem; }
 .example-photos img { 
     width: clamp(100px, 20vw, 150px); height: clamp(130px, 26vw, 200px); 
     object-fit: cover; border-radius: 12px;
@@ -503,40 +501,20 @@ body {
 .footer__phone { color: #e8c97a; font-weight: 600; transition: color 0.3s ease; }
 .footer__phone:hover { color: #fff; }
 
-/* ===== АДАПТИВНОСТЬ (только для очень маленьких экранов) ===== */
-@media (max-width: 600px) {
-    .media__content {
-        flex-wrap: wrap;
-        gap: 1rem;
-    }
-    .media__frame--video, .media__frame--photo {
-        width: 80%;
-        margin: 0 auto;
-    }
-    .media__frame--photo {
-        transform: rotate(8deg);
-        margin-top: -30px;
-    }
-    .vow {
-        flex-direction: column !important;
-        text-align: center !important;
-    }
-    .vow--bride {
-        flex-direction: column-reverse !important;
-    }
-    .vow__photo {
-        margin: 0 auto 1.5rem;
-        width: 50vw;
-        height: 60vw;
-    }
-    .dresscode__examples {
-        flex-direction: column;
-        gap: 2rem;
-    }
+/* ===== АДАПТИВНОСТЬ ===== */
+@media (max-width: 768px) {
+    .vow { flex-direction: column !important; text-align: center !important; }
+    .vow--bride { flex-direction: column-reverse !important; }
+    .vow--bride .vow__content { text-align: center !important; }
+    .vow__photo { margin: 0 auto 1.5rem; width: 60vw; height: 70vw; }
+    .dresscode__examples { gap: 2rem; }
+    .location__card { padding: 1.5rem; }
 }
 
 @media (max-width: 374px) {
     .intro__names { font-size: 2.5rem; }
+    .media__frame--video { width: 55%; }
+    .media__frame--photo { width: 45%; margin-left: -20px; margin-top: 20px; transform: rotate(8deg); }
     .media__golden-text { font-size: 1.3rem; }
     .golden-names__title { font-size: 1.5rem; }
     .together__text h3 { font-size: 1.3rem; }

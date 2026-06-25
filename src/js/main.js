@@ -171,4 +171,4 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => f.remove(), 2500);
         }, 1000);
     }
-});
+}); 
