@@ -24,7 +24,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.addEventListener('scroll', () => { if (sliderActive) updateSlide(); });
 
-    // Скролл-анимации
     const scrollElements = document.querySelectorAll('.regular-content .scroll-animate');
     const elementObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -60,7 +59,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Таймер
     const weddingDate = new Date('2027-07-27T15:00:00+03:00').getTime();
     function updateTimer() {
         const now = Date.now();
@@ -74,7 +72,6 @@ document.addEventListener('DOMContentLoaded', () => {
     setInterval(updateTimer, 1000);
     updateTimer();
 
-    // Частицы интро (уменьшено)
     const particlesContainer = document.getElementById('introParticles');
     if (particlesContainer) {
         function createParticle() {
@@ -92,7 +89,6 @@ document.addEventListener('DOMContentLoaded', () => {
         for(let i=0;i<15;i++) setTimeout(createParticle, i*200);
     }
 
-    // Золотые частицы (уменьшено)
     function startGoldenParticles() {
         const goldenContainer = document.getElementById('goldenParticles');
         if (!goldenContainer) return;
@@ -111,7 +107,6 @@ document.addEventListener('DOMContentLoaded', () => {
         for(let i=0;i<8;i++) setTimeout(create, i*250);
     }
 
-    // Медиа эффекты (уменьшено)
     function startMediaEffects() {
         const container = document.getElementById('mediaParticles');
         if (!container) return;
@@ -138,7 +133,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 1500);
     }
 
-    // Эффекты для слов
     function startVowsParticles() {
         const container = document.getElementById('vowsParticles');
         if (!container) return;
@@ -152,7 +146,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 1000);
     }
 
-    // Эффекты для программы
     function startProgramParticles() {
         const container = document.getElementById('programParticles');
         if (!container) return;
@@ -166,7 +159,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 900);
     }
 
-    // Эффекты для локации
     function startLocationParticles() {
         const container = document.getElementById('locationParticles');
         if (!container) return;

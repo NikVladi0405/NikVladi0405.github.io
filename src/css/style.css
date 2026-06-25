@@ -18,14 +18,14 @@ body {
     -webkit-text-size-adjust: 100%;
 }
 
-/* ===== ЗОЛОТОЙ ТЕКСТ (общий класс) ===== */
+/* ===== ЗОЛОТОЙ ТЕКСТ ===== */
 .gold-text-gradient {
     background: var(--gold-gradient);
     background-size: 400% 400%;
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    animation: goldShine 8s ease infinite;
+    animation: goldShine 10s ease infinite;
 }
 @keyframes goldShine {
     0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; }
@@ -56,11 +56,9 @@ body {
 }
 @keyframes floatUpParticle {
     0% { transform: translateY(0) scale(0.5); opacity: 0; }
-    10% { opacity: 0.6; }
-    90% { opacity: 0.4; }
+    10% { opacity: 0.6; } 90% { opacity: 0.4; }
     100% { transform: translateY(-100vh) scale(1); opacity: 0; }
 }
-
 .intro__firework { position: absolute; top: 30%; z-index: 1; pointer-events: none; }
 .intro__firework--left { left: 20%; }
 .intro__firework--right { right: 20%; }
@@ -86,14 +84,15 @@ body {
     color: transparent;
     filter: drop-shadow(0 4px 16px rgba(0,0,0,0.5));
     margin-bottom: 0.5rem;
-    animation: goldShine 6s ease infinite;
+    animation: goldShine 10s ease infinite;
 }
 .intro__names span { 
-    background: none;
-    -webkit-background-clip: unset;
-    background-clip: unset;
-    color: #fff;
-    filter: none;
+    background: var(--gold-gradient);
+    background-size: 400% 400%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: goldShine 10s ease infinite;
 }
 .intro__subtitle { 
     font-family: 'Cormorant Garamond', serif; 
@@ -107,20 +106,17 @@ body {
     color: var(--gold); font-size: clamp(1rem, 2vw, 1.3rem); cursor: pointer;
     backdrop-filter: blur(5px); 
     transition: all 0.3s ease; 
-    animation: pulseButton 2.5s infinite;
-    position: relative;
-    overflow: hidden;
+    animation: pulseButton 3s infinite;
+    position: relative; overflow: hidden;
 }
 .intro__cta::before {
-    content: '';
-    position: absolute;
-    top: 0; left: -100%;
+    content: ''; position: absolute; top: 0; left: -100%;
     width: 100%; height: 100%;
     background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.3), transparent);
-    animation: ctaShimmer 4s infinite;
+    animation: ctaShimmer 5s infinite;
 }
 @keyframes ctaShimmer { 0% { left: -100%; } 100% { left: 100%; } }
-@keyframes pulseButton { 0% { transform: scale(1); } 50% { transform: scale(1.04); } 100% { transform: scale(1); } }
+@keyframes pulseButton { 0% { transform: scale(1); } 50% { transform: scale(1.03); } 100% { transform: scale(1); } }
 .intro__cta:hover { background: rgba(212, 175, 55, 0.25); transform: scale(1.06); }
 .intro__footer {
     position: absolute; bottom: 0; left: 0; right: 0; background: #000;
@@ -135,15 +131,13 @@ body {
     display: flex; flex-direction: column; align-items: center; justify-content: center;
     padding: clamp(1rem, 3vw, 2rem); box-sizing: border-box;
     transform: translateX(0); transition: transform 0.1s ease; will-change: transform;
-    background: var(--bg-primary);
-    overflow: hidden;
+    background: var(--bg-primary); overflow: hidden;
 }
 .slide__bg-decor {
     position: absolute; inset: 0; pointer-events: none;
-    background: 
-        radial-gradient(circle at 20% 30%, rgba(212,175,55,0.06) 0%, transparent 50%),
-        radial-gradient(circle at 80% 70%, rgba(212,175,55,0.06) 0%, transparent 50%);
-    animation: decorShift 10s ease-in-out infinite;
+    background: radial-gradient(circle at 20% 30%, rgba(212,175,55,0.06) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(212,175,55,0.06) 0%, transparent 50%);
+    animation: decorShift 12s ease-in-out infinite;
 }
 @keyframes decorShift { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
 .regular-content { display: block; position: relative; z-index: 10; background: var(--bg-secondary); }
@@ -186,10 +180,10 @@ body {
     background: var(--gold-gradient);
     background-size: 400% 400%;
     -webkit-background-clip: text; background-clip: text; color: transparent;
-    animation: goldShine 8s ease infinite, gentlePulse 3s ease-in-out infinite;
+    animation: goldShine 10s ease infinite, gentlePulse 4s ease-in-out infinite;
     position: relative; z-index: 2;
 }
-@keyframes gentlePulse { 0% { transform: scale(1); } 50% { transform: scale(1.03); } 100% { transform: scale(1); } }
+@keyframes gentlePulse { 0% { transform: scale(1); } 50% { transform: scale(1.02); } 100% { transform: scale(1); } }
 
 /* ===== МЫ ВСЕГДА БУДЕМ ВМЕСТЕ ===== */
 .always-together { text-align: center; }
@@ -198,16 +192,15 @@ body {
     font-size: clamp(2.5rem, 6vw, 3.5rem); 
     background: var(--gold-gradient);
     background-size: 400% 400%;
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    animation: goldShine 6s ease infinite, textFloat 5s ease-in-out infinite;
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    animation: goldShine 10s ease infinite, textFloat 6s ease-in-out infinite;
+    filter: drop-shadow(0 0 8px rgba(212,175,55,0.3));
 }
 @keyframes textFloat { 0% { transform: translateY(0); } 50% { transform: translateY(-6px); } 100% { transform: translateY(0); } }
 .gold-lines { display: flex; flex-direction: column; align-items: center; margin: 1rem 0; }
-.gold-line { width: 80%; height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 4px 0; animation: lineShine 3s ease-in-out infinite; }
-.gold-line--thin { width: 60%; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); animation: lineShine 3s ease-in-out infinite reverse; }
-@keyframes lineShine { 0% { opacity: 0.4; } 50% { opacity: 1; } 100% { opacity: 0.4; } }
+.gold-line { width: 80%; height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 4px 0; animation: lineShine 4s ease-in-out infinite; }
+.gold-line--thin { width: 60%; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); animation: lineShine 4s ease-in-out infinite reverse; }
+@keyframes lineShine { 0% { opacity: 0.3; } 50% { opacity: 1; } 100% { opacity: 0.3; } }
 .together__text { max-width: 600px; margin: clamp(1rem, 2vh, 2rem) auto; line-height: 1.8; padding: 0 1rem; }
 .together__text h3 { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.5rem, 3vw, 2rem); margin-bottom: 1rem; color: var(--rose); }
 .date { font-size: clamp(1.8rem, 3.5vw, 2.5rem); font-weight: 700; margin: 1.5rem 0; background: var(--gold-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; }
@@ -228,10 +221,6 @@ body {
     font-family: 'Cormorant Garamond', serif; 
     font-size: clamp(1.4rem, 3vw, 2rem); 
     margin-bottom: clamp(1rem, 2vh, 2rem); 
-    background: var(--gold-gradient);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
 }
 .media__content {
     display: flex; gap: clamp(0.5rem, 3vw, 2rem); align-items: center; justify-content: center;
@@ -240,39 +229,31 @@ body {
 .media__frame {
     position: relative; border-radius: 16px; overflow: visible;
     box-shadow: 0 8px 24px rgba(0,0,0,0.1); background: #fff; padding: 4px;
-    border: 2px solid var(--gold);
-    transition: transform 0.5s ease, box-shadow 0.5s ease;
+    border: 2px solid var(--gold); transition: transform 0.5s ease, box-shadow 0.5s ease;
 }
 .media__frame:hover { transform: scale(1.03); box-shadow: 0 12px 40px rgba(0,0,0,0.2), 0 0 30px rgba(212,175,55,0.4); }
-.media__frame--video { width: min(45%, 380px); animation: frameFloat 6s ease-in-out infinite; }
+.media__frame--video { width: min(45%, 380px); animation: frameFloat 8s ease-in-out infinite; }
 .media__frame--photo {
     width: min(35%, 260px); 
-    transform: rotate(8deg); 
-    margin-top: 40px; margin-left: -50px; z-index: 3;
-    animation: frameFloat 6s ease-in-out infinite reverse;
+    transform: rotate(12deg); 
+    margin-top: 40px; margin-left: -60px; z-index: 3;
+    animation: frameFloat 8s ease-in-out infinite reverse;
 }
-@keyframes frameFloat {
-    0% { transform: translateY(0); } 50% { transform: translateY(-8px); } 100% { transform: translateY(0); }
-}
-.media__frame--photo { animation: frameFloat 6s ease-in-out infinite reverse; transform: rotate(8deg); }
+@keyframes frameFloat { 0% { transform: translateY(0); } 50% { transform: translateY(-8px); } 100% { transform: translateY(0); } }
+.media__frame--photo { animation: frameFloat 8s ease-in-out infinite reverse; transform: rotate(12deg); }
 .media__frame--video .media__video { width: 100%; height: auto; border-radius: 12px; display: block; }
 .media__frame--photo img { width: 100%; height: auto; display: block; border-radius: 12px; }
 .media__frame::after {
-    content: '';
-    position: absolute; inset: -6px; border-radius: 20px;
+    content: ''; position: absolute; inset: -6px; border-radius: 20px;
     border: 2px solid rgba(212, 175, 55, 0.2);
-    animation: energyField 4s ease-in-out infinite;
-    pointer-events: none;
+    animation: energyField 5s ease-in-out infinite; pointer-events: none;
 }
-@keyframes energyField {
-    0% { inset: -6px; opacity: 0.2; } 50% { inset: -10px; opacity: 0.05; } 100% { inset: -6px; opacity: 0.2; }
-}
+@keyframes energyField { 0% { inset: -6px; opacity: 0.2; } 50% { inset: -10px; opacity: 0.05; } 100% { inset: -6px; opacity: 0.2; } }
 .media__golden-section { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; margin-top: 1rem; }
 .media__wave {
     width: clamp(120px, 30vw, 200px); height: 20px;
     background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 20'%3E%3Cpath d='M0,10 Q25,0 50,10 T100,10 T150,10 T200,10' fill='none' stroke='%23d4af37' stroke-width='1'/%3E%3C/svg%3E") repeat-x;
-    opacity: 0.8; margin: 0.5rem 0;
-    animation: waveRight 4s linear infinite;
+    opacity: 0.8; margin: 0.5rem 0; animation: waveRight 4s linear infinite;
 }
 .media__wave--bottom { animation: waveLeft 4s linear infinite; }
 @keyframes waveRight { from { background-position: 0 0; } to { background-position: 200px 0; } }
@@ -280,10 +261,9 @@ body {
 .media__golden-text {
     font-family: 'Great Vibes', 'Cormorant Garamond', serif;
     font-size: clamp(1.5rem, 4vw, 2.2rem); font-weight: 700;
-    background: var(--gold-gradient);
-    background-size: 400% 400%;
+    background: var(--gold-gradient); background-size: 400% 400%;
     -webkit-background-clip: text; background-clip: text; color: transparent;
-    animation: goldShine 8s ease infinite, gentlePulse 3s ease-in-out infinite;
+    animation: goldShine 10s ease infinite, gentlePulse 4s ease-in-out infinite;
     white-space: nowrap; line-height: 1.2;
 }
 .media__particles { position: absolute; inset: 0; pointer-events: none; z-index: 1; }
@@ -291,10 +271,7 @@ body {
     position: absolute; width: 3px; height: 3px; background: var(--gold); border-radius: 50%; opacity: 0;
     animation: mediaFirework 2.5s ease-out forwards;
 }
-@keyframes mediaFirework {
-    0% { opacity: 1; transform: scale(0); } 50% { opacity: 1; transform: scale(1.3); }
-    100% { opacity: 0; transform: scale(1.8) translateY(-25px); }
-}
+@keyframes mediaFirework { 0% { opacity: 1; transform: scale(0); } 50% { opacity: 1; transform: scale(1.3); } 100% { opacity: 0; transform: scale(1.8) translateY(-25px); } }
 .media-circle {
     position: absolute; border: 1px solid var(--gold); border-radius: 50%; opacity: 0;
     animation: circleExpand 4s ease-out forwards;
@@ -304,9 +281,7 @@ body {
 /* ===== СЛОВА ЖЕНИХА И НЕВЕСТЫ ===== */
 .vows {
     padding: clamp(3rem, 6vw, 6rem) clamp(1rem, 3vw, 2rem);
-    background: var(--bg-secondary);
-    position: relative;
-    overflow: hidden;
+    background: var(--bg-secondary); position: relative; overflow: hidden;
 }
 .vows__bg-decor {
     position: absolute; inset: 0; pointer-events: none;
@@ -314,51 +289,42 @@ body {
                 radial-gradient(circle at 70% 80%, rgba(212,175,55,0.05), transparent 50%);
 }
 .vows__container { max-width: 1000px; margin: 0 auto; position: relative; z-index: 1; }
-.vow {
-    display: flex; gap: 2rem; align-items: center; margin-bottom: 3rem;
-    position: relative;
-}
+.vow { display: flex; gap: 2rem; align-items: center; margin-bottom: 3rem; position: relative; }
 .vow--groom { justify-content: flex-start; }
 .vow--bride { justify-content: flex-end; flex-direction: row; }
 .vow__photo {
     width: min(180px, 35vw); height: min(230px, 45vw);
     border-radius: 20px; overflow: hidden; position: relative;
     flex-shrink: 0; box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-    transition: transform 0.5s ease;
-    cursor: pointer;
+    transition: transform 0.5s ease; cursor: pointer;
 }
 .vow__photo:hover { transform: scale(1.05) rotate(-2deg); }
 .vow--bride .vow__photo:hover { transform: scale(1.05) rotate(2deg); }
 .vow__photo img { width: 100%; height: 100%; object-fit: cover; }
 .vow__photo-glow {
     position: absolute; inset: -3px; border-radius: 22px;
-    border: 2px solid var(--gold);
-    animation: frameShine 3s ease-in-out infinite;
-    pointer-events: none;
+    border: 2px solid var(--gold); animation: frameShine 3s ease-in-out infinite; pointer-events: none;
 }
 @keyframes frameShine { 0% { border-color: var(--gold); } 50% { border-color: var(--gold-light); } 100% { border-color: var(--gold); } }
 .vow__content { flex: 1; min-width: 250px; }
 .vow--bride .vow__content { text-align: right; }
 .vow__label {
     font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(1rem, 2vw, 1.2rem); color: #a0676b; letter-spacing: 0.1em; margin-bottom: 0.5rem;
+    font-size: clamp(1rem, 2vw, 1.2rem); letter-spacing: 0.1em; margin-bottom: 0.5rem;
+    display: inline-block;
 }
 .vow__name {
     font-family: 'Great Vibes', cursive;
-    font-size: clamp(2rem, 4vw, 3rem);
-    background: var(--gold-gradient);
-    -webkit-background-clip: text; background-clip: text; color: transparent;
-    margin-bottom: 1.5rem;
+    font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 1.5rem;
+    display: inline-block;
+    filter: drop-shadow(0 0 6px rgba(212,175,55,0.4));
 }
 .vow__text p { font-size: clamp(0.9rem, 1.5vw, 1rem); line-height: 1.8; margin-bottom: 1rem; color: #2e1a20; }
 .vows__ampersand {
-    text-align: center;
-    font-size: clamp(3rem, 6vw, 5rem);
-    background: var(--gold-gradient);
-    -webkit-background-clip: text; background-clip: text; color: transparent;
-    font-family: 'Great Vibes', cursive;
-    margin: 2rem 0;
-    animation: ampersandPulse 3s ease-in-out infinite;
+    text-align: center; font-size: clamp(3rem, 6vw, 5rem);
+    font-family: 'Great Vibes', cursive; margin: 2rem 0;
+    animation: ampersandPulse 4s ease-in-out infinite;
+    filter: drop-shadow(0 0 8px rgba(212,175,55,0.5));
 }
 @keyframes ampersandPulse { 0% { transform: scale(1); opacity: 0.8; } 50% { transform: scale(1.1); opacity: 1; } 100% { transform: scale(1); opacity: 0.8; } }
 .vows__particles { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
@@ -376,33 +342,24 @@ body {
 .program__container { max-width: 600px; margin: 0 auto; position: relative; z-index: 1; }
 .program h2 {
     font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(1.8rem, 3.5vw, 2.5rem);
-    background: var(--gold-gradient);
-    -webkit-background-clip: text; background-clip: text; color: transparent;
-    text-align: center; margin-bottom: 2rem;
+    font-size: clamp(1.8rem, 3.5vw, 2.5rem); text-align: center; margin-bottom: 2rem;
+    filter: drop-shadow(0 0 6px rgba(212,175,55,0.4));
 }
 .location__timeline { position: relative; padding-left: 2.5rem; border-left: 2px dashed var(--gold); margin-top: 2rem; }
 .timeline__item { position: relative; margin-bottom: 2.5rem; padding-left: 1rem; }
 .timeline__dot { 
     position: absolute; left: -0.75rem; top: 0.5rem; width: 14px; height: 14px; 
-    background: var(--gold); border-radius: 50%;
-    animation: dotPulse 2s ease-in-out infinite;
+    background: var(--gold); border-radius: 50%; animation: dotPulse 2s ease-in-out infinite;
 }
-@keyframes dotPulse {
-    0% { box-shadow: 0 0 0 0 rgba(212,175,55,0.6); }
-    70% { box-shadow: 0 0 0 10px rgba(212,175,55,0); }
-    100% { box-shadow: 0 0 0 0 rgba(212,175,55,0); }
-}
+@keyframes dotPulse { 0% { box-shadow: 0 0 0 0 rgba(212,175,55,0.6); } 70% { box-shadow: 0 0 0 10px rgba(212,175,55,0); } 100% { box-shadow: 0 0 0 0 rgba(212,175,55,0); } }
 .timeline__dot--rings { background: transparent; font-size: 1.2rem; left: -1.3rem; top: -0.1rem; animation: ringSpin 3s linear infinite; }
 .timeline__dot--dance { background: transparent; font-size: 1.2rem; left: -1.3rem; top: -0.1rem; animation: ringSpin 3s linear infinite; }
 .timeline__dot--firework { background: transparent; font-size: 1.2rem; left: -1.3rem; top: -0.1rem; }
 @keyframes ringSpin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 .timeline__content { display: flex; flex-direction: column; gap: 0.3rem; }
 .timeline__time { 
-    font-weight: 700; font-family: 'Playfair Display', serif;
-    background: var(--gold-gradient);
-    -webkit-background-clip: text; background-clip: text; color: transparent;
-    font-size: clamp(1.1rem, 2vw, 1.3rem);
+    font-weight: 700; font-family: 'Playfair Display', serif; font-size: clamp(1.1rem, 2vw, 1.3rem);
+    display: inline-block; width: fit-content;
 }
 .timeline__desc { font-size: clamp(0.9rem, 1.5vw, 1rem); }
 .program__particles { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
@@ -422,34 +379,27 @@ body {
 .location__container { max-width: 800px; margin: 0 auto; position: relative; z-index: 1; }
 .location h2 {
     font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(1.8rem, 3.5vw, 2.5rem);
-    background: var(--gold-gradient);
-    -webkit-background-clip: text; background-clip: text; color: transparent;
-    margin-bottom: 1.5rem;
+    font-size: clamp(1.8rem, 3.5vw, 2.5rem); margin-bottom: 1.5rem;
+    filter: drop-shadow(0 0 6px rgba(212,175,55,0.4));
 }
 .location__card {
     background: #fff; border-radius: 24px; padding: clamp(1.5rem, 3vw, 3rem);
     box-shadow: 0 0 0 1px rgba(212,175,55,0.3), 0 15px 40px rgba(0,0,0,0.08);
     transition: all 0.5s ease;
 }
-.location__card:hover {
-    box-shadow: 0 0 0 3px rgba(212,175,55,0.5), 0 20px 50px rgba(0,0,0,0.12);
-    transform: translateY(-3px);
-}
+.location__card:hover { box-shadow: 0 0 0 3px rgba(212,175,55,0.5), 0 20px 50px rgba(0,0,0,0.12); transform: translateY(-3px); }
 .location__intro { font-size: clamp(1rem, 2vw, 1.2rem); margin-bottom: 0.5rem; }
 .location__name { 
     font-family: 'Cormorant Garamond', serif; 
-    font-size: clamp(1.5rem, 3.5vw, 2.2rem); 
-    background: var(--gold-gradient);
-    -webkit-background-clip: text; background-clip: text; color: transparent;
-    margin: 0.5rem 0;
+    font-size: clamp(1.5rem, 3.5vw, 2.2rem); margin: 0.5rem 0;
+    filter: drop-shadow(0 0 6px rgba(212,175,55,0.4));
 }
+.floating-text {
+    animation: nameFloat 4s ease-in-out infinite;
+}
+@keyframes nameFloat { 0% { transform: translateY(0); } 50% { transform: translateY(-6px); } 100% { transform: translateY(0); } }
 .location__address { font-size: clamp(0.9rem, 2vw, 1.2rem); margin-bottom: 1.5rem; color: #666; }
-.location__map { 
-    border-radius: 16px; overflow: hidden; 
-    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
-    transition: box-shadow 0.3s ease;
-}
+.location__map { border-radius: 16px; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,0.1); transition: box-shadow 0.3s ease; }
 .location__map:hover { box-shadow: 0 8px 30px rgba(0,0,0,0.15); }
 .location__particles { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
 
@@ -458,27 +408,21 @@ body {
 .dresscode__container { max-width: 800px; margin: 0 auto; }
 .dresscode h2 {
     font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(1.8rem, 3.5vw, 2.5rem);
-    background: var(--gold-gradient);
-    -webkit-background-clip: text; background-clip: text; color: transparent;
-    margin-bottom: 1.5rem;
+    font-size: clamp(1.8rem, 3.5vw, 2.5rem); margin-bottom: 1.5rem;
+    filter: drop-shadow(0 0 6px rgba(212,175,55,0.4));
 }
 .dresscode__colors { display: flex; justify-content: center; gap: clamp(0.8rem, 2vw, 1.5rem); margin: 2rem 0; flex-wrap: wrap; }
 .color-item { 
     width: clamp(35px, 7vw, 45px); height: clamp(35px, 7vw, 45px); 
-    border-radius: 50%; border: 2px solid var(--gold);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    animation: colorFloat 3s ease-in-out infinite;
-    cursor: pointer; position: relative;
+    border-radius: 50%; border: 2px solid var(--gold); transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: colorFloat 4s ease-in-out infinite; cursor: pointer; position: relative;
 }
 .color-item:nth-child(odd) { animation-delay: 0.5s; }
 .color-item:nth-child(even) { animation-delay: 1s; }
 .color-item:hover { transform: scale(1.25) rotate(10deg); box-shadow: 0 0 20px rgba(212,175,55,0.5); }
 .color-item::after {
-    content: attr(data-color);
-    position: absolute; bottom: -25px; left: 50%; transform: translateX(-50%);
-    font-size: 0.7rem; color: var(--rose); white-space: nowrap;
-    opacity: 0; transition: opacity 0.3s ease; pointer-events: none;
+    content: attr(data-color); position: absolute; bottom: -25px; left: 50%; transform: translateX(-50%);
+    font-size: 0.7rem; color: var(--rose); white-space: nowrap; opacity: 0; transition: opacity 0.3s ease; pointer-events: none;
 }
 .color-item:hover::after { opacity: 1; }
 @keyframes colorFloat { 0% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-6px) rotate(3deg); } 100% { transform: translateY(0) rotate(0deg); } }
@@ -487,8 +431,7 @@ body {
 .example-photos img { 
     width: clamp(100px, 20vw, 150px); height: clamp(130px, 26vw, 200px); 
     object-fit: cover; border-radius: 12px; margin: 0.5rem;
-    transition: transform 0.4s ease, box-shadow 0.4s ease;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transition: transform 0.4s ease, box-shadow 0.4s ease; box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 .example-photos img:hover { transform: scale(1.05) rotate(-2deg); box-shadow: 0 8px 24px rgba(0,0,0,0.2), 0 0 20px rgba(212,175,55,0.4); }
 
@@ -522,11 +465,11 @@ body {
 
 /* ===== ТАЙМЕР ===== */
 .timer { background: #2e1a20; color: #f0e1e5; padding: clamp(2rem, 5vw, 6rem) clamp(1rem, 3vw, 2rem); text-align: center; }
-.timer__headline { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.8rem, 4vw, 2.5rem); background: var(--gold-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; margin-bottom: clamp(1.5rem, 3vh, 2rem); }
+.timer__headline { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.8rem, 4vw, 2.5rem); margin-bottom: clamp(1.5rem, 3vh, 2rem); filter: drop-shadow(0 0 6px rgba(212,175,55,0.4)); }
 .timer__grid { display: flex; justify-content: center; gap: clamp(0.5rem, 2vw, 1rem); margin-bottom: 2rem; flex-wrap: wrap; }
 .timer__square { background: rgba(255,255,255,0.1); border: 2px solid var(--gold); border-radius: 20px; padding: clamp(1rem, 2vw, 1.5rem) clamp(0.8rem, 1.5vw, 1rem); min-width: clamp(80px, 15vw, 100px); transition: all 0.3s ease; }
 .timer__square:hover { background: rgba(212,175,55,0.2); transform: translateY(-5px); box-shadow: 0 10px 25px rgba(212,175,55,0.3); }
-.timer__number { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 4vw, 2.8rem); background: var(--gold-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.timer__number { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 4vw, 2.8rem); display: inline-block; }
 .timer__quote { font-size: clamp(1.3rem, 3vw, 2rem); font-weight: 700; margin: clamp(1rem, 2vh, 1.5rem) 0; }
 .timer__photo { width: min(250px, 80vw); margin: 2rem auto; border-radius: 20px; overflow: hidden; border: 2px solid var(--gold); transition: all 0.5s ease; }
 .timer__photo:hover { transform: scale(1.03); box-shadow: 0 0 30px rgba(212,175,55,0.5); }
@@ -543,7 +486,7 @@ body {
 /* ===== АДАПТИВНОСТЬ ===== */
 @media (max-width: 768px) {
     .vow { flex-direction: column !important; text-align: center !important; }
-    .vow--bride { flex-direction: column !important; }
+    .vow--bride { flex-direction: column-reverse !important; }
     .vow--bride .vow__content { text-align: center !important; }
     .vow__photo { margin: 0 auto 1.5rem; width: 60vw; height: 70vw; }
     .media__frame--video { width: 80%; }
@@ -555,7 +498,7 @@ body {
 @media (max-width: 374px) {
     .intro__names { font-size: 2.5rem; }
     .media__frame--video { width: 90%; }
-    .media__frame--photo { width: 70%; margin-left: 0; margin-top: 1.5rem; transform: rotate(3deg); }
+    .media__frame--photo { width: 70%; margin-left: 0; margin-top: 1.5rem; transform: rotate(10deg); }
     .media__golden-text { font-size: 1.3rem; }
     .golden-names__title { font-size: 1.5rem; }
     .together__text h3 { font-size: 1.3rem; }
