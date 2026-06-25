@@ -29,7 +29,10 @@
             <span></span><span></span><span></span><span></span><span></span><span></span>
         </div>
         <div class="intro__content">
-            <h1 class="intro__names">Никита <span>&</span> Влада</h1>
+            <div class="intro__names-wrapper">
+                <div class="intro__names-glow"></div>
+                <h1 class="intro__names">Никита <span>&</span> Влада</h1>
+            </div>
             <p class="intro__subtitle">Приглашение на свадьбу</p>
             <button class="intro__cta" id="openInvitation">
                 <span>Открыть приглашение</span>
@@ -67,13 +70,15 @@
 
         <!-- Обычная прокрутка после слайда -->
         <div class="regular-content">
-            <!-- Липкая надпись с волшебными частицами -->
+            <!-- Липкая надпись -->
             <section class="golden-names" id="golden-names">
                 <div class="golden-names__particles" id="goldenParticles"></div>
                 <h2 class="golden-names__title">Никита & Влада</h2>
             </section>
 
+            <!-- Медиа -->
             <section class="media" id="media">
+                <div class="media__bg-decor"></div>
                 <div class="media__container">
                     <h3 class="media__heading">МЫ ЕСТЬ ДРУГ У ДРУГА, НАВСЕГДА.</h3>
                     <div class="media__content">
@@ -95,58 +100,134 @@
                 </div>
             </section>
 
+            <!-- Слова жениха и невесты -->
+            <section class="vows" id="vows">
+                <div class="vows__container">
+                    <!-- Жених -->
+                    <div class="vow vow--groom scroll-animate" data-animation="fade-left">
+                        <div class="vow__photo">
+                            <img src="src/img/portraits/nikita_1.webp" alt="Никита">
+                            <div class="vow__photo-frame"></div>
+                        </div>
+                        <div class="vow__content">
+                            <p class="vow__label">Жених</p>
+                            <h3 class="vow__name">Никита</h3>
+                            <div class="vow__text">
+                                <p>Влада — это человек, который сделал мою жизнь яркой и осмысленной. Каждый день рядом с ней — это подарок судьбы. Я обещаю быть верным и любящим мужем, разделять с тобой радости и преодолевать трудности. Ты — мой свет.</p>
+                                <p>Семья для меня — это не просто слово. Это фундамент, на котором строится всё остальное. Это место, где тебя всегда ждут, где всегда поймут и поддержат. Я хочу построить нашу семью на любви и взаимном уважении.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Символ & -->
+                    <div class="vows__ampersand scroll-animate" data-animation="fade-scale">&#x26;</div>
+                    <!-- Невеста -->
+                    <div class="vow vow--bride scroll-animate" data-animation="fade-right">
+                        <div class="vow__content">
+                            <p class="vow__label">Невеста</p>
+                            <h3 class="vow__name">Влада</h3>
+                            <div class="vow__text">
+                                <p>Никита — моя опора и вдохновение. С ним я чувствую себя самой счастливой девушкой на свете. Его забота, нежность и чувство юмора делают каждый наш день особенным. Я обещаю быть рядом и в горе, и в радости.</p>
+                                <p>Для меня семья — это очаг, который мы будем беречь вместе. Это наши будущие дети, уютный дом и бесконечная любовь. Я верю, что впереди у нас самая прекрасная история.</p>
+                            </div>
+                        </div>
+                        <div class="vow__photo">
+                            <img src="src/img/portraits/vlada_1.webp" alt="Влада">
+                            <div class="vow__photo-frame"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Программа мероприятия -->
             <section class="program" id="program">
                 <div class="wave wave--top"></div>
+                <div class="program__bg-decor"></div>
                 <div class="program__container">
-                    <h2>ПРОГРАММА ДНЯ</h2>
+                    <h2 class="scroll-animate" data-animation="fade-up">ПРОГРАММА МЕРОПРИЯТИЯ</h2>
                     <div class="location__timeline">
-                        <div class="timeline__item"><div class="timeline__dot"></div><div class="timeline__content"><span class="timeline__time">14:00</span><span class="timeline__desc">Встреча гостей</span></div></div>
-                        <div class="timeline__item timeline__item--ceremony"><div class="timeline__dot timeline__dot--rings">💍</div><div class="timeline__content"><span class="timeline__time">15:00</span><span class="timeline__desc">Церемония «Вместе и навсегда»</span></div></div>
-                        <div class="timeline__item"><div class="timeline__dot"></div><div class="timeline__content"><span class="timeline__time">17:00</span><span class="timeline__desc">Ужин и тосты</span></div></div>
-                        <div class="timeline__item timeline__item--fireworks"><div class="timeline__dot timeline__dot--firework">🎆</div><div class="timeline__content"><span class="timeline__time">23:00</span><span class="timeline__desc">Салют в честь новобрачных</span></div></div>
+                        <div class="timeline__item scroll-animate" data-animation="fade-left">
+                            <div class="timeline__dot"></div>
+                            <div class="timeline__content"><span class="timeline__time">14:00</span><span class="timeline__desc">Встреча гостей</span></div>
+                        </div>
+                        <div class="timeline__item timeline__item--ceremony scroll-animate" data-animation="fade-left">
+                            <div class="timeline__dot timeline__dot--rings">💍</div>
+                            <div class="timeline__content"><span class="timeline__time">15:00</span><span class="timeline__desc">Церемония «Вместе и навсегда»</span></div>
+                        </div>
+                        <div class="timeline__item scroll-animate" data-animation="fade-left">
+                            <div class="timeline__dot"></div>
+                            <div class="timeline__content"><span class="timeline__time">17:00</span><span class="timeline__desc">Ужин и тосты</span></div>
+                        </div>
+                        <div class="timeline__item scroll-animate" data-animation="fade-left">
+                            <div class="timeline__dot"></div>
+                            <div class="timeline__content"><span class="timeline__time">21:30</span><span class="timeline__desc">Первый танец молодожен</span></div>
+                        </div>
+                        <div class="timeline__item scroll-animate" data-animation="fade-left">
+                            <div class="timeline__dot"></div>
+                            <div class="timeline__content"><span class="timeline__time">22:00</span><span class="timeline__desc">Торт</span></div>
+                        </div>
+                        <div class="timeline__item timeline__item--fireworks scroll-animate" data-animation="fade-left">
+                            <div class="timeline__dot timeline__dot--firework">🎆</div>
+                            <div class="timeline__content"><span class="timeline__time">23:00</span><span class="timeline__desc">Салют в честь новобрачных</span></div>
+                        </div>
                     </div>
                 </div>
                 <div class="wave wave--bottom"></div>
             </section>
 
+            <!-- Локация -->
             <section class="location" id="location">
                 <div class="location__container">
-                    <h2>ЛОКАЦИЯ</h2>
-                    <p class="location__intro">Наш праздник пройдет в</p>
-                    <h3 class="location__name">ЗАГОРОДНОМ КЛУБЕ ЛЮБОВЬ</h3>
-                    <p class="location__address">Московская обл., Благовещенка, ул.Весенняя, дом 9</p>
-                    <div class="location__map">
+                    <h2 class="scroll-animate" data-animation="fade-up">ЛОКАЦИЯ</h2>
+                    <p class="location__intro scroll-animate" data-animation="fade-up">Наш праздник пройдет в</p>
+                    <h3 class="location__name scroll-animate" data-animation="fade-up">ЗАГОРОДНОМ КЛУБЕ ЛЮБОВЬ</h3>
+                    <p class="location__address scroll-animate" data-animation="fade-up">Московская обл., Благовещенка, ул.Весенняя, дом 9</p>
+                    <div class="location__map scroll-animate" data-animation="fade-up">
                         <iframe src="https://yandex.ru/map-widget/v1/?mode=search&text=Весенняя%20улица%2C%209%2C%20Благовещенка%2C%20Химки%2C%20Московская%20область%2C%20Загородный%20клуб%20Любовь&z=16&pt=37.6200,55.9000&ll=37.6200%2C55.9000" width="100%" height="320" style="border:0; border-radius: 16px;" allowfullscreen="" loading="lazy" title="Карта"></iframe>
                     </div>
                 </div>
+                <div class="location__decor"></div>
             </section>
 
+            <!-- Дресс-код -->
             <section class="dresscode" id="dresscode">
                 <div class="dresscode__container">
-                    <h2>ДРЕСС-КОД</h2>
-                    <div class="dresscode__colors">
-                        <div class="color-item" style="background: #fff6d3;"></div>
-                        <div class="color-item" style="background: #f3e4e1;"></div>
-                        <div class="color-item" style="background: #7b6d64;"></div>
-                        <div class="color-item" style="background: #f3c5c7;"></div>
-                        <div class="color-item" style="background: #c5ae9e;"></div>
-                        <div class="color-item" style="background: #c5b2b6;"></div>
-                        <div class="color-item" style="background: #cedff0;"></div>
-                        <div class="color-item" style="background: #616066;"></div>
-                        <div class="color-item" style="background: #000000;"></div>
-                        <div class="color-item" style="background: #805f5f;"></div>
+                    <h2 class="scroll-animate" data-animation="fade-up">ДРЕСС-КОД</h2>
+                    <div class="dresscode__colors scroll-animate" data-animation="fade-up">
+                        <div class="color-item" style="background: #fff6d3;" data-color="Кремовый"></div>
+                        <div class="color-item" style="background: #f3e4e1;" data-color="Розовый"></div>
+                        <div class="color-item" style="background: #7b6d64;" data-color="Серый"></div>
+                        <div class="color-item" style="background: #f3c5c7;" data-color="Персиковый"></div>
+                        <div class="color-item" style="background: #c5ae9e;" data-color="Бежевый"></div>
+                        <div class="color-item" style="background: #c5b2b6;" data-color="Лиловый"></div>
+                        <div class="color-item" style="background: #cedff0;" data-color="Голубой"></div>
+                        <div class="color-item" style="background: #616066;" data-color="Графит"></div>
+                        <div class="color-item" style="background: #000000;" data-color="Чёрный"></div>
+                        <div class="color-item" style="background: #805f5f;" data-color="Бордовый"></div>
                     </div>
                     <div class="dresscode__examples">
-                        <div class="dresscode__gender"><h4>Девушки</h4><div class="example-photos"><img src="src/img/dresscode/women1.jpg" alt=""><img src="src/img/dresscode/women2.jpg" alt=""></div></div>
-                        <div class="dresscode__gender"><h4>Мужчины</h4><div class="example-photos"><img src="src/img/dresscode/men1.jpg" alt=""><img src="src/img/dresscode/men2.jpg" alt=""></div></div>
+                        <div class="dresscode__gender scroll-animate" data-animation="fade-left">
+                            <h4>Девушки</h4>
+                            <div class="example-photos">
+                                <img src="src/img/dresscode/women1.jpg" alt="">
+                                <img src="src/img/dresscode/women2.jpg" alt="">
+                            </div>
+                        </div>
+                        <div class="dresscode__gender scroll-animate" data-animation="fade-right">
+                            <h4>Мужчины</h4>
+                            <div class="example-photos">
+                                <img src="src/img/dresscode/men1.jpg" alt="">
+                                <img src="src/img/dresscode/men2.jpg" alt="">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
 
+            <!-- Анкета -->
             <section class="rsvp" id="rsvp">
                 <div class="rsvp__container">
-                    <h2>Ждём только вас <span>(и ваше настроение)</span></h2>
-                    <form class="rsvp__form" id="rsvpForm">
+                    <h2 class="scroll-animate" data-animation="fade-up">Ждём только вас <span>(и ваше настроение)</span></h2>
+                    <form class="rsvp__form scroll-animate" data-animation="fade-up" id="rsvpForm">
                         <div class="rsvp__field">
                             <label for="guestName" class="rsvp__label">Ваше имя</label>
                             <input type="text" id="guestName" name="guestName" class="rsvp__input" placeholder="Введите ваше имя" required />
@@ -194,10 +275,11 @@
                 </div>
             </section>
 
+            <!-- Таймер -->
             <section class="timer" id="timer">
                 <div class="timer__container">
-                    <h2 class="timer__headline">ДО СВАДЬБЫ ОСТАЛОСЬ</h2>
-                    <div class="timer__grid">
+                    <h2 class="timer__headline scroll-animate" data-animation="fade-up">ДО СВАДЬБЫ ОСТАЛОСЬ</h2>
+                    <div class="timer__grid scroll-animate" data-animation="fade-up">
                         <div class="timer__block" data-unit="days"><div class="timer__square"><span class="timer__number" id="days">000</span><span class="timer__unit">Дни</span></div></div>
                         <div class="timer__separator">:</div>
                         <div class="timer__block" data-unit="hours"><div class="timer__square"><span class="timer__number" id="hours">00</span><span class="timer__unit">Часы</span></div></div>
@@ -206,11 +288,14 @@
                         <div class="timer__separator">:</div>
                         <div class="timer__block" data-unit="seconds"><div class="timer__square"><span class="timer__number" id="seconds">00</span><span class="timer__unit">Секунды</span></div></div>
                     </div>
-                    <p class="timer__quote">Любовь — она в нас</p>
-                    <div class="timer__photo"><img src="src/img/hero/background.webp" alt="Мы"></div>
+                    <p class="timer__quote scroll-animate" data-animation="fade-up">Любовь — она в нас</p>
+                    <div class="timer__photo scroll-animate" data-animation="fade-up">
+                        <img src="src/img/hero/background.webp" alt="Мы">
+                    </div>
                 </div>
             </section>
 
+            <!-- Футер -->
             <footer class="footer">
                 <div class="footer__container">
                     <p class="footer__thanks">Спасибо, что будете с нами</p>

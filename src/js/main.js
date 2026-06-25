@@ -21,14 +21,30 @@ document.addEventListener('DOMContentLoaded', () => {
         if (relativeScroll > SLIDE_HEIGHT) relativeScroll = SLIDE_HEIGHT;
 
         const progress = relativeScroll / SLIDE_HEIGHT;
-        slide.style.transform = `translateX(${-progress * 100}%)`;
-
+        if (slide) slide.style.transform = `translateX(${-progress * 100}%)`;
         document.body.style.backgroundColor = progress >= 1 ? '#fefafc' : '#fdf7f2';
     }
 
     window.addEventListener('scroll', () => {
         if (sliderActive) updateSlide();
     });
+
+    // Скролл-анимации для обычных секций
+    const scrollElements = document.querySelectorAll('.regular-content .scroll-animate');
+    const elementObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const el = entry.target;
+                const delay = el.dataset.delay || 0;
+                setTimeout(() => {
+                    el.classList.add('revealed');
+                }, parseInt(delay));
+                elementObserver.unobserve(el);
+            }
+        });
+    }, { threshold: 0.2, rootMargin: '0px 0px -30px 0px' });
+
+    scrollElements.forEach(el => elementObserver.observe(el));
 
     if (openBtn) {
         openBtn.addEventListener('click', () => {
@@ -47,7 +63,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
             startGoldenParticles();
             startMediaEffects();
-            startProposalFireworks();
+
+            // Запуск анимаций для уже видимых элементов
+            setTimeout(() => {
+                document.querySelectorAll('.regular-content .scroll-animate').forEach(el => {
+                    if (el.getBoundingClientRect().top < window.innerHeight) {
+                        el.classList.add('revealed');
+                    }
+                });
+            }, 100);
         });
     }
 
@@ -68,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setInterval(updateTimer, 1000);
     updateTimer();
 
-    // Улучшенные частицы интро
+    // Частицы интро
     const particlesContainer = document.getElementById('introParticles');
     if (particlesContainer) {
         function createParticle() {
@@ -78,9 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
             p.style.left = Math.random()*100+'%';
             p.style.animationDuration = (Math.random()*4+4)+'s';
             p.style.animationDelay = Math.random()*3+'s';
-            if (p.classList.contains('ring-particle')) {
-                p.textContent = '';
-            } else {
+            if (!p.classList.contains('ring-particle')) {
                 p.textContent = ['✦','✧','•','·','✶','✷'][Math.floor(Math.random()*6)];
             }
             p.style.fontSize = (Math.random()*1+0.8)+'rem';
@@ -91,14 +113,13 @@ document.addEventListener('DOMContentLoaded', () => {
         for(let i=0;i<30;i++) setTimeout(createParticle, i*100);
     }
 
-    // Улучшенные частицы для липкой надписи
+    // Частицы для липкой надписи
     function startGoldenParticles() {
         const goldenContainer = document.getElementById('goldenParticles');
         if (!goldenContainer) return;
         function createGoldenParticle() {
             const p = document.createElement('span');
-            const isSparkle = Math.random() > 0.7;
-            p.className = isSparkle ? 'golden-particle sparkle' : 'golden-particle';
+            p.className = Math.random() > 0.7 ? 'golden-particle sparkle' : 'golden-particle';
             p.style.left = Math.random() * 100 + '%';
             p.style.animationDuration = (Math.random() * 3 + 3) + 's';
             p.style.animationDelay = Math.random() * 2 + 's';
@@ -116,7 +137,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const container = document.getElementById('mediaParticles');
         if (!container) return;
 
-        // Множественные фейерверки
         setInterval(() => {
             for (let i = 0; i < 4; i++) {
                 const firework = document.createElement('span');
@@ -129,7 +149,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }, 500);
 
-        // Расширяющиеся круги
         setInterval(() => {
             for (let i = 0; i < 3; i++) {
                 const circle = document.createElement('div');
@@ -144,7 +163,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }, 1000);
 
-        // Мини-салюты
         setInterval(() => {
             const x = Math.random() * 100;
             const y = Math.random() * 100;
@@ -159,33 +177,5 @@ document.addEventListener('DOMContentLoaded', () => {
                 setTimeout(() => particle.remove(), 1500);
             }
         }, 2000);
-    }
-
-    // Фейерверки в предложении
-    function startProposalFireworks() {
-        const proposalSlide = document.getElementById('proposal');
-        if (!proposalSlide) return;
-        const heart = proposalSlide.querySelector('.proposal__heart');
-        if (!heart) return;
-        const fireworkContainer = heart.querySelector('.firework-particles');
-        if (!fireworkContainer) return;
-        
-        function createProposalFirework() {
-            const span = document.createElement('span');
-            span.style.cssText = 'position:absolute;width:4px;height:4px;background:#d4af37;border-radius:50%;opacity:0;animation:fireworkBurst 2s ease-out forwards;left:50%;top:50%;';
-            span.style.transform = `rotate(${Math.random()*360}deg) translateY(-20px)`;
-            fireworkContainer.appendChild(span);
-            setTimeout(() => span.remove(), 2000);
-        }
-        setInterval(createProposalFirework, 600);
-    }
-
-    // Добавляем свечение вокруг имён в интро
-    const namesWrapper = document.querySelector('.intro__names');
-    if (namesWrapper) {
-        namesWrapper.parentElement.classList.add('intro__names-wrapper');
-        const glow = document.createElement('div');
-        glow.className = 'intro__names-glow';
-        namesWrapper.parentElement.appendChild(glow);
     }
 });
